@@ -1,2 +1,0 @@
-# tribe-game
-a test

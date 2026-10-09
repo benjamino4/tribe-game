@@ -3,8 +3,12 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+<<<<<<< HEAD
 <meta name="theme-color" content="#0b0710" />
 <title>Ashen Blade</title>
+=======
+<title>TRIBES</title>
+>>>>>>> c980ec2 (Add Ashen Blade Telegram mini-app game)
 <link rel="stylesheet" href="styles.css" />
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
@@ -12,6 +16,7 @@
   <div id="stage">
     <canvas id="game"></canvas>
 
+<<<<<<< HEAD
     <!-- On-screen touch controls (hidden until play) -->
     <div id="touch" class="hidden">
       <div class="pad left">
@@ -41,6 +46,26 @@
     </div>
   </div>
 
+=======
+    <!-- Touch controls -->
+    <div id="controls">
+      <div id="dpad">
+        <button class="dbtn" data-k="up">▲</button>
+        <div class="drow">
+          <button class="dbtn" data-k="left">◀</button>
+          <button class="dbtn mid" data-k="down">▼</button>
+          <button class="dbtn" data-k="right">▶</button>
+        </div>
+      </div>
+      <div id="actions">
+        <button class="abtn" data-k="b">B</button>
+        <button class="abtn primary" data-k="a">A</button>
+      </div>
+    </div>
+
+    <div id="loading">Awakening the tribe…</div>
+  </div>
+>>>>>>> c980ec2 (Add Ashen Blade Telegram mini-app game)
   <script src="game.js"></script>
 </body>
 </html>

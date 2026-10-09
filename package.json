@@ -1,6 +1,13 @@
 {
-  "name": "tribe-game",
-  "type": "module",
-  "scripts": { "start": "node server.js" },
-  "dependencies": { "express": "4.19.2" }
+  "name": "tribes",
+  "version": "1.0.0",
+  "description": "TRIBES \u2014 Telegram Mini App olden-era survival RPG",
+  "private": true,
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=16"
+  }
 }

@@ -11,16 +11,9 @@
   <div id="stage">
     <canvas id="game"></canvas>
 
-    <!-- Touch controls -->
+    <!-- Native mobile controls: tap to move / tap to act.
+         A = confirm/talk, B = cancel/leave (also used by battle menu). -->
     <div id="controls">
-      <div id="dpad">
-        <button class="dbtn" data-k="up">▲</button>
-        <div class="drow">
-          <button class="dbtn" data-k="left">◀</button>
-          <button class="dbtn mid" data-k="down">▼</button>
-          <button class="dbtn" data-k="right">▶</button>
-        </div>
-      </div>
       <div id="actions">
         <button class="abtn" data-k="b">B</button>
         <button class="abtn primary" data-k="a">A</button>

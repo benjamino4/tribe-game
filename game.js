@@ -42,7 +42,8 @@ window.addEventListener('resize',resize);
 if(TG&&TG.onEvent){ try{TG.onEvent('viewportChanged',resize);}catch(e){} }
 resize();
 /* ---------- Asset manifest (baked from processed packs) ---------- */
-var A={"hero":{"idle":{"down":{"file":"assets2/hero/idle_down.png","frames":4,"fw":64,"fh":64},"up":{"file":"assets2/hero/idle_up.png","frames":4,"fw":64,"fh":64},"side":{"file":"assets2/hero/idle_side.png","frames":4,"fw":64,"fh":64}},"walk":{"down":{"file":"assets2/hero/walk_down.png","frames":6,"fw":64,"fh":64},"up":{"file":"assets2/hero/walk_up.png","frames":6,"fw":64,"fh":64},"side":{"file":"assets2/hero/walk_side.png","frames":6,"fw":64,"fh":64}},"run":{"down":{"file":"assets2/hero/run_down.png","frames":6,"fw":64,"fh":64},"up":{"file":"assets2/hero/run_up.png","frames":6,"fw":64,"fh":64},"side":{"file":"assets2/hero/run_side.png","frames":6,"fw":64,"fh":64}},"slice":{"down":{"file":"assets2/hero/slice_down.png","frames":8,"fw":64,"fh":64},"up":{"file":"assets2/hero/slice_up.png","frames":8,"fw":64,"fh":64},"side":{"file":"assets2/hero/slice_side.png","frames":8,"fw":64,"fh":64}},"hit":{"down":{"file":"assets2/hero/hit_down.png","frames":4,"fw":64,"fh":64},"up":{"file":"assets2/hero/hit_up.png","frames":4,"fw":64,"fh":64},"side":{"file":"assets2/hero/hit_side.png","frames":4,"fw":64,"fh":64}},"death":{"down":{"file":"assets2/hero/death_down.png","frames":8,"fw":64,"fh":64},"up":{"file":"assets2/hero/death_up.png","frames":8,"fw":64,"fh":64},"side":{"file":"assets2/hero/death_side.png","frames":8,"fw":64,"fh":64}}},"npc":{"peasant":{"file":"assets2/npc/peasant.png","frames":4,"fw":64,"fh":64},"tavern":{"file":"assets2/npc/tavern.png","frames":4,"fw":64,"fh":64},"knight":{"file":"assets2/npc/knight.png","frames":4,"fw":32,"fh":32},"wizard":{"file":"assets2/npc/wizard.png","frames":4,"fw":32,"fh":32},"rogue":{"file":"assets2/npc/rogue.png","frames":4,"fw":32,"fh":32}},"mob":{"skel_base":{"idle":{"file":"assets2/mob/skel_base_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/skel_base_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/skel_base_death.png","frames":12,"fw":64,"fh":64}},"skel_warrior":{"idle":{"file":"assets2/mob/skel_warrior_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/skel_warrior_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/skel_warrior_death.png","frames":8,"fw":48,"fh":48}},"skel_mage":{"idle":{"file":"assets2/mob/skel_mage_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/skel_mage_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/skel_mage_death.png","frames":6,"fw":64,"fh":64}},"skel_rogue":{"idle":{"file":"assets2/mob/skel_rogue_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/skel_rogue_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/skel_rogue_death.png","frames":6,"fw":64,"fh":64}},"orc":{"idle":{"file":"assets2/mob/orc_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/orc_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/orc_death.png","frames":6,"fw":64,"fh":64}},"orc_warrior":{"idle":{"file":"assets2/mob/orc_warrior_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/orc_warrior_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/orc_warrior_death.png","frames":7,"fw":82,"fh":80}},"orc_shaman":{"idle":{"file":"assets2/mob/orc_shaman_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/orc_shaman_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/orc_shaman_death.png","frames":7,"fw":64,"fh":64}},"orc_rogue":{"idle":{"file":"assets2/mob/orc_rogue_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/orc_rogue_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/orc_rogue_death.png","frames":6,"fw":64,"fh":64}}},"build":{"blue_castle":{"file":"assets2/build/blue_castle.png","w":320,"h":256},"blue_tower":{"file":"assets2/build/blue_tower.png","w":128,"h":256},"blue_house1":{"file":"assets2/build/blue_house1.png","w":128,"h":192},"blue_house2":{"file":"assets2/build/blue_house2.png","w":128,"h":192},"blue_house3":{"file":"assets2/build/blue_house3.png","w":128,"h":192},"blue_monastery":{"file":"assets2/build/blue_monastery.png","w":192,"h":320},"blue_barracks":{"file":"assets2/build/blue_barracks.png","w":192,"h":256},"blue_archery":{"file":"assets2/build/blue_archery.png","w":192,"h":256},"red_castle":{"file":"assets2/build/red_castle.png","w":320,"h":256},"red_tower":{"file":"assets2/build/red_tower.png","w":128,"h":256},"red_house1":{"file":"assets2/build/red_house1.png","w":128,"h":192},"red_house2":{"file":"assets2/build/red_house2.png","w":128,"h":192},"red_house3":{"file":"assets2/build/red_house3.png","w":128,"h":192},"red_monastery":{"file":"assets2/build/red_monastery.png","w":192,"h":320},"red_barracks":{"file":"assets2/build/red_barracks.png","w":192,"h":256},"red_archery":{"file":"assets2/build/red_archery.png","w":192,"h":256}},"terr":{"grass":{"file":"assets2/terr/grass.png","w":64,"h":64},"water":{"file":"assets2/terr/water.png","w":64,"h":64},"tree":{"file":"assets2/terr/tree.png","w":192,"h":256},"rock":{"file":"assets2/terr/rock.png","w":64,"h":64},"bush":{"file":"assets2/terr/bush.png","w":128,"h":128}},"spell":{"fire":{"file":"assets2/spell/fire.png","frames":13,"fw":128,"fh":128},"heal":{"file":"assets2/spell/heal.png","frames":16,"fw":128,"fh":128},"poison":{"file":"assets2/spell/poison.png","frames":17,"fw":128,"fh":128},"lightning":{"file":"assets2/spell/lightning.png","frames":7,"fw":128,"fh":128},"slash":{"file":"assets2/spell/slash.png","frames":7,"fw":96,"fh":96}}};
+var A={"hero":{"idle":{"down":{"file":"assets2/hero/idle_down.png","frames":4,"fw":64,"fh":64},"up":{"file":"assets2/hero/idle_up.png","frames":4,"fw":64,"fh":64},"side":{"file":"assets2/hero/idle_side.png","frames":4,"fw":64,"fh":64}},"walk":{"down":{"file":"assets2/hero/walk_down.png","frames":6,"fw":64,"fh":64},"up":{"file":"assets2/hero/walk_up.png","frames":6,"fw":64,"fh":64},"side":{"file":"assets2/hero/walk_side.png","frames":6,"fw":64,"fh":64}},"run":{"down":{"file":"assets2/hero/run_down.png","frames":6,"fw":64,"fh":64},"up":{"file":"assets2/hero/run_up.png","frames":6,"fw":64,"fh":64},"side":{"file":"assets2/hero/run_side.png","frames":6,"fw":64,"fh":64}},"slice":{"down":{"file":"assets2/hero/slice_down.png","frames":8,"fw":64,"fh":64},"up":{"file":"assets2/hero/slice_up.png","frames":8,"fw":64,"fh":64},"side":{"file":"assets2/hero/slice_side.png","frames":8,"fw":64,"fh":64}},"hit":{"down":{"file":"assets2/hero/hit_down.png","frames":4,"fw":64,"fh":64},"up":{"file":"assets2/hero/hit_up.png","frames":4,"fw":64,"fh":64},"side":{"file":"assets2/hero/hit_side.png","frames":4,"fw":64,"fh":64}},"death":{"down":{"file":"assets2/hero/death_down.png","frames":8,"fw":64,"fh":64},"up":{"file":"assets2/hero/death_up.png","frames":8,"fw":64,"fh":64},"side":{"file":"assets2/hero/death_side.png","frames":8,"fw":64,"fh":64}}},"npc":{"peasant":{"file":"assets2/npc/peasant.png","frames":4,"fw":64,"fh":64},"tavern":{"file":"assets2/npc/tavern.png","frames":4,"fw":64,"fh":64},"knight":{"file":"assets2/npc/knight.png","frames":4,"fw":32,"fh":32},"wizard":{"file":"assets2/npc/wizard.png","frames":4,"fw":32,"fh":32},"rogue":{"file":"assets2/npc/rogue.png","frames":4,"fw":32,"fh":32}},"mob":{"skel_base":{"idle":{"file":"assets2/mob/skel_base_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/skel_base_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/skel_base_death.png","frames":12,"fw":64,"fh":64}},"skel_warrior":{"idle":{"file":"assets2/mob/skel_warrior_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/skel_warrior_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/skel_warrior_death.png","frames":8,"fw":48,"fh":48}},"skel_mage":{"idle":{"file":"assets2/mob/skel_mage_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/skel_mage_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/skel_mage_death.png","frames":6,"fw":64,"fh":64}},"skel_rogue":{"idle":{"file":"assets2/mob/skel_rogue_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/skel_rogue_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/skel_rogue_death.png","frames":6,"fw":64,"fh":64}},"orc":{"idle":{"file":"assets2/mob/orc_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/orc_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/orc_death.png","frames":6,"fw":64,"fh":64}},"orc_warrior":{"idle":{"file":"assets2/mob/orc_warrior_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/orc_warrior_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/orc_warrior_death.png","frames":7,"fw":82,"fh":80}},"orc_shaman":{"idle":{"file":"assets2/mob/orc_shaman_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/orc_shaman_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/orc_shaman_death.png","frames":7,"fw":64,"fh":64}},"orc_rogue":{"idle":{"file":"assets2/mob/orc_rogue_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/orc_rogue_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/orc_rogue_death.png","frames":6,"fw":64,"fh":64}},"demon":{"idle":{"file":"assets2/mob/demon_idle.png","frames":6,"fw":100,"fh":100},"run":{"file":"assets2/mob/demon_run.png","frames":8,"fw":100,"fh":100},"attack":{"file":"assets2/mob/demon_attack.png","frames":7,"fw":100,"fh":100},"death":{"file":"assets2/mob/demon_death.png","frames":4,"fw":100,"fh":100},"hurt":{"file":"assets2/mob/demon_hurt.png","frames":4,"fw":100,"fh":100}},"blood":{"idle":{"file":"assets2/mob/blood_idle.png","frames":6,"fw":100,"fh":100},"run":{"file":"assets2/mob/blood_run.png","frames":8,"fw":100,"fh":100},"attack":{"file":"assets2/mob/blood_attack.png","frames":8,"fw":100,"fh":100},"death":{"file":"assets2/mob/blood_death.png","frames":4,"fw":100,"fh":100},"hurt":{"file":"assets2/mob/blood_hurt.png","frames":4,"fw":100,"fh":100}}},"build":{"blue_castle":{"file":"assets2/build/blue_castle.png","w":320,"h":256},"blue_tower":{"file":"assets2/build/blue_tower.png","w":128,"h":256},"blue_house1":{"file":"assets2/build/blue_house1.png","w":128,"h":192},"blue_house2":{"file":"assets2/build/blue_house2.png","w":128,"h":192},"blue_house3":{"file":"assets2/build/blue_house3.png","w":128,"h":192},"blue_monastery":{"file":"assets2/build/blue_monastery.png","w":192,"h":320},"blue_barracks":{"file":"assets2/build/blue_barracks.png","w":192,"h":256},"blue_archery":{"file":"assets2/build/blue_archery.png","w":192,"h":256},"red_castle":{"file":"assets2/build/red_castle.png","w":320,"h":256},"red_tower":{"file":"assets2/build/red_tower.png","w":128,"h":256},"red_house1":{"file":"assets2/build/red_house1.png","w":128,"h":192},"red_house2":{"file":"assets2/build/red_house2.png","w":128,"h":192},"red_house3":{"file":"assets2/build/red_house3.png","w":128,"h":192},"red_monastery":{"file":"assets2/build/red_monastery.png","w":192,"h":320},"red_barracks":{"file":"assets2/build/red_barracks.png","w":192,"h":256},"red_archery":{"file":"assets2/build/red_archery.png","w":192,"h":256}},"terr":{"grass":{"file":"assets2/terr/grass_set.png","fw":64,"fh":64,"cols":4,"rows":4},"water":{"file":"assets2/terr/water.png","w":64,"h":64},"foam":{"file":"assets2/terr/foam.png","frames":16,"fw":192,"fh":192},"water_rock":{"file":"assets2/terr/water_rock.png","frames":16,"fw":64,"fh":64},"tree":{"file":"assets2/terr/tree.png","frames":8,"fw":192,"fh":256},"rock":{"file":"assets2/terr/rock.png","w":64,"h":64},"bush":{"file":"assets2/terr/bush.png","frames":8,"fw":128,"fh":128}},"spell":{"fire":{"file":"assets2/spell/fire.png","frames":13,"fw":128,"fh":128},"heal":{"file":"assets2/spell/heal.png","frames":16,"fw":128,"fh":128},"poison":{"file":"assets2/spell/poison.png","frames":17,"fw":128,"fh":128},"lightning":{"file":"assets2/spell/lightning.png","frames":7,"fw":128,"fh":128},"slash":{"file":"assets2/spell/slash.png","frames":7,"fw":96,"fh":96}},"status":{"bleed":{"file":"assets2/status/bleed.png","frames":16,"fw":64,"fh":64},"burn":{"file":"assets2/status/burn.png","frames":16,"fw":64,"fh":64},"poison":{"file":"assets2/status/poison.png","frames":16,"fw":64,"fh":64},"shock":{"file":"assets2/status/shock.png","frames":16,"fw":64,"fh":64},"heal":{"file":"assets2/status/heal.png","frames":16,"fw":64,"fh":64},"shield":{"file":"assets2/status/shield.png","frames":16,"fw":64,"fh":64},"stun":{"file":"assets2/status/stun.png","frames":16,"fw":64,"fh":64},"rage":{"file":"assets2/status/rage.png","frames":16,"fw":64,"fh":64},"regen":{"file":"assets2/status/regen.png","frames":16,"fw":64,"fh":64}}};
+/*__MANIFEST_END__*/
 /* ---------- Image loader (progress + watchdog) ---------- */
 var images={}; var toLoad=0, loaded=0, failed=[];
 function load(key,src){ if(images[key])return; toLoad++; var im=new Image();
@@ -58,7 +59,7 @@ function walk(obj,prefix){
 }
 function loadAll(cb){
   walk(A.hero,'hero'); walk(A.npc,'npc'); walk(A.mob,'mob');
-  walk(A.build,'build'); walk(A.terr,'terr'); walk(A.spell,'spell');
+  walk(A.build,'build'); walk(A.terr,'terr'); walk(A.spell,'spell'); walk(A.status,'status');
   var waited=0, MAXW=12000;
   (function wait(){
     setLoadMsg('Mustering the tribe\u2026 '+loaded+'/'+toLoad);
@@ -147,6 +148,18 @@ function drawFXAll(ox,oy){ for(var i=0;i<fxActive.length;i++){ var f=fxActive[i]
   ctx.drawImage(img, fi*s.fw,0, s.fw,s.fh, f.x-ox-w/2, f.y-oy-h/2, w,h);
   ctx.globalCompositeOperation='source-over'; } }
 function fxBusy(){ return fxActive.length>0; }
+/* ---------- Status FX (animated status-icon overlays) ---------- */
+var statFX=[];   // transient bursts {key,x,y,t,life}
+function addStatusFX(key,x,y,life){ if(!A.status[key])return; statFX.push({key:key,x:x,y:y,t:0,life:life||1.3}); }
+function updStatusFX(dt){ for(var i=statFX.length-1;i>=0;i--){ var f=statFX[i]; f.t+=dt; if(f.t>=f.life) statFX.splice(i,1); } }
+function drawStatusIcon(key,x,y,size){ var m=A.status[key], img=images['status_'+key]; if(!imgReady(img))return;
+  var fi=Math.floor(bclock*12)%m.frames; size=size||28;
+  ctx.drawImage(img, fi*m.fw,0, m.fw,m.fh, x-size/2, y-size, size, size); }
+function drawStatusFX(ox,oy){ for(var i=0;i<statFX.length;i++){ var f=statFX[i];
+  var a=clamp((f.life-f.t)*2,0,1); ctx.globalAlpha=a; drawStatusIcon(f.key, f.x-ox, f.y-oy-10, 36); ctx.globalAlpha=1; } }
+// draw the row of active persistent status badges above a combatant
+function drawStatusRow(keys,cx,topY){ var n=keys.length; if(!n)return; var gap=28, x0=cx-(n-1)*gap/2;
+  for(var i=0;i<n;i++) drawStatusIcon(keys[i], x0+i*gap, topY, 26); }
 /* ---------- World constants ---------- */
 var TILE=40;                 // world px per tile (also draw size of ground tile)
 var MW=44, MH=44;            // map size in tiles
@@ -178,7 +191,9 @@ var MOB={
   orc:          {name:'Orc Grunt',      hp:58, atk:14, def:5, xp:22, gold:14, draw:2.6, spell:null,      tier:1},
   orc_rogue:    {name:'Orc Marauder',   hp:66, atk:17, def:5, xp:30, gold:20, draw:2.6, spell:null,      tier:2},
   orc_shaman:   {name:'Orc Shaman',     hp:70, atk:15, def:6, xp:38, gold:28, draw:2.6, spell:'poison',  tier:3},
-  orc_warrior:  {name:'Orc Warchief',   hp:110,atk:22, def:9, xp:70, gold:60, draw:2.8, spell:'fire',    tier:4}
+  orc_warrior:  {name:'Orc Warchief',   hp:110,atk:22, def:9, xp:70, gold:60, draw:2.8, spell:'fire',    tier:4},
+  demon:        {name:'Infernal Reaver', hp:155,atk:26, def:10,xp:130, gold:120,draw:1.0, spell:'fire',    tier:5, boss:true},
+  blood:        {name:'Gorehulk',       hp:195,atk:31, def:13,xp:170, gold:170,draw:1.0, spell:null,     tier:5, boss:true}
 };
 
 /* ---------- Hero spells (FF-style Magic menu) ---------- */
@@ -204,9 +219,18 @@ var solids=[];      // collision rects {x,y,w,h}
 
 function addBuild(key,tx,ty,name,town){
   var m=A.build[key]; var wx=tx*TILE+TILE/2, wy=ty*TILE+TILE;
-  buildings.push({key:key,wx:wx,wy:wy,scale:BSCALE,name:name,town:town});
+  buildings.push({key:key,wx:wx,wy:wy,scale:BSCALE,name:name,town:town,enter:buildEnterType(key,name)});
   var bw=m.w*BSCALE*0.55;
   solids.push({x:wx-bw/2, y:wy-18, w:bw, h:20});
+}
+function buildEnterType(key,name){
+  var n=(name||'').toLowerCase();
+  if(n.indexOf('tavern')>=0) return 'tavern';
+  if(n.indexOf('castle')>=0||n.indexOf('keep')>=0) return 'castle';
+  if(n.indexOf('barrack')>=0||n.indexOf('war pit')>=0||n.indexOf('archery')>=0) return 'barracks';
+  if(n.indexOf('monastery')>=0||n.indexOf('temple')>=0) return 'temple';
+  if(n.indexOf('tower')>=0) return 'tower';
+  return 'home';
 }
 function addNPC(sprite,tx,ty,name,lines){
   var m=A.npc[sprite];
@@ -214,9 +238,10 @@ function addNPC(sprite,tx,ty,name,lines){
     lines:lines,t:rand(0,2),frame:0,fw:m.fw,fh:m.fh,frames:m.frames,scale:m.fh>=64?0.9:1.7});
 }
 function addDeco(kind,tx,ty,solid){
-  var m=A.terr[kind]; var sc = kind==='tree'?0.6:(kind==='bush'?0.5:0.9);
+  var m=A.terr[kind];
+  var sc = kind==='tree'?0.52:(kind==='bush'?0.5:(kind==='water_rock'?0.7:0.9));
   var wx=tx*TILE+TILE/2, wy=ty*TILE+TILE;
-  deco.push({kind:kind,wx:wx,wy:wy,scale:sc,solid:!!solid});
+  deco.push({kind:kind,wx:wx,wy:wy,scale:sc,solid:!!solid,frames:(m.frames||1),frame:0,ft:rand(0,1)});
   if(solid) solids.push({x:wx-14,y:wy-14,w:28,h:16});
 }
 function addRoamer(kind,tx,ty){
@@ -272,6 +297,8 @@ function genWorld(){
   var ospots=[[30,12],[36,14],[32,16],[34,18]];
   for(var oi=0;oi<ospots.length;oi++) addRoamer(choice(orcs),ospots[oi][0],ospots[oi][1]);
   addRoamer('orc_warrior',34,11);   // the Warchief guards the keep
+  addRoamer('demon',31,11);         // demon lords prowl Grimspire
+  addRoamer('blood',38,12);
   // spawn hero at Emberhold gate
   if(!player.wx){ player.wx=10*TILE; player.wy=14*TILE; }
 }
@@ -288,33 +315,40 @@ function blocked(wx,wy){
 }
 /* ---------- Overworld ---------- */
 var cam={x:0,y:0};
+var moveTarget=null;   // tap-to-move destination (world px)
+var gNearNPC=null, gNearBuild=null;
 var dlg={active:false,name:'',lines:[],idx:0};
 var nearInfo='';      // town/building name shown as a banner
 var waterT=0;
 
 function startDialogue(npc){
-  dlg.active=true; dlg.name=npc.name; dlg.lines=npc.lines; dlg.idx=0; haptic('light');
+  dlg.active=true; dlg.name=npc.name; dlg.lines=npc.lines; dlg.idx=0; moveTarget=null; haptic('light');
   if(npc.sprite==='tavern'){ player.hp=player.hpMax; player.mp=player.mpMax;
     floatText(player.wx,player.wy-TILE,'Fully healed!','#8fe36b'); }
 }
 function overworldUpdate(dt){
   waterT+=dt;
+  for(var di=0;di<deco.length;di++){ var _o=deco[di]; if(_o.frames>1){ _o.ft+=dt; if(_o.ft>=0.14){ _o.ft=0; _o.frame=(_o.frame+1)%_o.frames; } } }
   if(dlg.active){
     if(consume('a')){ dlg.idx++; haptic('sel'); if(dlg.idx>=dlg.lines.length) dlg.active=false; }
     if(consume('b')) dlg.active=false;
     return;
   }
   var ix=(keys.right?1:0)-(keys.left?1:0), iy=(keys.down?1:0)-(keys.up?1:0);
+  var usingTap=false;
+  if(!ix && !iy && moveTarget){ var ddx=moveTarget.x-player.wx, ddy=moveTarget.y-player.wy, dm=Math.hypot(ddx,ddy);
+    if(dm<6){ moveTarget=null; } else { ix=ddx/dm; iy=ddy/dm; usingTap=true; } }
   var running=keys.b && (ix||iy);
   var sp=running?170:118;
   if(ix||iy){
     // facing / direction for sprite sheet
-    if(ix!==0){ player.dir='side'; player.facing=ix>0?1:-1; }
-    if(iy>0 && ix===0) player.dir='down';
-    if(iy<0 && ix===0) player.dir='up';
+    if(Math.abs(ix)>Math.abs(iy)){ player.dir='side'; player.facing=ix>0?1:-1; }
+    else { player.dir = iy>0?'down':'up'; }
     var len=Math.hypot(ix,iy)||1, nx=player.wx+ix/len*sp*dt, ny=player.wy+iy/len*sp*dt;
-    if(!blocked(nx,player.wy)) player.wx=nx;
-    if(!blocked(player.wx,ny)) player.wy=ny;
+    var mvd=false;
+    if(!blocked(nx,player.wy)){ player.wx=nx; mvd=true; }
+    if(!blocked(player.wx,ny)){ player.wy=ny; mvd=true; }
+    if(usingTap && !mvd) moveTarget=null;   // stuck against a wall — give up
     player.moving=true; player.anim=running?'run':'walk';
   } else { player.moving=false; player.anim='idle'; }
   // animate hero
@@ -328,9 +362,15 @@ function overworldUpdate(dt){
     np.t+=dt; if(np.t>=0.28){ np.t=0; np.frame=(np.frame+1)%np.frames; }
     if(d<TILE*1.3 && d<nd){ nd=d; nearNPC=np; } }
   for(var ti=0;ti<towns.length;ti++){ if(dist(player.wx,player.wy,towns[ti].wx,towns[ti].wy)<TILE*5){ nearInfo=towns[ti].name; break; } }
+  // nearest enterable building
+  var nearBuild=null, bd=1e9;
+  for(var bi=0;bi<buildings.length;bi++){ var bb=buildings[bi]; var dbld=dist(player.wx,player.wy,bb.wx,bb.wy+8);
+    if(dbld<TILE*1.7 && dbld<bd){ bd=dbld; nearBuild=bb; } }
+  gNearNPC=nearNPC; gNearBuild=nearBuild;
   if(nearNPC) nearInfo=nearNPC.name+'  ▸ press A';
+  else if(nearBuild) nearInfo='Enter '+nearBuild.name+'  ▸ press A';
   // interact
-  if(consume('a') && nearNPC) startDialogue(nearNPC);
+  if(consume('a')){ if(nearNPC) startDialogue(nearNPC); else if(nearBuild) enterInterior(nearBuild); }
   // roamers wander + chase, contact -> battle
   for(var ri=0;ri<roamers.length;ri++){ var ro=roamers[ri]; ro.t+=dt; ro.cool-=dt;
     var dx=player.wx-ro.wx, dy=player.wy-ro.wy, dd=Math.hypot(dx,dy);
@@ -349,23 +389,47 @@ function overworldUpdate(dt){
   updPP(dt); updFloats(dt);
 }
 /* ---------- Overworld draw ---------- */
+function isWaterTile(tx,ty){
+  if(tx<1||ty<1||tx>=MW-1||ty>=MH-1) return true;              // sea border
+  if(tx>=lake.x0&&tx<=lake.x1&&ty>=lake.y0&&ty<=lake.y1) return true; // inland lake
+  return false;
+}
+function isGrassTile(tx,ty){ return !isWaterTile(tx,ty); }
+// 9-slice autotile pick from the 4x4 Tiny Swords grass block (cols/rows 0..3)
+function grassSrc(tx,ty){
+  var n=isGrassTile(tx,ty-1), s=isGrassTile(tx,ty+1), e=isGrassTile(tx+1,ty), w=isGrassTile(tx-1,ty);
+  var col = (w&&e)?1 : (!w?0:3);
+  var row = (n&&s)?1 : (!n?0:3);
+  if(col===1&&row===1){ var h=((tx*73856093)^(ty*19349663))>>>0; col=1+(h%2); } // texture variety on fill
+  return {sx:col*64, sy:row*64};
+}
 function drawGround(){
-  var g=images['terr_grass'], w=images['terr_water'];
-  var sc=TILE/64;
-  var tx0=Math.floor(cam.x/TILE), ty0=Math.floor(cam.y/TILE);
-  var tx1=Math.ceil((cam.x+VW)/TILE), ty1=Math.ceil((cam.y+VH)/TILE);
+  var g=images['terr_grass'], w=images['terr_water'], foam=images['terr_foam'];
+  var tx0=Math.floor(cam.x/TILE)-1, ty0=Math.floor(cam.y/TILE)-1;
+  var tx1=Math.ceil((cam.x+VW)/TILE)+1, ty1=Math.ceil((cam.y+VH)/TILE)+1;
+  // pass 1 — base ground (autotiled grass surface over animated water)
   for(var ty=ty0;ty<=ty1;ty++) for(var tx=tx0;tx<=tx1;tx++){
     var dx=tx*TILE-cam.x, dy=ty*TILE-cam.y;
-    if(imgReady(g)) ctx.drawImage(g,0,0,64,64,dx,dy,TILE+1,TILE+1);
-    else { ctx.fillStyle='#4a7a3a'; ctx.fillRect(dx,dy,TILE+1,TILE+1); }
+    if(isWaterTile(tx,ty)){
+      if(imgReady(w)) ctx.drawImage(w,0,0,64,64,dx,dy,TILE+1,TILE+1);
+      else { ctx.fillStyle='#2b6db0'; ctx.fillRect(dx,dy,TILE+1,TILE+1); }
+      ctx.globalAlpha=0.10+0.06*Math.sin(waterT*2+tx*0.7+ty*0.9);
+      ctx.fillStyle='#bfe6ff'; ctx.fillRect(dx,dy,TILE+1,TILE+1); ctx.globalAlpha=1;
+    } else {
+      if(imgReady(g)){ var sp=grassSrc(tx,ty); ctx.drawImage(g,sp.sx,sp.sy,64,64,dx,dy,TILE+1,TILE+1); }
+      else { ctx.fillStyle='#4a7a3a'; ctx.fillRect(dx,dy,TILE+1,TILE+1); }
+    }
   }
-  // lake water (slight shimmer via alpha bob)
-  for(var ly=lake.y0;ly<=lake.y1;ly++) for(var lx=lake.x0;lx<=lake.x1;lx++){
-    var wx=lx*TILE-cam.x, wy=ly*TILE-cam.y;
-    if(wx<-TILE||wy<-TILE||wx>VW||wy>VH) continue;
-    if(imgReady(w)) ctx.drawImage(w,0,0,64,64,wx,wy,TILE+1,TILE+1);
-    else { ctx.fillStyle='#2d6fb0'; ctx.fillRect(wx,wy,TILE+1,TILE+1); }
-    ctx.globalAlpha=0.12+0.06*Math.sin(waterT*2+lx+ly); ctx.fillStyle='#bfe6ff'; ctx.fillRect(wx,wy,TILE+1,TILE+1); ctx.globalAlpha=1;
+  // pass 2 — animated surf foam on the shoreline (water tiles touching grass)
+  if(imgReady(foam)){
+    var ff=Math.floor(waterT*12)%16;
+    for(var qy=ty0;qy<=ty1;qy++) for(var qx=tx0;qx<=tx1;qx++){
+      if(!isWaterTile(qx,qy))continue;
+      if(isGrassTile(qx-1,qy)||isGrassTile(qx+1,qy)||isGrassTile(qx,qy-1)||isGrassTile(qx,qy+1)){
+        var cx2=qx*TILE-cam.x+TILE/2, cy2=qy*TILE-cam.y+TILE/2, fs=TILE*1.4;
+        ctx.globalAlpha=0.72; ctx.drawImage(foam, ff*192,0,192,192, cx2-fs/2, cy2-fs/2, fs, fs); ctx.globalAlpha=1;
+      }
+    }
   }
 }
 function overworldDraw(sh){
@@ -374,7 +438,8 @@ function overworldDraw(sh){
   // build y-sorted drawable list
   var list=[];
   for(var i=0;i<deco.length;i++){ (function(o){ list.push({y:o.wy,fn:function(){ var m=A.terr[o.kind];
-    drawStatic(images['terr_'+o.kind], m.w,m.h, o.wx-cam.x, o.wy-cam.y, o.scale); }}); })(deco[i]); }
+    if(o.frames>1) drawFrame(images['terr_'+o.kind], m.fw,m.fh, o.frame|0, o.wx-cam.x, o.wy-cam.y, o.scale, false);
+    else drawStatic(images['terr_'+o.kind], m.w,m.h, o.wx-cam.x, o.wy-cam.y, o.scale); }}); })(deco[i]); }
   for(i=0;i<buildings.length;i++){ (function(o){ list.push({y:o.wy,fn:function(){ var m=A.build[o.key];
     drawShadow(o.wx-cam.x, o.wy-cam.y, m.w*o.scale*0.3);
     drawStatic(images['build_'+o.key], m.w,m.h, o.wx-cam.x, o.wy-cam.y, o.scale); }}); })(buildings[i]); }
@@ -455,8 +520,10 @@ function startBattle(roamer){
       phase:'intro', menu:'root', cursor:0, msg:'',
       heroAnim:'idle', heroFrame:0, heroT:0, heroDX:0, eneDX:0,
       flashE:0, flashH:0, eneBob:0, poisonE:0, poisonH:0, over:false,
+      burnE:0, bleedE:0, stun:0, guard:false, enraged:false, atkBase:Math.round(m.atk*sc),
+      boss:!!m.boss, eneAnim:null, eneFrame:0, eneT:0,
       roamer:roamer, dead:false, deathT:0 };
-  state='battle'; clearEv(); bclock=0; fxActive.length=0;
+  state='battle'; clearEv(); bclock=0; fxActive.length=0; statFX.length=0; moveTarget=null;
   B.msg=m.name+' blocks your path!';
   after(1.1, function(){ backToMenu(); });
   haptic('medium'); doShake(6,0.3);
@@ -472,8 +539,12 @@ function heroAttack(){ B.phase='anim'; clearEv(); B.msg=player.job+' strikes!'; 
   after(0.12,function(){ B.heroDX=46; });                 // lunge in
   after(0.34,function(){ // impact
     playFX('slash', eneX(), gy()-70, 1.0);
-    var d=dmg(player.atk, B.def, 0.18); B.hp=clamp(B.hp-d,0,B.hpMax); B.flashE=0.3; doShake(9,0.26); haptic('heavy');
-    floatText(eneX(),gy()-90,'-'+d,'#fff'); emit(eneX(),gy()-70,14,{col:'#ffd27a',sp0:40,sp1:150});
+    var crit=Math.random()<0.22;
+    var d=dmg(player.atk, B.def, 0.18); if(crit) d=Math.round(d*1.8);
+    B.hp=clamp(B.hp-d,0,B.hpMax); B.flashE=0.3; doShake(crit?15:9,crit?0.34:0.26); haptic('heavy');
+    if(crit){ B.msg='CRITICAL HIT!'; floatText(eneX(),gy()-112,'CRITICAL!','#ffd24a');
+      B.bleedE=3; playFX('slash', eneX(), gy()-60, 1.3); emit(eneX(),gy()-70,22,{col:'#ff5a5a',sp0:60,sp1:200}); }
+    floatText(eneX(),gy()-90,'-'+d,crit?'#ffd24a':'#fff'); emit(eneX(),gy()-70,14,{col:'#ffd27a',sp0:40,sp1:150});
   });
   after(0.6,function(){ B.heroDX=0; });
   after(0.85,function(){ if(B.hp<=0){ enemyDies(); return; } enemyTurn(); });
@@ -491,7 +562,9 @@ function heroMagic(i){ var s=SPELLS[i]; if(player.mp<s.mp){ B.msg='Not enough MP
     after(0.35,function(){ playFX(s.fx, eneX(), gy()-70, 1.15); doShake(10,0.3); B.flashE=0.35; haptic('heavy');
       var d=dmg(player.atk*s.pow, B.def*0.4, 0.14); B.hp=clamp(B.hp-d,0,B.hpMax);
       floatText(eneX(),gy()-95,'-'+d,s.col); emit(eneX(),gy()-70,18,{col:s.col,sp0:50,sp1:170});
-      if(s.kind==='poison'){ B.poisonE=3; floatText(eneX(),gy()-120,'POISONED','#8fe36b'); } });
+      if(s.kind==='poison'){ B.poisonE=3; floatText(eneX(),gy()-120,'POISONED','#8fe36b'); }
+      if(s.fx==='fire'){ B.burnE=3; floatText(eneX(),gy()-120,'BURNING','#ff8a3c'); }
+      if(s.fx==='lightning' && Math.random()<0.4){ B.stun=1; floatText(eneX(),gy()-120,'STUNNED','#c9a6ff'); } });
     after(1.15,function(){ if(B.hp<=0){ enemyDies(); return; } enemyTurn(); });
   }
 }
@@ -506,32 +579,59 @@ function heroItem(i){ var it=ITEMS[i];
 function heroFlee(){ B.phase='anim'; clearEv();
   if(Math.random()<0.6){ B.msg='Got away safely!'; after(0.9,function(){ endBattle(false); }); }
   else { B.msg='Could not escape!'; after(0.9, enemyTurn); } }
+function heroDefend(){ B.phase='anim'; clearEv(); B.menu='root'; heroPose('idle');
+  B.guard=true; player.mp=clamp(player.mp+6,0,player.mpMax);
+  playFX('heal', heroX(), gy()-70, 0.7); addStatusFX('shield', heroX(), gy()-70);
+  floatText(heroX(),gy()-100,'DEFEND','#9fd4ff'); haptic('light');
+  B.msg=player.job+' braces for impact!';
+  after(1.0, enemyTurn);
+}
 /* ---------- Enemy turn + resolutions ---------- */
 function enemyTurn(){ if(B.over)return; clearEv(); B.phase='enemy';
-  // poison DoT on enemy
-  if(B.poisonE>0){ B.poisonE--; var pd=Math.round(B.hpMax*0.06)+3; B.hp=clamp(B.hp-pd,0,B.hpMax);
-    playFX('poison',eneX(),gy()-70,0.7); floatText(eneX(),gy()-95,'-'+pd,'#8fe36b');
-    after(0.6,function(){ if(B.hp<=0){ enemyDies(); return; } enemyAct(); }); return; }
+  // resolve damage-over-time on the enemy (bleed + burn + poison stack)
+  var tot=0, cols=[];
+  if(B.bleedE>0){ B.bleedE--; tot+=Math.round(B.hpMax*0.05)+4; cols.push('bleed'); }
+  if(B.burnE>0){ B.burnE--;  tot+=Math.round(B.hpMax*0.055)+3; cols.push('burn'); }
+  if(B.poisonE>0){ B.poisonE--; tot+=Math.round(B.hpMax*0.06)+3; cols.push('poison'); }
+  if(tot>0){ B.hp=clamp(B.hp-tot,0,B.hpMax);
+    for(var i=0;i<cols.length;i++) addStatusFX(cols[i], eneX(), gy()-70);
+    floatText(eneX(),gy()-95,'-'+tot,'#9fe36b');
+    after(0.6,function(){ if(B.hp<=0){ enemyDies(); return; } enemyAfterDot(); }); return; }
+  enemyAfterDot();
+}
+function enemyAfterDot(){
+  // enrage once, when driven below 35% HP
+  if(!B.enraged && B.hp>0 && B.hp < B.hpMax*0.35){ B.enraged=true; B.atk=Math.round(B.atkBase*1.35);
+    B.flashE=0.5; addStatusFX('rage', eneX(), gy()-70, 1.6); doShake(8,0.3);
+    B.msg=B.name+' flies into a RAGE!'; haptic('heavy');
+    after(1.0, enemyMaybeAct); return; }
+  enemyMaybeAct();
+}
+function enemyMaybeAct(){
+  if(B.stun>0){ B.stun--; addStatusFX('stun', eneX(), gy()-70); B.msg=B.name+' is stunned and cannot move!';
+    after(0.9, afterEnemy); return; }
   enemyAct();
 }
 function enemyAct(){
   var casts = B.spell && Math.random()<0.5;
   B.msg=B.name+(casts?' chants a dark spell!':' attacks!');
+  var g2 = B.guard?0.5:1;   // Defend halves this hit
   if(casts){
     after(0.3,function(){ playFX(B.spell, heroX(), gy()-70, 1.0); doShake(10,0.3); B.flashH=0.35; heroPose('hit'); haptic('heavy');
-      var d=dmg(B.atk*1.3, player.def, 0.2); if(player.invuln>0)d=0; player.hp=clamp(player.hp-d,0,player.hpMax);
-      floatText(heroX(),gy()-100,'-'+d,'#ff8a3c'); emit(heroX(),gy()-70,14,{col:'#ff8a3c',sp0:40,sp1:150}); });
+      var d=Math.round(dmg(B.atk*1.3, player.def, 0.2)*g2); if(player.invuln>0)d=0; player.hp=clamp(player.hp-d,0,player.hpMax);
+      floatText(heroX(),gy()-100,(g2<1?'blocked -':'-')+d,'#ff8a3c'); emit(heroX(),gy()-70,14,{col:'#ff8a3c',sp0:40,sp1:150}); });
     after(1.0, afterEnemy);
   } else {
+    if(B.boss && A.mob[B.kind].attack){ B.eneAnim='attack'; B.eneFrame=0; B.eneT=0; }
     after(0.18,function(){ B.eneDX=-54; });
-    after(0.4,function(){ heroPose('hit'); B.flashH=0.3; doShake(8,0.26); haptic('heavy');
-      var d=dmg(B.atk, player.def, 0.2); if(player.invuln>0)d=0; player.hp=clamp(player.hp-d,0,player.hpMax);
-      floatText(heroX(),gy()-100,'-'+d,'#ff6b6b'); emit(heroX(),gy()-70,12,{col:'#ff6b6b',sp0:40,sp1:130}); });
-    after(0.62,function(){ B.eneDX=0; });
+    after(0.45,function(){ heroPose('hit'); B.flashH=0.3; doShake(B.boss?12:8,0.26); haptic('heavy');
+      var d=Math.round(dmg(B.atk, player.def, 0.2)*g2); if(player.invuln>0)d=0; player.hp=clamp(player.hp-d,0,player.hpMax);
+      floatText(heroX(),gy()-100,(g2<1?'blocked -':'-')+d,'#ff6b6b'); emit(heroX(),gy()-70,12,{col:'#ff6b6b',sp0:40,sp1:130}); });
+    after(0.7,function(){ B.eneDX=0; B.eneAnim=null; });
     after(0.95, afterEnemy);
   }
 }
-function afterEnemy(){ if(player.hp<=0){ heroDies(); return; } backToMenu(); }
+function afterEnemy(){ B.guard=false; if(player.hp<=0){ heroDies(); return; } backToMenu(); }
 function enemyDies(){ if(B.over)return; B.over=true; B.phase='dying'; clearEv(); B.dead=true; B.deathT=0;
   B.msg=B.name+' is slain!'; emit(eneX(),gy()-60,26,{col:'#ffd27a',sp0:40,sp1:170}); haptic('medium');
   var dm=A.mob[B.kind].death; var dur=dm.frames/12;
@@ -554,7 +654,7 @@ function endBattle(won){
   state='overworld'; player.invuln=1.2; B=null; save();
 }
 /* ---------- Battle: input + update ---------- */
-var ROOT=['Fight','Magic','Item','Flee'];
+var ROOT=['Fight','Magic','Defend','Item','Flee'];
 function battleInput(){
   if(!B || B.phase!=='menu')return;
   var list = B.menu==='root'?ROOT : (B.menu==='magic'?SPELLS:ITEMS);
@@ -564,7 +664,8 @@ function battleInput(){
     if(B.menu==='root'){
       if(B.cursor===0) heroAttack();
       else if(B.cursor===1){ B.menu='magic'; B.cursor=0; haptic('sel'); }
-      else if(B.cursor===2){ B.menu='item'; B.cursor=0; haptic('sel'); }
+      else if(B.cursor===2) heroDefend();
+      else if(B.cursor===3){ B.menu='item'; B.cursor=0; haptic('sel'); }
       else heroFlee();
     } else if(B.menu==='magic'){ heroMagic(B.cursor); }
     else heroItem(B.cursor);
@@ -584,9 +685,11 @@ function battleUpdate(dt){
     if(B.heroAnim==='idle') B.heroFrame=(B.heroFrame+1)%hd.frames;
     else if(B.heroFrame<hd.frames-1) B.heroFrame++; }
   if(B.dead) B.deathT+=dt;
+  // enemy attack-animation advance (bosses only)
+  if(B.eneAnim){ var ea=A.mob[B.kind][B.eneAnim]; if(ea){ B.eneT+=dt; if(B.eneT>=1/12){ B.eneT=0; if(B.eneFrame<ea.frames-1) B.eneFrame++; } } }
   if(B.flashE>0)B.flashE-=dt; if(B.flashH>0)B.flashH-=dt;
   if(player.invuln>0)player.invuln-=dt;
-  updFX(dt); updPP(dt); updFloats(dt);
+  updFX(dt); updStatusFX(dt); updPP(dt); updFloats(dt);
   battleInput();
 }
 /* ---------- Battle: render ---------- */
@@ -614,10 +717,16 @@ function battleDraw(sh){
   if(B.dead){ var dm=mdef.death, dfi=Math.min(dm.frames-1,Math.floor(B.deathT*12)), dsc=118/dm.fh;
     if(B.deathT < dm.frames/12 + 0.4) drawFrame(images['mob_'+B.kind+'_death'], dm.fw,dm.fh, dfi, ex, g, dsc, true);
   } else {
-    var im=mdef.idle, ifi=Math.floor(B.eneBob*6)%im.frames, isc=108/im.fh, bob=Math.sin(B.eneBob*3)*3;
-    drawFrame(images['mob_'+B.kind+'_idle'], im.fw,im.fh, ifi, ex, g-bob, isc, true);
-    if(B.flashE>0){ ctx.globalCompositeOperation='lighter'; ctx.globalAlpha=clamp(B.flashE*2.5,0,0.9);
+    var im=mdef.idle, isc=108/im.fh, bob=Math.sin(B.eneBob*3)*3;
+    if(B.eneAnim && mdef[B.eneAnim]){ var am=mdef[B.eneAnim], afi=Math.min(am.frames-1,B.eneFrame), asc=108/am.fh;
+      drawFrame(images['mob_'+B.kind+'_'+B.eneAnim], am.fw,am.fh, afi, ex, g-bob, asc, true);
+    } else {
+      var ifi=Math.floor(B.eneBob*6)%im.frames;
       drawFrame(images['mob_'+B.kind+'_idle'], im.fw,im.fh, ifi, ex, g-bob, isc, true);
+    }
+    if(B.flashE>0){ ctx.globalCompositeOperation='lighter'; ctx.globalAlpha=clamp(B.flashE*2.5,0,0.9);
+      var ffi=Math.floor(B.eneBob*6)%im.frames;
+      drawFrame(images['mob_'+B.kind+'_idle'], im.fw,im.fh, ffi, ex, g-bob, isc, true);
       ctx.globalAlpha=1; ctx.globalCompositeOperation='source-over'; }
   }
   // hero (faces right toward enemy)
@@ -627,6 +736,11 @@ function battleDraw(sh){
     drawFrame(images['hero_'+B.heroAnim+'_side'], hdef.fw,hdef.fh, Math.min(B.heroFrame,hdef.frames-1), hx, g, 1.7, false);
     ctx.globalAlpha=1; ctx.globalCompositeOperation='source-over'; }
   drawFXAll(0,0); drawPP(0,0); drawFloats(0,0);
+  // persistent status badges above the combatants + transient status bursts
+  var es=[]; if(B.bleedE>0)es.push('bleed'); if(B.burnE>0)es.push('burn'); if(B.poisonE>0)es.push('poison'); if(B.stun>0)es.push('stun'); if(B.enraged&&B.hp>0)es.push('rage');
+  if(!B.dead) drawStatusRow(es, ex, g-124);
+  if(B.guard) drawStatusRow(['shield'], hx, g-110);
+  drawStatusFX(0,0);
   ctx.restore();
 
   // enemy nameplate + HP
@@ -634,7 +748,6 @@ function battleDraw(sh){
   ctx.strokeStyle='rgba(224,120,90,.5)'; ctx.lineWidth=1.5; ctx.stroke();
   ctx.fillStyle='#f3e9d2'; ctx.font='bold 14px Trebuchet MS'; ctx.textAlign='center';
   ctx.fillText(B.name, VW/2, 30); ctx.textAlign='left'; bar(VW/2-112,34,224,8,Math.max(0,B.hp),B.hpMax,'#d2443a');
-  if(B.poisonE>0){ ctx.fillStyle='#8fe36b'; ctx.font='10px Trebuchet MS'; ctx.textAlign='center'; ctx.fillText('POISON '+B.poisonE, VW/2, 48); ctx.textAlign='left'; }
   battleUI();
 }
 /* ---------- Battle UI (message + stats + command window) ---------- */
@@ -708,6 +821,136 @@ function gameoverDraw(){
   ctx.textAlign='left';
 }
 
+/* ============================================================
+   BUILDING INTERIORS  (enterable rooms + keepers + services)
+   ============================================================ */
+var INTERIORS={
+  tavern:  {title:'The Ember Tavern',  floor:'#5a3b26', wall:'#3a2416', accent:'#e0a35a', keeper:'tavern', keeperName:'Brida the Keep',
+            lines:['Rest easy, Vanguard \u2014 your wounds are mended.','A warm hearth and a full tankard, free for our champion.','Come back weary and I\u2019ll patch you up again.'], heal:true},
+  castle:  {title:'The Throne Hall',   floor:'#3b4a66', wall:'#222c42', accent:'#9fb6e0', keeper:'knight', keeperName:'King Aldric',
+            lines:['Rise, Vanguard. The realm leans upon your blade.','Grimspire\u2019s demons grow bold \u2014 fell their Warchief and the beasts beyond.','My healers have restored your strength. Go bravely.'], heal:true},
+  barracks:{title:'The War Hall',      floor:'#43402f', wall:'#2a271c', accent:'#d0b45a', keeper:'knight', keeperName:'Drillmaster Doran',
+            lines:['Steel is earned in sweat, soldier.','In battle, Defend to brace \u2014 then punish with a counter.','Dismissed. Back to the field with you.'], heal:false},
+  temple:  {title:'Monastery of Dawn', floor:'#4a4660', wall:'#2c2940', accent:'#cbb9ff', keeper:'wizard', keeperName:'Sage Morwen',
+            lines:['The light flows through you once more.','Thunder bites hardest against the undead; flame against the fiend.','Go in peace, child of the ember.'], heal:true},
+  tower:   {title:'The Watchtower',    floor:'#3a4238', wall:'#242a22', accent:'#9fd4a0', keeper:'rogue',  keeperName:'The Watchman',
+            lines:['From here I see the whole vale.','Dark banners mass to the north-east \u2014 Grimspire stirs.','Keep your blade close on the roads.'], heal:false},
+  home:    {title:'A Humble Dwelling', floor:'#4e3b2a', wall:'#30241a', accent:'#c9a06a', keeper:'peasant',keeperName:'Villager',
+            lines:['Welcome, friend. Mind the dust.','We pray for your victory each dawn.','Safe travels out there.'], heal:false}
+};
+var INT=null;
+function enterInterior(b){
+  var cfg=INTERIORS[b.enter]||INTERIORS.home;
+  INT={cfg:cfg, name:b.name, idx:0, dlg:false, t:0, bx:b.wx, by:b.wy};
+  state='interior'; moveTarget=null; haptic('medium');
+  if(cfg.heal){ player.hp=player.hpMax; player.mp=player.mpMax; floatText(VW/2,VH*0.5,'Restored!','#8fe36b'); }
+  save();
+}
+function exitInterior(){
+  if(!INT)return;
+  state='overworld'; player.invuln=0.6;
+  player.wx=INT.bx; player.wy=INT.by+TILE*1.2;   // step out below the door
+  player.dir='down'; player.anim='idle'; moveTarget=null;
+  INT=null; haptic('light');
+}
+function interiorUpdate(dt){
+  INT.t+=dt;
+  var cfg=INT.cfg;
+  if(consume('a')){ if(!INT.dlg){ INT.dlg=true; INT.idx=0; } else { INT.idx++; if(INT.idx>=cfg.lines.length) INT.dlg=false; } haptic('sel'); }
+  if(consume('b')) exitInterior();
+  updPP(dt); updFloats(dt);
+}
+function interiorDraw(){
+  var cfg=INT.cfg, fy=VH*0.46;
+  ctx.fillStyle=cfg.wall; ctx.fillRect(0,0,VW,VH);
+  ctx.fillStyle=cfg.floor; ctx.fillRect(0,fy,VW,VH-fy);
+  // floor boards (converging perspective)
+  ctx.strokeStyle='rgba(0,0,0,.18)'; ctx.lineWidth=2;
+  for(var i=1;i<8;i++){ var x=VW*i/8; ctx.beginPath(); ctx.moveTo(x,fy); ctx.lineTo(VW*0.5+(x-VW*0.5)*2.1,VH); ctx.stroke(); }
+  for(var j=1;j<5;j++){ var yy=fy+(VH-fy)*(j/5)*(j/5); ctx.beginPath(); ctx.moveTo(0,yy); ctx.lineTo(VW,yy); ctx.stroke(); }
+  ctx.fillStyle='rgba(0,0,0,.28)'; ctx.fillRect(0,fy-8,VW,8);
+  // wall torches
+  function torch(tx){ var ty=fy*0.52; ctx.fillStyle='#2a1c10'; ctx.fillRect(tx-3,ty,6,34);
+    ctx.globalCompositeOperation='lighter'; var fl=4+Math.sin(INT.t*8+tx)*2;
+    var gr=ctx.createRadialGradient(tx,ty-2,2,tx,ty-2,24); gr.addColorStop(0,'#ffd98a'); gr.addColorStop(1,'rgba(255,140,40,0)');
+    ctx.fillStyle=gr; ctx.beginPath(); ctx.arc(tx,ty-2,20+fl,0,6.283); ctx.fill(); ctx.globalCompositeOperation='source-over'; }
+  torch(VW*0.18); torch(VW*0.82);
+  if(Math.random()<0.5){ emit(VW*0.18, fy*0.52-2, 1, {col:'#ffb86b',sp0:4,sp1:16,ang:-1.57,g:-30,l0:0.6,l1:1.2,r0:1,r1:2});
+    emit(VW*0.82, fy*0.52-2, 1, {col:'#ffb86b',sp0:4,sp1:16,ang:-1.57,g:-30,l0:0.6,l1:1.2,r0:1,r1:2}); }
+  // keeper on the back wall
+  var kx=VW*0.5, ky=fy+14, km=A.npc[cfg.keeper];
+  drawShadow(kx,ky,16);
+  if(imgReady(images['npc_'+cfg.keeper])) drawFrame(images['npc_'+cfg.keeper], km.fw,km.fh, Math.floor(INT.t*4)%km.frames, kx, ky, km.fh>=64?1.6:2.8, false);
+  // hero before the keeper
+  var hm=A.hero.idle.down; drawShadow(VW*0.5, VH*0.78, 15);
+  drawFrame(images['hero_idle_down'], hm.fw,hm.fh, Math.floor(INT.t*5)%hm.frames, VW*0.5, VH*0.78, 1.4, false);
+  // title
+  ctx.textAlign='center'; ctx.fillStyle=cfg.accent; ctx.font='bold 20px Trebuchet MS'; ctx.fillText(INT.name, VW/2, 42);
+  ctx.fillStyle='rgba(243,233,210,.7)'; ctx.font='12px Trebuchet MS'; ctx.fillText(cfg.title, VW/2, 62); ctx.textAlign='left';
+  drawPP(0,0); drawFloats(0,0);
+  // exit banner
+  ctx.fillStyle='rgba(8,14,8,.72)'; roundRect(VW/2-96,VH-150-44,192,32,8); ctx.fill();
+  ctx.strokeStyle='rgba(180,150,90,.6)'; ctx.lineWidth=1.5; ctx.stroke();
+  ctx.fillStyle='#eafbe0'; ctx.font='13px Trebuchet MS'; ctx.textAlign='center';
+  ctx.fillText(INT.dlg?'A \u25b8 continue':'Tap keeper to talk \u00b7 B / tap here to leave', VW/2, VH-150-23); ctx.textAlign='left';
+  if(INT.dlg) drawInteriorDialogue();
+}
+function drawInteriorDialogue(){
+  var h=108, y=VH-h-150, cfg=INT.cfg;
+  ctx.fillStyle='rgba(8,14,8,.9)'; roundRect(12,y,VW-24,h,12); ctx.fill();
+  ctx.strokeStyle='rgba(180,150,90,.8)'; ctx.lineWidth=2.5; ctx.stroke();
+  ctx.fillStyle='#ffd98a'; ctx.font='bold 16px Trebuchet MS'; ctx.fillText(cfg.keeperName, 28, y+28);
+  ctx.fillStyle='#f3e9d2'; ctx.font='15px Trebuchet MS';
+  wrapText(cfg.lines[Math.min(INT.idx,cfg.lines.length-1)]||'', 28, y+54, VW-56, 22, 'left');
+}
+/* ============================================================
+   TOUCH \u2014 tap-to-move / tap-to-act (native mobile controls)
+   ============================================================ */
+function canvasTap(cx,cy){
+  if(state==='title'){ newGame(); return; }
+  if(state==='gameover'){ state='title'; return; }
+  if(state==='interior'){ handleInteriorTap(cx,cy); return; }
+  if(state==='overworld'){ handleOverworldTap(cx,cy); return; }
+  if(state==='battle'){ handleBattleTap(cx,cy); return; }
+}
+function handleOverworldTap(cx,cy){
+  if(dlg.active){ dlg.idx++; if(dlg.idx>=dlg.lines.length) dlg.active=false; haptic('sel'); return; }
+  var wx=cam.x+cx, wy=cam.y+cy;
+  for(var i=0;i<npcs.length;i++){ if(dist(wx,wy,npcs[i].wx,npcs[i].wy)<TILE && dist(player.wx,player.wy,npcs[i].wx,npcs[i].wy)<TILE*2.4){ startDialogue(npcs[i]); return; } }
+  for(i=0;i<buildings.length;i++){ var bb=buildings[i], m=A.build[bb.key], bw=m.w*bb.scale, bh=m.h*bb.scale;
+    if(wx>bb.wx-bw/2 && wx<bb.wx+bw/2 && wy>bb.wy-bh && wy<bb.wy+12){
+      if(dist(player.wx,player.wy,bb.wx,bb.wy+8)<TILE*2.6){ enterInterior(bb); return; }
+    } }
+  moveTarget={x:clamp(wx,TILE,WMAX_X-TILE), y:clamp(wy,TILE,WMAX_Y-TILE)};
+}
+function handleInteriorTap(cx,cy){
+  if(cy>VH-150-50 && cy<VH-150-6){ exitInterior(); return; }
+  var cfg=INT.cfg;
+  if(!INT.dlg){ INT.dlg=true; INT.idx=0; } else { INT.idx++; if(INT.idx>=cfg.lines.length) INT.dlg=false; }
+  haptic('sel');
+}
+function handleBattleTap(cx,cy){
+  if(!B || B.phase!=='menu') return;
+  var by=VH-150-96, py=by+42;
+  var list=B.menu==='root'?ROOT:(B.menu==='magic'?SPELLS:ITEMS);
+  var mx=170, mw=VW-180, mh=90;
+  if(cx>=mx && cx<=mx+mw && cy>=py && cy<=py+mh){
+    var i=Math.floor((cy-(py+6))/20);
+    if(i>=0 && i<list.length){ B.cursor=i; haptic('sel');
+      if(B.menu==='root'){ if(i===0)heroAttack(); else if(i===1){B.menu='magic';B.cursor=0;} else if(i===2)heroDefend(); else if(i===3){B.menu='item';B.cursor=0;} else heroFlee(); }
+      else if(B.menu==='magic') heroMagic(i);
+      else heroItem(i);
+    }
+    return;
+  }
+  if(B.menu!=='root' && cx<162 && cy>=py){ B.menu='root'; B.cursor=0; haptic('light'); }
+}
+(function(){
+  function tapAt(e){ var r=canvas.getBoundingClientRect(); var pt=(e.touches&&e.touches[0])||e;
+    canvasTap(pt.clientX-r.left, pt.clientY-r.top); }
+  canvas.addEventListener('touchstart',function(e){ e.preventDefault(); tapAt(e); },{passive:false});
+  canvas.addEventListener('mousedown',function(e){ tapAt(e); });
+})();
 /* ---------- Main loop ---------- */
 var last=0;
 function frame(ts){
@@ -716,6 +959,7 @@ function frame(ts){
   ctx.clearRect(0,0,VW,VH);
   if(state==='title'){ titleUpdate(dt); titleDraw(); }
   else if(state==='overworld'){ overworldUpdate(dt); overworldDraw(sh); }
+  else if(state==='interior'){ interiorUpdate(dt); interiorDraw(); }
   else if(state==='battle'){ battleUpdate(dt); if(B) battleDraw(sh); }
   else if(state==='gameover'){ gameoverUpdate(dt); gameoverDraw(); }
   pressed.a=false; pressed.b=false;

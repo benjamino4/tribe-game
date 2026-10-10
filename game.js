@@ -42,7 +42,7 @@ window.addEventListener('resize',resize);
 if(TG&&TG.onEvent){ try{TG.onEvent('viewportChanged',resize);}catch(e){} }
 resize();
 /* ---------- Asset manifest (baked from processed packs) ---------- */
-var A={"hero":{"idle":{"down":{"file":"assets2/hero/idle_down.png","frames":4,"fw":64,"fh":64},"up":{"file":"assets2/hero/idle_up.png","frames":4,"fw":64,"fh":64},"side":{"file":"assets2/hero/idle_side.png","frames":4,"fw":64,"fh":64}},"walk":{"down":{"file":"assets2/hero/walk_down.png","frames":6,"fw":64,"fh":64},"up":{"file":"assets2/hero/walk_up.png","frames":6,"fw":64,"fh":64},"side":{"file":"assets2/hero/walk_side.png","frames":6,"fw":64,"fh":64}},"run":{"down":{"file":"assets2/hero/run_down.png","frames":6,"fw":64,"fh":64},"up":{"file":"assets2/hero/run_up.png","frames":6,"fw":64,"fh":64},"side":{"file":"assets2/hero/run_side.png","frames":6,"fw":64,"fh":64}},"slice":{"down":{"file":"assets2/hero/slice_down.png","frames":8,"fw":64,"fh":64},"up":{"file":"assets2/hero/slice_up.png","frames":8,"fw":64,"fh":64},"side":{"file":"assets2/hero/slice_side.png","frames":8,"fw":64,"fh":64}},"hit":{"down":{"file":"assets2/hero/hit_down.png","frames":4,"fw":64,"fh":64},"up":{"file":"assets2/hero/hit_up.png","frames":4,"fw":64,"fh":64},"side":{"file":"assets2/hero/hit_side.png","frames":4,"fw":64,"fh":64}},"death":{"down":{"file":"assets2/hero/death_down.png","frames":8,"fw":64,"fh":64},"up":{"file":"assets2/hero/death_up.png","frames":8,"fw":64,"fh":64},"side":{"file":"assets2/hero/death_side.png","frames":8,"fw":64,"fh":64}}},"npc":{"peasant":{"file":"assets2/npc/peasant.png","frames":4,"fw":64,"fh":64},"tavern":{"file":"assets2/npc/tavern.png","frames":4,"fw":64,"fh":64},"knight":{"file":"assets2/npc/knight.png","frames":4,"fw":32,"fh":32},"wizard":{"file":"assets2/npc/wizard.png","frames":4,"fw":32,"fh":32},"rogue":{"file":"assets2/npc/rogue.png","frames":4,"fw":32,"fh":32}},"mob":{"skel_base":{"idle":{"file":"assets2/mob/skel_base_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/skel_base_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/skel_base_death.png","frames":12,"fw":64,"fh":64}},"skel_warrior":{"idle":{"file":"assets2/mob/skel_warrior_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/skel_warrior_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/skel_warrior_death.png","frames":8,"fw":48,"fh":48}},"skel_mage":{"idle":{"file":"assets2/mob/skel_mage_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/skel_mage_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/skel_mage_death.png","frames":6,"fw":64,"fh":64}},"skel_rogue":{"idle":{"file":"assets2/mob/skel_rogue_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/skel_rogue_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/skel_rogue_death.png","frames":6,"fw":64,"fh":64}},"orc":{"idle":{"file":"assets2/mob/orc_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/orc_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/orc_death.png","frames":6,"fw":64,"fh":64}},"orc_warrior":{"idle":{"file":"assets2/mob/orc_warrior_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/orc_warrior_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/orc_warrior_death.png","frames":7,"fw":82,"fh":80}},"orc_shaman":{"idle":{"file":"assets2/mob/orc_shaman_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/orc_shaman_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/orc_shaman_death.png","frames":7,"fw":64,"fh":64}},"orc_rogue":{"idle":{"file":"assets2/mob/orc_rogue_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/orc_rogue_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/orc_rogue_death.png","frames":6,"fw":64,"fh":64}},"demon":{"idle":{"file":"assets2/mob/demon_idle.png","frames":6,"fw":100,"fh":100},"run":{"file":"assets2/mob/demon_run.png","frames":8,"fw":100,"fh":100},"attack":{"file":"assets2/mob/demon_attack.png","frames":7,"fw":100,"fh":100},"death":{"file":"assets2/mob/demon_death.png","frames":4,"fw":100,"fh":100},"hurt":{"file":"assets2/mob/demon_hurt.png","frames":4,"fw":100,"fh":100}},"blood":{"idle":{"file":"assets2/mob/blood_idle.png","frames":6,"fw":100,"fh":100},"run":{"file":"assets2/mob/blood_run.png","frames":8,"fw":100,"fh":100},"attack":{"file":"assets2/mob/blood_attack.png","frames":8,"fw":100,"fh":100},"death":{"file":"assets2/mob/blood_death.png","frames":4,"fw":100,"fh":100},"hurt":{"file":"assets2/mob/blood_hurt.png","frames":4,"fw":100,"fh":100}}},"build":{"blue_castle":{"file":"assets2/build/blue_castle.png","w":320,"h":256},"blue_tower":{"file":"assets2/build/blue_tower.png","w":128,"h":256},"blue_house1":{"file":"assets2/build/blue_house1.png","w":128,"h":192},"blue_house2":{"file":"assets2/build/blue_house2.png","w":128,"h":192},"blue_house3":{"file":"assets2/build/blue_house3.png","w":128,"h":192},"blue_monastery":{"file":"assets2/build/blue_monastery.png","w":192,"h":320},"blue_barracks":{"file":"assets2/build/blue_barracks.png","w":192,"h":256},"blue_archery":{"file":"assets2/build/blue_archery.png","w":192,"h":256},"red_castle":{"file":"assets2/build/red_castle.png","w":320,"h":256},"red_tower":{"file":"assets2/build/red_tower.png","w":128,"h":256},"red_house1":{"file":"assets2/build/red_house1.png","w":128,"h":192},"red_house2":{"file":"assets2/build/red_house2.png","w":128,"h":192},"red_house3":{"file":"assets2/build/red_house3.png","w":128,"h":192},"red_monastery":{"file":"assets2/build/red_monastery.png","w":192,"h":320},"red_barracks":{"file":"assets2/build/red_barracks.png","w":192,"h":256},"red_archery":{"file":"assets2/build/red_archery.png","w":192,"h":256}},"terr":{"grass":{"file":"assets2/terr/grass_set.png","fw":64,"fh":64,"cols":4,"rows":4},"water":{"file":"assets2/terr/water.png","w":64,"h":64},"foam":{"file":"assets2/terr/foam.png","frames":16,"fw":192,"fh":192},"water_rock":{"file":"assets2/terr/water_rock.png","frames":16,"fw":64,"fh":64},"tree":{"file":"assets2/terr/tree.png","frames":8,"fw":192,"fh":256},"rock":{"file":"assets2/terr/rock.png","w":64,"h":64},"bush":{"file":"assets2/terr/bush.png","frames":8,"fw":128,"fh":128}},"spell":{"fire":{"file":"assets2/spell/fire.png","frames":13,"fw":128,"fh":128},"heal":{"file":"assets2/spell/heal.png","frames":16,"fw":128,"fh":128},"poison":{"file":"assets2/spell/poison.png","frames":17,"fw":128,"fh":128},"lightning":{"file":"assets2/spell/lightning.png","frames":7,"fw":128,"fh":128},"slash":{"file":"assets2/spell/slash.png","frames":7,"fw":96,"fh":96}},"status":{"bleed":{"file":"assets2/status/bleed.png","frames":16,"fw":64,"fh":64},"burn":{"file":"assets2/status/burn.png","frames":16,"fw":64,"fh":64},"poison":{"file":"assets2/status/poison.png","frames":16,"fw":64,"fh":64},"shock":{"file":"assets2/status/shock.png","frames":16,"fw":64,"fh":64},"heal":{"file":"assets2/status/heal.png","frames":16,"fw":64,"fh":64},"shield":{"file":"assets2/status/shield.png","frames":16,"fw":64,"fh":64},"stun":{"file":"assets2/status/stun.png","frames":16,"fw":64,"fh":64},"rage":{"file":"assets2/status/rage.png","frames":16,"fw":64,"fh":64},"regen":{"file":"assets2/status/regen.png","frames":16,"fw":64,"fh":64}}};
+var A={"hero":{"idle":{"down":{"file":"assets2/hero/idle_down.png","frames":4,"fw":64,"fh":64},"up":{"file":"assets2/hero/idle_up.png","frames":4,"fw":64,"fh":64},"side":{"file":"assets2/hero/idle_side.png","frames":4,"fw":64,"fh":64}},"walk":{"down":{"file":"assets2/hero/walk_down.png","frames":6,"fw":64,"fh":64},"up":{"file":"assets2/hero/walk_up.png","frames":6,"fw":64,"fh":64},"side":{"file":"assets2/hero/walk_side.png","frames":6,"fw":64,"fh":64}},"run":{"down":{"file":"assets2/hero/run_down.png","frames":6,"fw":64,"fh":64},"up":{"file":"assets2/hero/run_up.png","frames":6,"fw":64,"fh":64},"side":{"file":"assets2/hero/run_side.png","frames":6,"fw":64,"fh":64}},"slice":{"down":{"file":"assets2/hero/slice_down.png","frames":8,"fw":64,"fh":64},"up":{"file":"assets2/hero/slice_up.png","frames":8,"fw":64,"fh":64},"side":{"file":"assets2/hero/slice_side.png","frames":8,"fw":64,"fh":64}},"hit":{"down":{"file":"assets2/hero/hit_down.png","frames":4,"fw":64,"fh":64},"up":{"file":"assets2/hero/hit_up.png","frames":4,"fw":64,"fh":64},"side":{"file":"assets2/hero/hit_side.png","frames":4,"fw":64,"fh":64}},"death":{"down":{"file":"assets2/hero/death_down.png","frames":8,"fw":64,"fh":64},"up":{"file":"assets2/hero/death_up.png","frames":8,"fw":64,"fh":64},"side":{"file":"assets2/hero/death_side.png","frames":8,"fw":64,"fh":64}}},"npc":{"peasant":{"file":"assets2/npc/peasant.png","frames":4,"fw":64,"fh":64},"tavern":{"file":"assets2/npc/tavern.png","frames":4,"fw":64,"fh":64},"knight":{"file":"assets2/npc/knight.png","frames":4,"fw":32,"fh":32},"wizard":{"file":"assets2/npc/wizard.png","frames":4,"fw":32,"fh":32},"rogue":{"file":"assets2/npc/rogue.png","frames":4,"fw":32,"fh":32}},"mob":{"skel_base":{"idle":{"file":"assets2/mob/skel_base_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/skel_base_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/skel_base_death.png","frames":12,"fw":64,"fh":64}},"skel_warrior":{"idle":{"file":"assets2/mob/skel_warrior_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/skel_warrior_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/skel_warrior_death.png","frames":8,"fw":48,"fh":48}},"skel_mage":{"idle":{"file":"assets2/mob/skel_mage_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/skel_mage_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/skel_mage_death.png","frames":6,"fw":64,"fh":64}},"skel_rogue":{"idle":{"file":"assets2/mob/skel_rogue_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/skel_rogue_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/skel_rogue_death.png","frames":6,"fw":64,"fh":64}},"orc":{"idle":{"file":"assets2/mob/orc_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/orc_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/orc_death.png","frames":6,"fw":64,"fh":64}},"orc_warrior":{"idle":{"file":"assets2/mob/orc_warrior_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/orc_warrior_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/orc_warrior_death.png","frames":7,"fw":82,"fh":80}},"orc_shaman":{"idle":{"file":"assets2/mob/orc_shaman_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/orc_shaman_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/orc_shaman_death.png","frames":7,"fw":64,"fh":64}},"orc_rogue":{"idle":{"file":"assets2/mob/orc_rogue_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/orc_rogue_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/orc_rogue_death.png","frames":6,"fw":64,"fh":64}},"demon":{"idle":{"file":"assets2/mob/demon_idle.png","frames":6,"fw":100,"fh":100},"run":{"file":"assets2/mob/demon_run.png","frames":8,"fw":100,"fh":100},"attack":{"file":"assets2/mob/demon_attack.png","frames":7,"fw":100,"fh":100},"death":{"file":"assets2/mob/demon_death.png","frames":4,"fw":100,"fh":100},"hurt":{"file":"assets2/mob/demon_hurt.png","frames":4,"fw":100,"fh":100}},"blood":{"idle":{"file":"assets2/mob/blood_idle.png","frames":6,"fw":100,"fh":100},"run":{"file":"assets2/mob/blood_run.png","frames":8,"fw":100,"fh":100},"attack":{"file":"assets2/mob/blood_attack.png","frames":8,"fw":100,"fh":100},"death":{"file":"assets2/mob/blood_death.png","frames":4,"fw":100,"fh":100},"hurt":{"file":"assets2/mob/blood_hurt.png","frames":4,"fw":100,"fh":100}}},"build":{"blue_castle":{"file":"assets2/build/blue_castle.png","w":320,"h":256},"blue_tower":{"file":"assets2/build/blue_tower.png","w":128,"h":256},"blue_house1":{"file":"assets2/build/blue_house1.png","w":128,"h":192},"blue_house2":{"file":"assets2/build/blue_house2.png","w":128,"h":192},"blue_house3":{"file":"assets2/build/blue_house3.png","w":128,"h":192},"blue_monastery":{"file":"assets2/build/blue_monastery.png","w":192,"h":320},"blue_barracks":{"file":"assets2/build/blue_barracks.png","w":192,"h":256},"blue_archery":{"file":"assets2/build/blue_archery.png","w":192,"h":256},"red_castle":{"file":"assets2/build/red_castle.png","w":320,"h":256},"red_tower":{"file":"assets2/build/red_tower.png","w":128,"h":256},"red_house1":{"file":"assets2/build/red_house1.png","w":128,"h":192},"red_house2":{"file":"assets2/build/red_house2.png","w":128,"h":192},"red_house3":{"file":"assets2/build/red_house3.png","w":128,"h":192},"red_monastery":{"file":"assets2/build/red_monastery.png","w":192,"h":320},"red_barracks":{"file":"assets2/build/red_barracks.png","w":192,"h":256},"red_archery":{"file":"assets2/build/red_archery.png","w":192,"h":256}},"terr":{"grass":{"file":"assets2/terr/grass_set.png","fw":64,"fh":64,"cols":4,"rows":4},"water":{"file":"assets2/terr/water.png","w":64,"h":64},"foam":{"file":"assets2/terr/foam.png","frames":16,"fw":192,"fh":192},"water_rock":{"file":"assets2/terr/water_rock.png","frames":16,"fw":64,"fh":64},"tree":{"file":"assets2/terr/tree.png","frames":8,"fw":192,"fh":256},"rock":{"file":"assets2/terr/rock.png","w":64,"h":64},"bush":{"file":"assets2/terr/bush.png","frames":8,"fw":128,"fh":128},"cobble":{"file":"assets2/terr/cobble.png","w":64,"h":64},"cobble2":{"file":"assets2/terr/cobble2.png","w":64,"h":64},"dirt":{"file":"assets2/terr/dirt.png","w":64,"h":64},"sand":{"file":"assets2/terr/sand.png","w":64,"h":64},"scorch":{"file":"assets2/terr/scorch.png","w":64,"h":64},"flower1":{"file":"assets2/terr/flower1.png","w":43,"h":54},"flower2":{"file":"assets2/terr/flower2.png","w":23,"h":21},"tuft1":{"file":"assets2/terr/tuft1.png","w":17,"h":40},"tuft2":{"file":"assets2/terr/tuft2.png","w":21,"h":40},"pebble":{"file":"assets2/terr/pebble.png","w":10,"h":9}},"spell":{"fire":{"file":"assets2/spell/fire.png","frames":13,"fw":128,"fh":128},"heal":{"file":"assets2/spell/heal.png","frames":16,"fw":128,"fh":128},"poison":{"file":"assets2/spell/poison.png","frames":17,"fw":128,"fh":128},"lightning":{"file":"assets2/spell/lightning.png","frames":7,"fw":128,"fh":128},"slash":{"file":"assets2/spell/slash.png","frames":7,"fw":96,"fh":96},"smite":{"file":"assets2/spell/smite.png","frames":16,"fw":144,"fh":144},"curse":{"file":"assets2/spell/curse.png","frames":22,"fw":64,"fh":64},"ward":{"file":"assets2/spell/ward.png","frames":18,"fw":128,"fh":128},"fury":{"file":"assets2/spell/fury.png","frames":18,"fw":128,"fh":128},"haste":{"file":"assets2/spell/haste.png","frames":22,"fw":128,"fh":128}},"status":{"bleed":{"file":"assets2/status/bleed.png","frames":16,"fw":64,"fh":64},"burn":{"file":"assets2/status/burn.png","frames":16,"fw":64,"fh":64},"poison":{"file":"assets2/status/poison.png","frames":16,"fw":64,"fh":64},"shock":{"file":"assets2/status/shock.png","frames":16,"fw":64,"fh":64},"heal":{"file":"assets2/status/heal.png","frames":16,"fw":64,"fh":64},"shield":{"file":"assets2/status/shield.png","frames":16,"fw":64,"fh":64},"stun":{"file":"assets2/status/stun.png","frames":16,"fw":64,"fh":64},"rage":{"file":"assets2/status/rage.png","frames":16,"fw":64,"fh":64},"regen":{"file":"assets2/status/regen.png","frames":16,"fw":64,"fh":64}},"prop":{"tent":{"file":"assets2/prop/tent.png","w":73,"h":65},"tent2":{"file":"assets2/prop/tent2.png","w":65,"h":62},"crate":{"file":"assets2/prop/crate.png","w":20,"h":22},"barrel":{"file":"assets2/prop/barrel.png","w":18,"h":25},"house_s":{"file":"assets2/prop/house_s.png","w":116,"h":112},"house_m":{"file":"assets2/prop/house_m.png","w":156,"h":135},"bigdecor":{"file":"assets2/prop/bigdecor.png","w":48,"h":26},"fence":{"file":"assets2/prop/fence.png","w":63,"h":64}},"critter":{"cat":{"file":"assets2/critter/cat.png","frames":6,"fw":96,"fh":96}},"ui":{"frame":{"file":"assets2/ui/frame.png","w":48,"h":48,"corner":16}}};
 /*__MANIFEST_END__*/
 /* ---------- Image loader (progress + watchdog) ---------- */
 var images={}; var toLoad=0, loaded=0, failed=[];
@@ -60,6 +60,7 @@ function walk(obj,prefix){
 function loadAll(cb){
   walk(A.hero,'hero'); walk(A.npc,'npc'); walk(A.mob,'mob');
   walk(A.build,'build'); walk(A.terr,'terr'); walk(A.spell,'spell'); walk(A.status,'status');
+  walk(A.prop,'prop'); walk(A.critter,'critter'); walk(A.ui,'ui');
   var waited=0, MAXW=12000;
   (function wait(){
     setLoadMsg('Mustering the tribe\u2026 '+loaded+'/'+toLoad);
@@ -200,7 +201,10 @@ var MOB={
 var SPELLS=[
   {name:'Firaga',  mp:6,  fx:'fire',     col:'#ff8a3c', pow:1.6, kind:'atk', desc:'Hurl a burst of flame.'},
   {name:'Thundara',mp:8,  fx:'lightning',col:'#c9a6ff', pow:1.9, kind:'atk', desc:'Call down lightning.'},
+  {name:'Smite',   mp:7,  fx:'smite',    col:'#ffe9a0', pow:1.7, kind:'atk', desc:'Searing light \u2014 scourge of the undead.'},
+  {name:'Curse',   mp:6,  fx:'curse',    col:'#c86bd6', pow:1.2, kind:'curse', desc:'A withering hex that bleeds the foe.'},
   {name:'Venom',   mp:5,  fx:'poison',   col:'#8fe36b', pow:1.1, kind:'poison', desc:'Poison the foe over time.'},
+  {name:'Ward',    mp:5,  fx:'ward',     col:'#9fd4ff', pow:0,   kind:'ward', desc:'Raise a shield that blunts the next blow.'},
   {name:'Cura',    mp:7,  fx:'heal',     col:'#ffe08a', pow:0,   kind:'heal', desc:'Restore your health.'}
 ];
 var ITEMS=[
@@ -216,6 +220,10 @@ var roamers=[];     // {kind,wx,wy,name,t,frame,vx,vy,dir,cool,hp}
 var towns=[];       // {name,wx,wy}
 var lake={x0:18,y0:20,x1:24,y1:26};
 var solids=[];      // collision rects {x,y,w,h}
+var props=[];       // {kind,wx,wy,scale}  village props (tents/houses/crates/fences)
+var critters=[];    // {wx,wy,t,frame,vx,vy,dir,hx,hy}  ambient animals
+var biomeGrid=null; // Uint8Array MW*MH : 0 meadow 1 forest 2 farm 3 sand 4 scorch 5 cobble
+var roadSet=null;   // Uint8Array MW*MH : 1 = dirt road tile
 
 function addBuild(key,tx,ty,name,town){
   var m=A.build[key]; var wx=tx*TILE+TILE/2, wy=ty*TILE+TILE;
@@ -248,9 +256,55 @@ function addRoamer(kind,tx,ty){
   roamers.push({kind:kind,wx:tx*TILE+TILE/2,wy:ty*TILE+TILE/2,name:MOB[kind].name,
     t:rand(0,4),frame:0,vx:0,vy:0,dir:1,cool:0});
 }
+function addProp(kind,tx,ty,solid,sc){
+  var m=A.prop[kind]; if(!m)return; sc=sc||0.6;
+  var wx=tx*TILE+TILE/2, wy=ty*TILE+TILE;
+  props.push({kind:kind,wx:wx,wy:wy,scale:sc});
+  if(solid){ var bw=m.w*sc*0.7; solids.push({x:wx-bw/2,y:wy-14,w:bw,h:16}); }
+}
+function addCritter(tx,ty){
+  critters.push({wx:tx*TILE+TILE/2,wy:ty*TILE+TILE/2,t:rand(0,3),frame:0,
+    vx:0,vy:0,dir:1,hx:tx*TILE+TILE/2,hy:ty*TILE+TILE/2,wt:rand(0,2)});
+}
+// deterministic 2D hash -> uint32
+function hash2(x,y){ var h=((x|0)*73856093)^((y|0)*19349663); h^=h>>>13; return h>>>0; }
+function nearestTownDist(tx,ty){ var best=1e9; for(var i=0;i<towns.length;i++){
+  var d=Math.hypot(tx-towns[i].wx/TILE, ty-towns[i].wy/TILE); if(d<best)best=d; } return best; }
+function waterWithin(tx,ty,rad){ for(var dy=-rad;dy<=rad;dy++)for(var dx=-rad;dx<=rad;dx++){
+  if(isWaterTile(tx+dx,ty+dy)) return true; } return false; }
+function buildBiomes(){
+  biomeGrid=new Uint8Array(MW*MH); roadSet=new Uint8Array(MW*MH);
+  var grim=[34,8];                 // Grimspire -> scorched earth
+  var farmC=[[8,34],[9,33]];        // Mirefen hamlet -> tilled farmland
+  var forestC=[[20,6],[26,14],[6,20],[14,30],[24,36],[38,20],[16,16]];
+  for(var ty=0;ty<MH;ty++)for(var tx=0;tx<MW;tx++){
+    var idx=ty*MW+tx; if(isWaterTile(tx,ty)){ biomeGrid[idx]=0; continue; }
+    var hs=hash2(tx,ty), b=0;
+    // meadow with hashed forest/meadow blending for organic patches
+    var dG=Math.hypot(tx-grim[0],ty-grim[1]);
+    var dT=nearestTownDist(tx,ty);
+    var inForest=false; for(var f=0;f<forestC.length;f++){ if(Math.hypot(tx-forestC[f][0],ty-forestC[f][1])< (3.2+ (hs%100)/60)) { inForest=true; break; } }
+    var inFarm=false; for(var fa=0;fa<farmC.length;fa++){ if(Math.hypot(tx-farmC[fa][0],ty-farmC[fa][1])<4.5){ inFarm=true; break; } }
+    if(dT<2.1) b=5;                       // town plaza cobble
+    else if(dG<6.5+ (hs%100)/50) b=4;     // scorched ring around Grimspire
+    else if(waterWithin(tx,ty,2)) b=3;    // sandy shore
+    else if(inFarm) b=2;                  // farmland
+    else if(inForest) b=1;                // deep forest grass
+    else b=0;                             // meadow
+    biomeGrid[idx]=b;
+  }
+  // carve dirt roads between hubs (simple sampled segments, width 1)
+  function road(ax,ay,bx,by){ var steps=Math.ceil(Math.hypot(bx-ax,by-ay)*1.3);
+    for(var i=0;i<=steps;i++){ var t=i/steps, x=Math.round(ax+(bx-ax)*t), y=Math.round(ay+(by-ay)*t);
+      for(var oy=0;oy<=1;oy++){ var xx=x, yy=y+oy; if(xx>0&&yy>0&&xx<MW-1&&yy<MH-1&&!isWaterTile(xx,yy)) roadSet[yy*MW+xx]=1; } } }
+  road(10,8, 34,8);     // Emberhold -> Grimspire
+  road(10,8, 33,32);    // Emberhold -> Ravenmoor
+  road(10,8, 8,34);     // Emberhold -> Mirefen
+  road(33,32, 16,27);   // Ravenmoor -> Dunewatch
+}
 
 function genWorld(){
-  buildings=[]; npcs=[]; deco=[]; roamers=[]; towns=[]; solids=[];
+  buildings=[]; npcs=[]; deco=[]; roamers=[]; towns=[]; solids=[]; props=[]; critters=[];
   // ---- Emberhold (friendly capital, NW) ----
   towns.push({name:'Emberhold',wx:10*TILE,wy:7*TILE});
   addBuild('blue_castle',10,8,'Emberhold Castle','Emberhold');
@@ -275,12 +329,31 @@ function genWorld(){
   addBuild('red_castle',34,8,'Grimspire Keep','Grimspire');
   addBuild('red_tower',30,7,'Blood Tower','Grimspire');
   addBuild('red_barracks',38,10,'War Pit','Grimspire');
+  // ---- Mirefen Hamlet (farming village, SW) ----
+  towns.push({name:'Mirefen Hamlet',wx:8*TILE,wy:34*TILE});
+  addProp('house_m',8,33,true,0.6); addProp('house_s',11,35,true,0.6);
+  addProp('tent',6,36,true,0.7); addProp('tent2',10,37,true,0.7);
+  addProp('fence',6,34,false,0.6); addProp('fence',7,34,false,0.6); addProp('fence',8,35,false,0.6);
+  addProp('crate',9,36,false,0.8); addProp('barrel',10,35,false,0.8); addProp('bigdecor',7,37,false,0.7);
+  addNPC('tavern',7,34,'Innkeep Odo',['Rest your boots, traveller \u2014 the hearth is warm.','Step close and press A and I\u2019ll mend you, free of charge.','The orcs burned our east field. Avenge it, aye?']);
+  addNPC('peasant',9,35,'Goodwife Mara',['We farm what the raiders leave us.','Mind the roads at dusk \u2014 skeletons walk them.']);
+  addCritter(9,36); addCritter(7,35);
+  // ---- Dunewatch (coastal outpost by the lake, S) ----
+  towns.push({name:'Dunewatch',wx:16*TILE,wy:27*TILE});
+  addProp('tent',15,27,true,0.7); addProp('house_s',18,28,true,0.55);
+  addProp('barrel',17,27,false,0.8); addProp('crate',14,28,false,0.8);
+  addNPC('rogue',16,28,'Fisher Cael',['The lake gives, when the drowned things sleep.','Shore stones hide coin \u2014 and worse.']);
+  addCritter(17,28);
   /*__DECO__*/
+  buildBiomes();   // compute biome map + dirt roads first so scatter avoids them
   // scatter trees (forests), rocks, bushes avoiding towns/lake
   function far(tx,ty){
     if(tx<2||ty<2||tx>MW-2||ty>MH-2) return false;
     if(tx>=lake.x0-1&&tx<=lake.x1+1&&ty>=lake.y0-1&&ty<=lake.y1+1) return false;
+    if(roadSet && roadSet[ty*MW+tx]) return false;
+    for(var ci=0;ci<towns.length;ci++){ if(dist(tx*TILE,ty*TILE,towns[ci].wx,towns[ci].wy)<TILE*4.5) return false; }
     for(var i=0;i<buildings.length;i++){ if(dist(tx*TILE,ty*TILE,buildings[i].wx,buildings[i].wy)<TILE*3) return false; }
+    for(var pi=0;pi<props.length;pi++){ if(dist(tx*TILE,ty*TILE,props[pi].wx,props[pi].wy)<TILE*2) return false; }
     return true;
   }
   var forests=[[20,6],[26,14],[6,20],[14,30],[24,36],[38,20],[16,16]];
@@ -329,6 +402,15 @@ function startDialogue(npc){
 function overworldUpdate(dt){
   waterT+=dt;
   for(var di=0;di<deco.length;di++){ var _o=deco[di]; if(_o.frames>1){ _o.ft+=dt; if(_o.ft>=0.14){ _o.ft=0; _o.frame=(_o.frame+1)%_o.frames; } } }
+  for(var ci=0;ci<critters.length;ci++){ var ct=critters[ci]; ct.t+=dt; ct.wt-=dt;
+    if(ct.wt<=0){ ct.wt=rand(1.2,3.2); if(Math.random()<0.5){ ct.vx=rand(-26,26); ct.vy=rand(-20,20); } else { ct.vx=0; ct.vy=0; } }
+    // leash the cat to its home tile
+    if(dist(ct.wx,ct.wy,ct.hx,ct.hy)>TILE*2.4){ ct.vx=(ct.hx-ct.wx)*0.6; ct.vy=(ct.hy-ct.wy)*0.6; }
+    var cnx=ct.wx+ct.vx*dt, cny=ct.wy+ct.vy*dt;
+    if(!blocked(cnx,ct.wy)) ct.wx=cnx; else ct.vx*=-1;
+    if(!blocked(ct.wx,cny)) ct.wy=cny; else ct.vy*=-1;
+    if(ct.vx) ct.dir=ct.vx>0?1:-1;
+    var moving=(ct.vx||ct.vy); if(ct.t>=(moving?0.12:0.26)){ ct.t=0; ct.frame=(ct.frame+1)%6; } }
   if(dlg.active){
     if(consume('a')){ dlg.idx++; haptic('sel'); if(dlg.idx>=dlg.lines.length) dlg.active=false; }
     if(consume('b')) dlg.active=false;
@@ -403,11 +485,32 @@ function grassSrc(tx,ty){
   if(col===1&&row===1){ var h=((tx*73856093)^(ty*19349663))>>>0; col=1+(h%2); } // texture variety on fill
   return {sx:col*64, sy:row*64};
 }
+function biomeTileImg(b){
+  if(b===2) return images['terr_dirt'];
+  if(b===3) return images['terr_sand'];
+  if(b===4) return images['terr_scorch'];
+  if(b===5) return images['terr_cobble'];
+  return null;
+}
+var BIOME_FB=['#4a7a3a','#3c5e30','#7a5a34','#cebd8a','#4a543a','#8a7d66'];
+// small ground flora scattered deterministically to break up the terrain
+function scatterAt(tx,ty,dx,dy){
+  var hd=hash2(tx*3+11,ty*7+5), r=hd%100;
+  if(r>=20) return;                               // ~20% of grassy tiles get flora
+  var pick=(hd>>>8)%6, k, sc;
+  if(pick===0){ k='flower1'; sc=0.42; } else if(pick===1){ k='flower2'; sc=0.7; }
+  else if(pick===2){ k='tuft1'; sc=0.5; } else if(pick===3){ k='tuft2'; sc=0.5; }
+  else { k='pebble'; sc=1.3; }
+  var m=A.terr[k], img=images['terr_'+k]; if(!imgReady(img)) return;
+  var ox=(hd%(TILE-10))+5, oy=((hd>>>5)%(TILE-10))+5;
+  var w=m.w*sc, h=m.h*sc;
+  ctx.drawImage(img, dx+ox-w/2, dy+oy-h, w, h);
+}
 function drawGround(){
   var g=images['terr_grass'], w=images['terr_water'], foam=images['terr_foam'];
   var tx0=Math.floor(cam.x/TILE)-1, ty0=Math.floor(cam.y/TILE)-1;
   var tx1=Math.ceil((cam.x+VW)/TILE)+1, ty1=Math.ceil((cam.y+VH)/TILE)+1;
-  // pass 1 — base ground (autotiled grass surface over animated water)
+  // pass 1 — base ground: water, biome tiles, or autotiled grass (+ dirt roads)
   for(var ty=ty0;ty<=ty1;ty++) for(var tx=tx0;tx<=tx1;tx++){
     var dx=tx*TILE-cam.x, dy=ty*TILE-cam.y;
     if(isWaterTile(tx,ty)){
@@ -415,10 +518,31 @@ function drawGround(){
       else { ctx.fillStyle='#2b6db0'; ctx.fillRect(dx,dy,TILE+1,TILE+1); }
       ctx.globalAlpha=0.10+0.06*Math.sin(waterT*2+tx*0.7+ty*0.9);
       ctx.fillStyle='#bfe6ff'; ctx.fillRect(dx,dy,TILE+1,TILE+1); ctx.globalAlpha=1;
-    } else {
-      if(imgReady(g)){ var sp=grassSrc(tx,ty); ctx.drawImage(g,sp.sx,sp.sy,64,64,dx,dy,TILE+1,TILE+1); }
-      else { ctx.fillStyle='#4a7a3a'; ctx.fillRect(dx,dy,TILE+1,TILE+1); }
+      continue;
     }
+    var inb = (tx>=0&&ty>=0&&tx<MW&&ty<MH), idx=ty*MW+tx;
+    var b = inb && biomeGrid ? biomeGrid[idx] : 0;
+    var isRoad = inb && roadSet && roadSet[idx];
+    if(isRoad){
+      var di=images['terr_dirt'];
+      if(imgReady(di)) ctx.drawImage(di,0,0,64,64,dx,dy,TILE+1,TILE+1);
+      else { ctx.fillStyle='#7a5a34'; ctx.fillRect(dx,dy,TILE+1,TILE+1); }
+    } else if(b===0||b===1){                     // grassy biomes use the autotile
+      if(imgReady(g)){ var sp=grassSrc(tx,ty); ctx.drawImage(g,sp.sx,sp.sy,64,64,dx,dy,TILE+1,TILE+1); }
+      else { ctx.fillStyle=BIOME_FB[b]; ctx.fillRect(dx,dy,TILE+1,TILE+1); }
+      if(b===1){ ctx.globalAlpha=0.26; ctx.fillStyle='#14300f'; ctx.fillRect(dx,dy,TILE+1,TILE+1); ctx.globalAlpha=1; }
+    } else {                                     // dirt / sand / scorch / cobble tiles
+      var bi=biomeTileImg(b);
+      if(imgReady(bi)) ctx.drawImage(bi,0,0,64,64,dx,dy,TILE+1,TILE+1);
+      else { ctx.fillStyle=BIOME_FB[b]; ctx.fillRect(dx,dy,TILE+1,TILE+1); }
+    }
+    // subtle deterministic brightness jitter — kills the flat, repetitive look
+    var hv=hash2(tx,ty)%100;
+    ctx.globalAlpha=0.05+ (hv%4)*0.012;
+    ctx.fillStyle = hv<50 ? '#000' : '#fff';
+    ctx.fillRect(dx,dy,TILE+1,TILE+1); ctx.globalAlpha=1;
+    // ground flora on grass / farm (not roads)
+    if(!isRoad && (b===0||b===1||b===2)) scatterAt(tx,ty,dx,dy);
   }
   // pass 2 — animated surf foam on the shoreline (water tiles touching grass)
   if(imgReady(foam)){
@@ -440,6 +564,12 @@ function overworldDraw(sh){
   for(var i=0;i<deco.length;i++){ (function(o){ list.push({y:o.wy,fn:function(){ var m=A.terr[o.kind];
     if(o.frames>1) drawFrame(images['terr_'+o.kind], m.fw,m.fh, o.frame|0, o.wx-cam.x, o.wy-cam.y, o.scale, false);
     else drawStatic(images['terr_'+o.kind], m.w,m.h, o.wx-cam.x, o.wy-cam.y, o.scale); }}); })(deco[i]); }
+  for(i=0;i<props.length;i++){ (function(o){ list.push({y:o.wy,fn:function(){ var m=A.prop[o.kind];
+    drawShadow(o.wx-cam.x, o.wy-cam.y, m.w*o.scale*0.3);
+    drawStatic(images['prop_'+o.kind], m.w,m.h, o.wx-cam.x, o.wy-cam.y, o.scale); }}); })(props[i]); }
+  for(i=0;i<critters.length;i++){ (function(o){ list.push({y:o.wy,fn:function(){ var m=A.critter.cat;
+    drawShadow(o.wx-cam.x, o.wy-cam.y, 10);
+    drawFrame(images['critter_cat'], m.fw,m.fh, o.frame|0, o.wx-cam.x, o.wy-cam.y, 0.5, o.dir<0); }}); })(critters[i]); }
   for(i=0;i<buildings.length;i++){ (function(o){ list.push({y:o.wy,fn:function(){ var m=A.build[o.key];
     drawShadow(o.wx-cam.x, o.wy-cam.y, m.w*o.scale*0.3);
     drawStatic(images['build_'+o.key], m.w,m.h, o.wx-cam.x, o.wy-cam.y, o.scale); }}); })(buildings[i]); }
@@ -462,15 +592,13 @@ function overworldDraw(sh){
   // ---- HUD ----
   drawHUD();
   if(nearInfo){ ctx.font='bold 15px Trebuchet MS'; var tw=ctx.measureText(nearInfo).width;
-    ctx.fillStyle='rgba(10,20,10,.72)'; roundRect(VW/2-tw/2-14, 10, tw+28, 28, 8); ctx.fill();
-    ctx.strokeStyle='rgba(150,210,120,.6)'; ctx.lineWidth=1.5; ctx.stroke();
+    panel(VW/2-tw/2-16, 8, tw+32, 32);
     ctx.fillStyle='#eafbe0'; ctx.textAlign='center'; ctx.fillText(nearInfo, VW/2, 29); ctx.textAlign='left'; }
   if(dlg.active) drawDialogue();
 }
 function drawDialogue(){
   var h=118, y=VH-h-150;
-  ctx.fillStyle='rgba(8,14,8,.9)'; roundRect(12,y,VW-24,h,12); ctx.fill();
-  ctx.strokeStyle='rgba(180,150,90,.8)'; ctx.lineWidth=2.5; ctx.stroke();
+  panel(12,y,VW-24,h);
   ctx.fillStyle='#ffd98a'; ctx.font='bold 16px Trebuchet MS'; ctx.fillText(dlg.name, 28, y+28);
   ctx.fillStyle='#f3e9d2'; ctx.font='15px Trebuchet MS';
   wrapText(dlg.lines[Math.min(dlg.idx,dlg.lines.length-1)]||'', 28, y+54, VW-56, 22, 'left');
@@ -488,9 +616,24 @@ function wrapText(txt,x,y,maxw,lh,align){ var prev=ctx.textAlign; if(align)ctx.t
   var words=(''+txt).split(' '),line='',yy=y;
   for(var i=0;i<words.length;i++){ var t=line+words[i]+' '; if(ctx.measureText(t).width>maxw&&line){ ctx.fillText(line,x,yy); line=words[i]+' '; yy+=lh; } else line=t; }
   ctx.fillText(line,x,yy); ctx.textAlign=prev; }
+// ornate framed panel: leather fill + gold double border + pack-art corner flourishes
+function panel(x,y,w,h,accent){
+  var gg=ctx.createLinearGradient(0,y,0,y+h);
+  gg.addColorStop(0,'rgba(30,23,14,.94)'); gg.addColorStop(1,'rgba(13,10,6,.96)');
+  ctx.fillStyle=gg; roundRect(x,y,w,h,9); ctx.fill();
+  ctx.strokeStyle='rgba(0,0,0,.55)'; ctx.lineWidth=3; ctx.stroke();
+  ctx.strokeStyle=accent||'#c9a24a'; ctx.lineWidth=2; roundRect(x+2.5,y+2.5,w-5,h-5,7); ctx.stroke();
+  ctx.strokeStyle='rgba(255,232,170,.32)'; ctx.lineWidth=1; roundRect(x+5,y+5,w-10,h-10,5); ctx.stroke();
+  var fr=images['ui_frame'];
+  if(imgReady(fr)){ var c=16,d=19;
+    ctx.drawImage(fr,0,0,c,c, x-3,y-3,d,d);
+    ctx.drawImage(fr,48-c,0,c,c, x+w-d+3,y-3,d,d);
+    ctx.drawImage(fr,0,48-c,c,c, x-3,y+h-d+3,d,d);
+    ctx.drawImage(fr,48-c,48-c,c,c, x+w-d+3,y+h-d+3,d,d);
+  }
+}
 function drawHUD(){
-  ctx.fillStyle='rgba(8,14,8,.68)'; roundRect(8,VH-150-46,186,42,8); ctx.fill();
-  ctx.strokeStyle='rgba(150,210,120,.4)'; ctx.lineWidth=1; ctx.stroke();
+  panel(8,VH-150-46,186,42);
   ctx.fillStyle='#eafbe0'; ctx.font='bold 12px Trebuchet MS';
   ctx.fillText(player.job+' Lv.'+player.level, 16, VH-150-30);
   ctx.fillStyle='#ffd98a'; ctx.font='11px Trebuchet MS'; ctx.textAlign='right';
@@ -558,11 +701,17 @@ function heroMagic(i){ var s=SPELLS[i]; if(player.mp<s.mp){ B.msg='Not enough MP
       var h=Math.round(player.hpMax*0.5); player.hp=clamp(player.hp+h,0,player.hpMax);
       floatText(heroX(),gy()-100,'+'+h,'#8fe36b'); haptic('medium'); });
     after(1.1, backToMenu);
+  } else if(s.kind==='ward'){
+    after(0.3,function(){ playFX('ward', heroX(), gy()-70, 1.0); B.guard=true;
+      addStatusFX('shield', heroX(), gy()-70, 1.6);
+      floatText(heroX(),gy()-100,'WARDED','#9fd4ff'); haptic('medium'); });
+    after(1.1, backToMenu);
   } else {
     after(0.35,function(){ playFX(s.fx, eneX(), gy()-70, 1.15); doShake(10,0.3); B.flashE=0.35; haptic('heavy');
       var d=dmg(player.atk*s.pow, B.def*0.4, 0.14); B.hp=clamp(B.hp-d,0,B.hpMax);
       floatText(eneX(),gy()-95,'-'+d,s.col); emit(eneX(),gy()-70,18,{col:s.col,sp0:50,sp1:170});
       if(s.kind==='poison'){ B.poisonE=3; floatText(eneX(),gy()-120,'POISONED','#8fe36b'); }
+      if(s.kind==='curse'){ B.bleedE=3; floatText(eneX(),gy()-120,'CURSED','#c86bd6'); }
       if(s.fx==='fire'){ B.burnE=3; floatText(eneX(),gy()-120,'BURNING','#ff8a3c'); }
       if(s.fx==='lightning' && Math.random()<0.4){ B.stun=1; floatText(eneX(),gy()-120,'STUNNED','#c9a6ff'); } });
     after(1.15,function(){ if(B.hp<=0){ enemyDies(); return; } enemyTurn(); });
@@ -744,8 +893,7 @@ function battleDraw(sh){
   ctx.restore();
 
   // enemy nameplate + HP
-  ctx.fillStyle='rgba(8,14,8,.68)'; roundRect(VW/2-130,14,260,36,8); ctx.fill();
-  ctx.strokeStyle='rgba(224,120,90,.5)'; ctx.lineWidth=1.5; ctx.stroke();
+  panel(VW/2-130,14,260,36,'#e0785a');
   ctx.fillStyle='#f3e9d2'; ctx.font='bold 14px Trebuchet MS'; ctx.textAlign='center';
   ctx.fillText(B.name, VW/2, 30); ctx.textAlign='left'; bar(VW/2-112,34,224,8,Math.max(0,B.hp),B.hpMax,'#d2443a');
   battleUI();
@@ -754,12 +902,11 @@ function battleDraw(sh){
 function battleUI(){
   var by=VH-150-96;
   // message bar
-  ctx.fillStyle='rgba(8,14,8,.8)'; roundRect(10,by,VW-20,34,8); ctx.fill();
-  ctx.strokeStyle='rgba(224,163,90,.5)'; ctx.lineWidth=1.5; ctx.stroke();
+  panel(10,by,VW-20,34);
   ctx.fillStyle='#f3e9d2'; ctx.font='14px Trebuchet MS'; ctx.textAlign='center'; ctx.fillText(B.msg, VW/2, by+22); ctx.textAlign='left';
   var py=by+42;
   // hero stat panel
-  ctx.fillStyle='rgba(8,14,8,.8)'; roundRect(10,py,150,90,8); ctx.fill(); ctx.strokeStyle='rgba(150,210,120,.4)'; ctx.stroke();
+  panel(10,py,150,90);
   ctx.fillStyle='#eafbe0'; ctx.font='bold 13px Trebuchet MS'; ctx.fillText(player.job+' Lv.'+player.level,20,py+18);
   ctx.font='11px Trebuchet MS'; ctx.fillStyle='#cfe0b0';
   ctx.fillText('HP '+Math.round(player.hp)+'/'+player.hpMax,20,py+36); bar(20,py+40,120,6,player.hp,player.hpMax,'#d2443a');
@@ -769,7 +916,7 @@ function battleUI(){
   if(B.phase==='menu'){
     var list = B.menu==='root'?ROOT:(B.menu==='magic'?SPELLS:ITEMS);
     var cx=170, cw=VW-180, ch=90;
-    ctx.fillStyle='rgba(8,14,8,.8)'; roundRect(cx,py,cw,ch,8); ctx.fill(); ctx.strokeStyle='rgba(224,163,90,.5)'; ctx.stroke();
+    panel(cx,py,cw,ch);
     ctx.font='14px Trebuchet MS';
     for(var i=0;i<list.length;i++){ var it=list[i];
       var label = B.menu==='root'? it : (it.name + (B.menu==='magic'?('  '+it.mp+'MP'):('  x'+player[it.key])));
@@ -889,16 +1036,14 @@ function interiorDraw(){
   ctx.fillStyle='rgba(243,233,210,.7)'; ctx.font='12px Trebuchet MS'; ctx.fillText(cfg.title, VW/2, 62); ctx.textAlign='left';
   drawPP(0,0); drawFloats(0,0);
   // exit banner
-  ctx.fillStyle='rgba(8,14,8,.72)'; roundRect(VW/2-96,VH-150-44,192,32,8); ctx.fill();
-  ctx.strokeStyle='rgba(180,150,90,.6)'; ctx.lineWidth=1.5; ctx.stroke();
+  panel(VW/2-96,VH-150-44,192,32);
   ctx.fillStyle='#eafbe0'; ctx.font='13px Trebuchet MS'; ctx.textAlign='center';
   ctx.fillText(INT.dlg?'A \u25b8 continue':'Tap keeper to talk \u00b7 B / tap here to leave', VW/2, VH-150-23); ctx.textAlign='left';
   if(INT.dlg) drawInteriorDialogue();
 }
 function drawInteriorDialogue(){
   var h=108, y=VH-h-150, cfg=INT.cfg;
-  ctx.fillStyle='rgba(8,14,8,.9)'; roundRect(12,y,VW-24,h,12); ctx.fill();
-  ctx.strokeStyle='rgba(180,150,90,.8)'; ctx.lineWidth=2.5; ctx.stroke();
+  panel(12,y,VW-24,h);
   ctx.fillStyle='#ffd98a'; ctx.font='bold 16px Trebuchet MS'; ctx.fillText(cfg.keeperName, 28, y+28);
   ctx.fillStyle='#f3e9d2'; ctx.font='15px Trebuchet MS';
   wrapText(cfg.lines[Math.min(INT.idx,cfg.lines.length-1)]||'', 28, y+54, VW-56, 22, 'left');

@@ -1,0 +1,459 @@
+{
+ "hero": {
+  "idle": {
+   "down": {
+    "file": "assets2/hero/idle_down.png",
+    "frames": 4,
+    "fw": 64,
+    "fh": 64
+   },
+   "up": {
+    "file": "assets2/hero/idle_up.png",
+    "frames": 4,
+    "fw": 64,
+    "fh": 64
+   },
+   "side": {
+    "file": "assets2/hero/idle_side.png",
+    "frames": 4,
+    "fw": 64,
+    "fh": 64
+   }
+  },
+  "walk": {
+   "down": {
+    "file": "assets2/hero/walk_down.png",
+    "frames": 6,
+    "fw": 64,
+    "fh": 64
+   },
+   "up": {
+    "file": "assets2/hero/walk_up.png",
+    "frames": 6,
+    "fw": 64,
+    "fh": 64
+   },
+   "side": {
+    "file": "assets2/hero/walk_side.png",
+    "frames": 6,
+    "fw": 64,
+    "fh": 64
+   }
+  },
+  "run": {
+   "down": {
+    "file": "assets2/hero/run_down.png",
+    "frames": 6,
+    "fw": 64,
+    "fh": 64
+   },
+   "up": {
+    "file": "assets2/hero/run_up.png",
+    "frames": 6,
+    "fw": 64,
+    "fh": 64
+   },
+   "side": {
+    "file": "assets2/hero/run_side.png",
+    "frames": 6,
+    "fw": 64,
+    "fh": 64
+   }
+  },
+  "slice": {
+   "down": {
+    "file": "assets2/hero/slice_down.png",
+    "frames": 8,
+    "fw": 64,
+    "fh": 64
+   },
+   "up": {
+    "file": "assets2/hero/slice_up.png",
+    "frames": 8,
+    "fw": 64,
+    "fh": 64
+   },
+   "side": {
+    "file": "assets2/hero/slice_side.png",
+    "frames": 8,
+    "fw": 64,
+    "fh": 64
+   }
+  },
+  "hit": {
+   "down": {
+    "file": "assets2/hero/hit_down.png",
+    "frames": 4,
+    "fw": 64,
+    "fh": 64
+   },
+   "up": {
+    "file": "assets2/hero/hit_up.png",
+    "frames": 4,
+    "fw": 64,
+    "fh": 64
+   },
+   "side": {
+    "file": "assets2/hero/hit_side.png",
+    "frames": 4,
+    "fw": 64,
+    "fh": 64
+   }
+  },
+  "death": {
+   "down": {
+    "file": "assets2/hero/death_down.png",
+    "frames": 8,
+    "fw": 64,
+    "fh": 64
+   },
+   "up": {
+    "file": "assets2/hero/death_up.png",
+    "frames": 8,
+    "fw": 64,
+    "fh": 64
+   },
+   "side": {
+    "file": "assets2/hero/death_side.png",
+    "frames": 8,
+    "fw": 64,
+    "fh": 64
+   }
+  }
+ },
+ "npc": {
+  "peasant": {
+   "file": "assets2/npc/peasant.png",
+   "frames": 4,
+   "fw": 64,
+   "fh": 64
+  },
+  "tavern": {
+   "file": "assets2/npc/tavern.png",
+   "frames": 4,
+   "fw": 64,
+   "fh": 64
+  },
+  "knight": {
+   "file": "assets2/npc/knight.png",
+   "frames": 4,
+   "fw": 32,
+   "fh": 32
+  },
+  "wizard": {
+   "file": "assets2/npc/wizard.png",
+   "frames": 4,
+   "fw": 32,
+   "fh": 32
+  },
+  "rogue": {
+   "file": "assets2/npc/rogue.png",
+   "frames": 4,
+   "fw": 32,
+   "fh": 32
+  }
+ },
+ "mob": {
+  "skel_base": {
+   "idle": {
+    "file": "assets2/mob/skel_base_idle.png",
+    "frames": 4,
+    "fw": 32,
+    "fh": 32
+   },
+   "run": {
+    "file": "assets2/mob/skel_base_run.png",
+    "frames": 6,
+    "fw": 64,
+    "fh": 64
+   },
+   "death": {
+    "file": "assets2/mob/skel_base_death.png",
+    "frames": 12,
+    "fw": 64,
+    "fh": 64
+   }
+  },
+  "skel_warrior": {
+   "idle": {
+    "file": "assets2/mob/skel_warrior_idle.png",
+    "frames": 4,
+    "fw": 32,
+    "fh": 32
+   },
+   "run": {
+    "file": "assets2/mob/skel_warrior_run.png",
+    "frames": 6,
+    "fw": 64,
+    "fh": 64
+   },
+   "death": {
+    "file": "assets2/mob/skel_warrior_death.png",
+    "frames": 8,
+    "fw": 48,
+    "fh": 48
+   }
+  },
+  "skel_mage": {
+   "idle": {
+    "file": "assets2/mob/skel_mage_idle.png",
+    "frames": 4,
+    "fw": 32,
+    "fh": 32
+   },
+   "run": {
+    "file": "assets2/mob/skel_mage_run.png",
+    "frames": 6,
+    "fw": 64,
+    "fh": 64
+   },
+   "death": {
+    "file": "assets2/mob/skel_mage_death.png",
+    "frames": 6,
+    "fw": 64,
+    "fh": 64
+   }
+  },
+  "skel_rogue": {
+   "idle": {
+    "file": "assets2/mob/skel_rogue_idle.png",
+    "frames": 4,
+    "fw": 32,
+    "fh": 32
+   },
+   "run": {
+    "file": "assets2/mob/skel_rogue_run.png",
+    "frames": 6,
+    "fw": 64,
+    "fh": 64
+   },
+   "death": {
+    "file": "assets2/mob/skel_rogue_death.png",
+    "frames": 6,
+    "fw": 64,
+    "fh": 64
+   }
+  },
+  "orc": {
+   "idle": {
+    "file": "assets2/mob/orc_idle.png",
+    "frames": 4,
+    "fw": 32,
+    "fh": 32
+   },
+   "run": {
+    "file": "assets2/mob/orc_run.png",
+    "frames": 6,
+    "fw": 64,
+    "fh": 64
+   },
+   "death": {
+    "file": "assets2/mob/orc_death.png",
+    "frames": 6,
+    "fw": 64,
+    "fh": 64
+   }
+  },
+  "orc_warrior": {
+   "idle": {
+    "file": "assets2/mob/orc_warrior_idle.png",
+    "frames": 4,
+    "fw": 32,
+    "fh": 32
+   },
+   "run": {
+    "file": "assets2/mob/orc_warrior_run.png",
+    "frames": 6,
+    "fw": 64,
+    "fh": 64
+   },
+   "death": {
+    "file": "assets2/mob/orc_warrior_death.png",
+    "frames": 7,
+    "fw": 82,
+    "fh": 80
+   }
+  },
+  "orc_shaman": {
+   "idle": {
+    "file": "assets2/mob/orc_shaman_idle.png",
+    "frames": 4,
+    "fw": 32,
+    "fh": 32
+   },
+   "run": {
+    "file": "assets2/mob/orc_shaman_run.png",
+    "frames": 6,
+    "fw": 64,
+    "fh": 64
+   },
+   "death": {
+    "file": "assets2/mob/orc_shaman_death.png",
+    "frames": 7,
+    "fw": 64,
+    "fh": 64
+   }
+  },
+  "orc_rogue": {
+   "idle": {
+    "file": "assets2/mob/orc_rogue_idle.png",
+    "frames": 4,
+    "fw": 32,
+    "fh": 32
+   },
+   "run": {
+    "file": "assets2/mob/orc_rogue_run.png",
+    "frames": 6,
+    "fw": 64,
+    "fh": 64
+   },
+   "death": {
+    "file": "assets2/mob/orc_rogue_death.png",
+    "frames": 6,
+    "fw": 64,
+    "fh": 64
+   }
+  }
+ },
+ "build": {
+  "blue_castle": {
+   "file": "assets2/build/blue_castle.png",
+   "w": 320,
+   "h": 256
+  },
+  "blue_tower": {
+   "file": "assets2/build/blue_tower.png",
+   "w": 128,
+   "h": 256
+  },
+  "blue_house1": {
+   "file": "assets2/build/blue_house1.png",
+   "w": 128,
+   "h": 192
+  },
+  "blue_house2": {
+   "file": "assets2/build/blue_house2.png",
+   "w": 128,
+   "h": 192
+  },
+  "blue_house3": {
+   "file": "assets2/build/blue_house3.png",
+   "w": 128,
+   "h": 192
+  },
+  "blue_monastery": {
+   "file": "assets2/build/blue_monastery.png",
+   "w": 192,
+   "h": 320
+  },
+  "blue_barracks": {
+   "file": "assets2/build/blue_barracks.png",
+   "w": 192,
+   "h": 256
+  },
+  "blue_archery": {
+   "file": "assets2/build/blue_archery.png",
+   "w": 192,
+   "h": 256
+  },
+  "red_castle": {
+   "file": "assets2/build/red_castle.png",
+   "w": 320,
+   "h": 256
+  },
+  "red_tower": {
+   "file": "assets2/build/red_tower.png",
+   "w": 128,
+   "h": 256
+  },
+  "red_house1": {
+   "file": "assets2/build/red_house1.png",
+   "w": 128,
+   "h": 192
+  },
+  "red_house2": {
+   "file": "assets2/build/red_house2.png",
+   "w": 128,
+   "h": 192
+  },
+  "red_house3": {
+   "file": "assets2/build/red_house3.png",
+   "w": 128,
+   "h": 192
+  },
+  "red_monastery": {
+   "file": "assets2/build/red_monastery.png",
+   "w": 192,
+   "h": 320
+  },
+  "red_barracks": {
+   "file": "assets2/build/red_barracks.png",
+   "w": 192,
+   "h": 256
+  },
+  "red_archery": {
+   "file": "assets2/build/red_archery.png",
+   "w": 192,
+   "h": 256
+  }
+ },
+ "terr": {
+  "grass": {
+   "file": "assets2/terr/grass.png",
+   "w": 64,
+   "h": 64
+  },
+  "water": {
+   "file": "assets2/terr/water.png",
+   "w": 64,
+   "h": 64
+  },
+  "tree": {
+   "file": "assets2/terr/tree.png",
+   "w": 192,
+   "h": 256
+  },
+  "rock": {
+   "file": "assets2/terr/rock.png",
+   "w": 64,
+   "h": 64
+  },
+  "bush": {
+   "file": "assets2/terr/bush.png",
+   "w": 128,
+   "h": 128
+  }
+ },
+ "spell": {
+  "fire": {
+   "file": "assets2/spell/fire.png",
+   "frames": 13,
+   "fw": 128,
+   "fh": 128
+  },
+  "heal": {
+   "file": "assets2/spell/heal.png",
+   "frames": 16,
+   "fw": 128,
+   "fh": 128
+  },
+  "poison": {
+   "file": "assets2/spell/poison.png",
+   "frames": 17,
+   "fw": 128,
+   "fh": 128
+  },
+  "lightning": {
+   "file": "assets2/spell/lightning.png",
+   "frames": 7,
+   "fw": 128,
+   "fh": 128
+  },
+  "slash": {
+   "file": "assets2/spell/slash.png",
+   "frames": 7,
+   "fw": 96,
+   "fh": 96
+  }
+ }
+}

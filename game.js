@@ -17,7 +17,7 @@ if (TG){ try{
   if(TG.setHeaderColor) TG.setHeaderColor('#12230f');
   if(TG.setBackgroundColor) TG.setBackgroundColor('#0b1a0b');
 }catch(e){} }
-function haptic(type){ try{ if(TG&&TG.HapticFeedback){ if(type==='sel')TG.HapticFeedback.selectionChanged(); else TG.HapticFeedback.impactOccurred(type||'light'); } }catch(e){} }
+function haptic(type){ if(typeof OPT!=='undefined'&&OPT.haptics===false)return; try{ if(TG&&TG.HapticFeedback){ if(type==='sel')TG.HapticFeedback.selectionChanged(); else TG.HapticFeedback.impactOccurred(type||'light'); } }catch(e){} }
 
 /* ---------- On-screen error reporting ---------- */
 window.addEventListener('error', function(e){
@@ -42,7 +42,7 @@ window.addEventListener('resize',resize);
 if(TG&&TG.onEvent){ try{TG.onEvent('viewportChanged',resize);}catch(e){} }
 resize();
 /* ---------- Asset manifest (baked from processed packs) ---------- */
-var A={"hero":{"idle":{"down":{"file":"assets2/hero/idle_down.png","frames":4,"fw":64,"fh":64},"up":{"file":"assets2/hero/idle_up.png","frames":4,"fw":64,"fh":64},"side":{"file":"assets2/hero/idle_side.png","frames":4,"fw":64,"fh":64}},"walk":{"down":{"file":"assets2/hero/walk_down.png","frames":6,"fw":64,"fh":64},"up":{"file":"assets2/hero/walk_up.png","frames":6,"fw":64,"fh":64},"side":{"file":"assets2/hero/walk_side.png","frames":6,"fw":64,"fh":64}},"run":{"down":{"file":"assets2/hero/run_down.png","frames":6,"fw":64,"fh":64},"up":{"file":"assets2/hero/run_up.png","frames":6,"fw":64,"fh":64},"side":{"file":"assets2/hero/run_side.png","frames":6,"fw":64,"fh":64}},"slice":{"down":{"file":"assets2/hero/slice_down.png","frames":8,"fw":64,"fh":64},"up":{"file":"assets2/hero/slice_up.png","frames":8,"fw":64,"fh":64},"side":{"file":"assets2/hero/slice_side.png","frames":8,"fw":64,"fh":64}},"hit":{"down":{"file":"assets2/hero/hit_down.png","frames":4,"fw":64,"fh":64},"up":{"file":"assets2/hero/hit_up.png","frames":4,"fw":64,"fh":64},"side":{"file":"assets2/hero/hit_side.png","frames":4,"fw":64,"fh":64}},"death":{"down":{"file":"assets2/hero/death_down.png","frames":8,"fw":64,"fh":64},"up":{"file":"assets2/hero/death_up.png","frames":8,"fw":64,"fh":64},"side":{"file":"assets2/hero/death_side.png","frames":8,"fw":64,"fh":64}}},"npc":{"peasant":{"file":"assets2/npc/peasant.png","frames":4,"fw":64,"fh":64},"tavern":{"file":"assets2/npc/tavern.png","frames":4,"fw":64,"fh":64},"knight":{"file":"assets2/npc/knight.png","frames":4,"fw":32,"fh":32},"wizard":{"file":"assets2/npc/wizard.png","frames":4,"fw":32,"fh":32},"rogue":{"file":"assets2/npc/rogue.png","frames":4,"fw":32,"fh":32}},"mob":{"skel_base":{"idle":{"file":"assets2/mob/skel_base_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/skel_base_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/skel_base_death.png","frames":12,"fw":64,"fh":64}},"skel_warrior":{"idle":{"file":"assets2/mob/skel_warrior_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/skel_warrior_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/skel_warrior_death.png","frames":8,"fw":48,"fh":48}},"skel_mage":{"idle":{"file":"assets2/mob/skel_mage_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/skel_mage_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/skel_mage_death.png","frames":6,"fw":64,"fh":64}},"skel_rogue":{"idle":{"file":"assets2/mob/skel_rogue_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/skel_rogue_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/skel_rogue_death.png","frames":6,"fw":64,"fh":64}},"orc":{"idle":{"file":"assets2/mob/orc_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/orc_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/orc_death.png","frames":6,"fw":64,"fh":64}},"orc_warrior":{"idle":{"file":"assets2/mob/orc_warrior_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/orc_warrior_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/orc_warrior_death.png","frames":7,"fw":82,"fh":80}},"orc_shaman":{"idle":{"file":"assets2/mob/orc_shaman_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/orc_shaman_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/orc_shaman_death.png","frames":7,"fw":64,"fh":64}},"orc_rogue":{"idle":{"file":"assets2/mob/orc_rogue_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/orc_rogue_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/orc_rogue_death.png","frames":6,"fw":64,"fh":64}},"demon":{"idle":{"file":"assets2/mob/demon_idle.png","frames":6,"fw":100,"fh":100},"run":{"file":"assets2/mob/demon_run.png","frames":8,"fw":100,"fh":100},"attack":{"file":"assets2/mob/demon_attack.png","frames":7,"fw":100,"fh":100},"death":{"file":"assets2/mob/demon_death.png","frames":4,"fw":100,"fh":100},"hurt":{"file":"assets2/mob/demon_hurt.png","frames":4,"fw":100,"fh":100}},"blood":{"idle":{"file":"assets2/mob/blood_idle.png","frames":6,"fw":100,"fh":100},"run":{"file":"assets2/mob/blood_run.png","frames":8,"fw":100,"fh":100},"attack":{"file":"assets2/mob/blood_attack.png","frames":8,"fw":100,"fh":100},"death":{"file":"assets2/mob/blood_death.png","frames":4,"fw":100,"fh":100},"hurt":{"file":"assets2/mob/blood_hurt.png","frames":4,"fw":100,"fh":100}}},"build":{"blue_castle":{"file":"assets2/build/blue_castle.png","w":320,"h":256},"blue_tower":{"file":"assets2/build/blue_tower.png","w":128,"h":256},"blue_house1":{"file":"assets2/build/blue_house1.png","w":128,"h":192},"blue_house2":{"file":"assets2/build/blue_house2.png","w":128,"h":192},"blue_house3":{"file":"assets2/build/blue_house3.png","w":128,"h":192},"blue_monastery":{"file":"assets2/build/blue_monastery.png","w":192,"h":320},"blue_barracks":{"file":"assets2/build/blue_barracks.png","w":192,"h":256},"blue_archery":{"file":"assets2/build/blue_archery.png","w":192,"h":256},"red_castle":{"file":"assets2/build/red_castle.png","w":320,"h":256},"red_tower":{"file":"assets2/build/red_tower.png","w":128,"h":256},"red_house1":{"file":"assets2/build/red_house1.png","w":128,"h":192},"red_house2":{"file":"assets2/build/red_house2.png","w":128,"h":192},"red_house3":{"file":"assets2/build/red_house3.png","w":128,"h":192},"red_monastery":{"file":"assets2/build/red_monastery.png","w":192,"h":320},"red_barracks":{"file":"assets2/build/red_barracks.png","w":192,"h":256},"red_archery":{"file":"assets2/build/red_archery.png","w":192,"h":256}},"terr":{"grass":{"file":"assets2/terr/grass_set.png","fw":64,"fh":64,"cols":4,"rows":4},"water":{"file":"assets2/terr/water.png","w":64,"h":64},"foam":{"file":"assets2/terr/foam.png","frames":16,"fw":192,"fh":192},"water_rock":{"file":"assets2/terr/water_rock.png","frames":16,"fw":64,"fh":64},"tree":{"file":"assets2/terr/tree.png","frames":8,"fw":192,"fh":256},"rock":{"file":"assets2/terr/rock.png","w":64,"h":64},"bush":{"file":"assets2/terr/bush.png","frames":8,"fw":128,"fh":128},"cobble":{"file":"assets2/terr/cobble.png","w":64,"h":64},"cobble2":{"file":"assets2/terr/cobble2.png","w":64,"h":64},"dirt":{"file":"assets2/terr/dirt.png","w":64,"h":64},"sand":{"file":"assets2/terr/sand.png","w":64,"h":64},"scorch":{"file":"assets2/terr/scorch.png","w":64,"h":64},"flower1":{"file":"assets2/terr/flower1.png","w":43,"h":54},"flower2":{"file":"assets2/terr/flower2.png","w":23,"h":21},"tuft1":{"file":"assets2/terr/tuft1.png","w":17,"h":40},"tuft2":{"file":"assets2/terr/tuft2.png","w":21,"h":40},"pebble":{"file":"assets2/terr/pebble.png","w":10,"h":9}},"spell":{"fire":{"file":"assets2/spell/fire.png","frames":13,"fw":128,"fh":128},"heal":{"file":"assets2/spell/heal.png","frames":16,"fw":128,"fh":128},"poison":{"file":"assets2/spell/poison.png","frames":17,"fw":128,"fh":128},"lightning":{"file":"assets2/spell/lightning.png","frames":7,"fw":128,"fh":128},"slash":{"file":"assets2/spell/slash.png","frames":7,"fw":96,"fh":96},"smite":{"file":"assets2/spell/smite.png","frames":16,"fw":144,"fh":144},"curse":{"file":"assets2/spell/curse.png","frames":22,"fw":64,"fh":64},"ward":{"file":"assets2/spell/ward.png","frames":18,"fw":128,"fh":128},"fury":{"file":"assets2/spell/fury.png","frames":18,"fw":128,"fh":128},"haste":{"file":"assets2/spell/haste.png","frames":22,"fw":128,"fh":128}},"status":{"bleed":{"file":"assets2/status/bleed.png","frames":16,"fw":64,"fh":64},"burn":{"file":"assets2/status/burn.png","frames":16,"fw":64,"fh":64},"poison":{"file":"assets2/status/poison.png","frames":16,"fw":64,"fh":64},"shock":{"file":"assets2/status/shock.png","frames":16,"fw":64,"fh":64},"heal":{"file":"assets2/status/heal.png","frames":16,"fw":64,"fh":64},"shield":{"file":"assets2/status/shield.png","frames":16,"fw":64,"fh":64},"stun":{"file":"assets2/status/stun.png","frames":16,"fw":64,"fh":64},"rage":{"file":"assets2/status/rage.png","frames":16,"fw":64,"fh":64},"regen":{"file":"assets2/status/regen.png","frames":16,"fw":64,"fh":64}},"prop":{"tent":{"file":"assets2/prop/tent.png","w":73,"h":65},"tent2":{"file":"assets2/prop/tent2.png","w":65,"h":62},"crate":{"file":"assets2/prop/crate.png","w":20,"h":22},"barrel":{"file":"assets2/prop/barrel.png","w":18,"h":25},"house_s":{"file":"assets2/prop/house_s.png","w":116,"h":112},"house_m":{"file":"assets2/prop/house_m.png","w":156,"h":135},"bigdecor":{"file":"assets2/prop/bigdecor.png","w":48,"h":26},"fence":{"file":"assets2/prop/fence.png","w":63,"h":64}},"critter":{"cat":{"file":"assets2/critter/cat.png","frames":6,"fw":96,"fh":96}},"ui":{"frame":{"file":"assets2/ui/frame.png","w":48,"h":48,"corner":16}}};
+var A={"hero":{"idle":{"down":{"file":"assets2/hero/idle_down.png","frames":4,"fw":64,"fh":64},"up":{"file":"assets2/hero/idle_up.png","frames":4,"fw":64,"fh":64},"side":{"file":"assets2/hero/idle_side.png","frames":4,"fw":64,"fh":64}},"walk":{"down":{"file":"assets2/hero/walk_down.png","frames":6,"fw":64,"fh":64},"up":{"file":"assets2/hero/walk_up.png","frames":6,"fw":64,"fh":64},"side":{"file":"assets2/hero/walk_side.png","frames":6,"fw":64,"fh":64}},"run":{"down":{"file":"assets2/hero/run_down.png","frames":6,"fw":64,"fh":64},"up":{"file":"assets2/hero/run_up.png","frames":6,"fw":64,"fh":64},"side":{"file":"assets2/hero/run_side.png","frames":6,"fw":64,"fh":64}},"slice":{"down":{"file":"assets2/hero/slice_down.png","frames":8,"fw":64,"fh":64},"up":{"file":"assets2/hero/slice_up.png","frames":8,"fw":64,"fh":64},"side":{"file":"assets2/hero/slice_side.png","frames":8,"fw":64,"fh":64}},"hit":{"down":{"file":"assets2/hero/hit_down.png","frames":4,"fw":64,"fh":64},"up":{"file":"assets2/hero/hit_up.png","frames":4,"fw":64,"fh":64},"side":{"file":"assets2/hero/hit_side.png","frames":4,"fw":64,"fh":64}},"death":{"down":{"file":"assets2/hero/death_down.png","frames":8,"fw":64,"fh":64},"up":{"file":"assets2/hero/death_up.png","frames":8,"fw":64,"fh":64},"side":{"file":"assets2/hero/death_side.png","frames":8,"fw":64,"fh":64}}},"npc":{"peasant":{"file":"assets2/npc/peasant.png","frames":4,"fw":64,"fh":64},"tavern":{"file":"assets2/npc/tavern.png","frames":4,"fw":64,"fh":64},"knight":{"file":"assets2/npc/knight.png","frames":4,"fw":32,"fh":32},"wizard":{"file":"assets2/npc/wizard.png","frames":4,"fw":32,"fh":32},"rogue":{"file":"assets2/npc/rogue.png","frames":4,"fw":32,"fh":32}},"mob":{"skel_base":{"idle":{"file":"assets2/mob/skel_base_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/skel_base_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/skel_base_death.png","frames":12,"fw":64,"fh":64}},"skel_warrior":{"idle":{"file":"assets2/mob/skel_warrior_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/skel_warrior_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/skel_warrior_death.png","frames":8,"fw":48,"fh":48}},"skel_mage":{"idle":{"file":"assets2/mob/skel_mage_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/skel_mage_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/skel_mage_death.png","frames":6,"fw":64,"fh":64}},"skel_rogue":{"idle":{"file":"assets2/mob/skel_rogue_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/skel_rogue_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/skel_rogue_death.png","frames":6,"fw":64,"fh":64}},"orc":{"idle":{"file":"assets2/mob/orc_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/orc_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/orc_death.png","frames":6,"fw":64,"fh":64}},"orc_warrior":{"idle":{"file":"assets2/mob/orc_warrior_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/orc_warrior_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/orc_warrior_death.png","frames":7,"fw":82,"fh":80}},"orc_shaman":{"idle":{"file":"assets2/mob/orc_shaman_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/orc_shaman_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/orc_shaman_death.png","frames":7,"fw":64,"fh":64}},"orc_rogue":{"idle":{"file":"assets2/mob/orc_rogue_idle.png","frames":4,"fw":32,"fh":32},"run":{"file":"assets2/mob/orc_rogue_run.png","frames":6,"fw":64,"fh":64},"death":{"file":"assets2/mob/orc_rogue_death.png","frames":6,"fw":64,"fh":64}},"demon":{"idle":{"file":"assets2/mob/demon_idle.png","frames":6,"fw":100,"fh":100},"run":{"file":"assets2/mob/demon_run.png","frames":8,"fw":100,"fh":100},"attack":{"file":"assets2/mob/demon_attack.png","frames":7,"fw":100,"fh":100},"death":{"file":"assets2/mob/demon_death.png","frames":4,"fw":100,"fh":100},"hurt":{"file":"assets2/mob/demon_hurt.png","frames":4,"fw":100,"fh":100}},"blood":{"idle":{"file":"assets2/mob/blood_idle.png","frames":6,"fw":100,"fh":100},"run":{"file":"assets2/mob/blood_run.png","frames":8,"fw":100,"fh":100},"attack":{"file":"assets2/mob/blood_attack.png","frames":8,"fw":100,"fh":100},"death":{"file":"assets2/mob/blood_death.png","frames":4,"fw":100,"fh":100},"hurt":{"file":"assets2/mob/blood_hurt.png","frames":4,"fw":100,"fh":100}}},"build":{"blue_castle":{"file":"assets2/build/blue_castle.png","w":320,"h":256},"blue_tower":{"file":"assets2/build/blue_tower.png","w":128,"h":256},"blue_house1":{"file":"assets2/build/blue_house1.png","w":128,"h":192},"blue_house2":{"file":"assets2/build/blue_house2.png","w":128,"h":192},"blue_house3":{"file":"assets2/build/blue_house3.png","w":128,"h":192},"blue_monastery":{"file":"assets2/build/blue_monastery.png","w":192,"h":320},"blue_barracks":{"file":"assets2/build/blue_barracks.png","w":192,"h":256},"blue_archery":{"file":"assets2/build/blue_archery.png","w":192,"h":256},"red_castle":{"file":"assets2/build/red_castle.png","w":320,"h":256},"red_tower":{"file":"assets2/build/red_tower.png","w":128,"h":256},"red_house1":{"file":"assets2/build/red_house1.png","w":128,"h":192},"red_house2":{"file":"assets2/build/red_house2.png","w":128,"h":192},"red_house3":{"file":"assets2/build/red_house3.png","w":128,"h":192},"red_monastery":{"file":"assets2/build/red_monastery.png","w":192,"h":320},"red_barracks":{"file":"assets2/build/red_barracks.png","w":192,"h":256},"red_archery":{"file":"assets2/build/red_archery.png","w":192,"h":256}},"terr":{"grass":{"file":"assets2/terr/grass_set.png","fw":64,"fh":64,"cols":4,"rows":4},"water":{"file":"assets2/terr/water.png","w":64,"h":64},"foam":{"file":"assets2/terr/foam.png","frames":16,"fw":192,"fh":192},"water_rock":{"file":"assets2/terr/water_rock.png","frames":16,"fw":64,"fh":64},"tree":{"file":"assets2/terr/tree.png","frames":8,"fw":192,"fh":256},"rock":{"file":"assets2/terr/rock.png","w":64,"h":64},"bush":{"file":"assets2/terr/bush.png","frames":8,"fw":128,"fh":128},"cobble":{"file":"assets2/terr/cobble.png","w":64,"h":64},"cobble2":{"file":"assets2/terr/cobble2.png","w":64,"h":64},"dirt":{"file":"assets2/terr/dirt.png","w":64,"h":64},"sand":{"file":"assets2/terr/sand.png","w":64,"h":64},"scorch":{"file":"assets2/terr/scorch.png","w":64,"h":64},"flower1":{"file":"assets2/terr/flower1.png","w":43,"h":54},"flower2":{"file":"assets2/terr/flower2.png","w":23,"h":21},"tuft1":{"file":"assets2/terr/tuft1.png","w":17,"h":40},"tuft2":{"file":"assets2/terr/tuft2.png","w":21,"h":40},"pebble":{"file":"assets2/terr/pebble.png","w":10,"h":9}},"spell":{"fire":{"file":"assets2/spell/fire.png","frames":13,"fw":128,"fh":128},"heal":{"file":"assets2/spell/heal.png","frames":16,"fw":128,"fh":128},"poison":{"file":"assets2/spell/poison.png","frames":17,"fw":128,"fh":128},"lightning":{"file":"assets2/spell/lightning.png","frames":7,"fw":128,"fh":128},"slash":{"file":"assets2/spell/slash.png","frames":7,"fw":96,"fh":96},"smite":{"file":"assets2/spell/smite.png","frames":16,"fw":144,"fh":144},"curse":{"file":"assets2/spell/curse.png","frames":22,"fw":64,"fh":64},"ward":{"file":"assets2/spell/ward.png","frames":18,"fw":128,"fh":128},"fury":{"file":"assets2/spell/fury.png","frames":18,"fw":128,"fh":128},"haste":{"file":"assets2/spell/haste.png","frames":22,"fw":128,"fh":128}},"status":{"bleed":{"file":"assets2/status/bleed.png","frames":16,"fw":64,"fh":64},"burn":{"file":"assets2/status/burn.png","frames":16,"fw":64,"fh":64},"poison":{"file":"assets2/status/poison.png","frames":16,"fw":64,"fh":64},"shock":{"file":"assets2/status/shock.png","frames":16,"fw":64,"fh":64},"heal":{"file":"assets2/status/heal.png","frames":16,"fw":64,"fh":64},"shield":{"file":"assets2/status/shield.png","frames":16,"fw":64,"fh":64},"stun":{"file":"assets2/status/stun.png","frames":16,"fw":64,"fh":64},"rage":{"file":"assets2/status/rage.png","frames":16,"fw":64,"fh":64},"regen":{"file":"assets2/status/regen.png","frames":16,"fw":64,"fh":64}},"prop":{"tent":{"file":"assets2/prop/tent.png","w":73,"h":65},"tent2":{"file":"assets2/prop/tent2.png","w":65,"h":62},"crate":{"file":"assets2/prop/crate.png","w":20,"h":22},"barrel":{"file":"assets2/prop/barrel.png","w":18,"h":25},"house_s":{"file":"assets2/prop/house_s.png","w":116,"h":112},"house_m":{"file":"assets2/prop/house_m.png","w":156,"h":135},"bigdecor":{"file":"assets2/prop/bigdecor.png","w":48,"h":26},"fence":{"file":"assets2/prop/fence.png","w":63,"h":64}},"critter":{"cat":{"file":"assets2/critter/cat.png","frames":6,"fw":96,"fh":96}},"ui":{"frame":{"file":"assets2/ui/frame.png","w":48,"h":48,"corner":16},"panel":{"file":"assets2/ui/panel.png","w":96,"h":96,"corner":32},"btn":{"file":"assets2/ui/btn.png","w":282,"h":286,"cap":118},"btnRed":{"file":"assets2/ui/btn_red.png","w":282,"h":286,"cap":118},"barBase":{"file":"assets2/ui/bar_base.png","w":320,"h":64,"cap":28},"barFill":{"file":"assets2/ui/bar_fill.png","w":64,"h":64}}};
 /*__MANIFEST_END__*/
 /* ---------- Image loader (progress + watchdog) ---------- */
 var images={}; var toLoad=0, loaded=0, failed=[];
@@ -112,7 +112,7 @@ var KMAP={ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right',w:'u
 window.addEventListener('keydown',function(e){ var k=KMAP[e.key]; if(k){ setKey(k,true); e.preventDefault(); } });
 window.addEventListener('keyup',function(e){ var k=KMAP[e.key]; if(k){ setKey(k,false); e.preventDefault(); } });
 function consume(k){ if(pressed[k]){ pressed[k]=false; return true; } return false; }
-var navHold={up:0,down:0};
+var navHold={up:0,down:0,left:0,right:0};
 function navEdge(k){ if(keys[k]){ if(navHold[k]<=0){ navHold[k]=0.18; return true; } navHold[k]-=1/60; } else navHold[k]=0; return false; }
 
 /* ---------- VFX: particles / floating text / screen-shake ---------- */
@@ -135,7 +135,7 @@ function drawFloats(ox,oy){ ctx.textAlign='center'; for(var i=0;i<floats.length;
   ctx.lineWidth=3; ctx.strokeStyle='rgba(0,0,0,.8)'; ctx.strokeText(f.txt,f.x-ox,f.y-oy);
   ctx.fillStyle=f.col; ctx.fillText(f.txt,f.x-ox,f.y-oy);} ctx.globalAlpha=1; ctx.textAlign='left'; }
 var shake={t:0,mag:0};
-function doShake(m,t){ shake.mag=Math.max(shake.mag,m); shake.t=Math.max(shake.t,t); }
+function doShake(m,t){ if(typeof OPT!=='undefined'&&OPT.shake===false)return; shake.mag=Math.max(shake.mag,m); shake.t=Math.max(shake.t,t); }
 function shakeOff(dt){ if(shake.t>0){ shake.t-=dt; var k=clamp(shake.t*4,0,1); return {x:rand(-1,1)*shake.mag*k,y:rand(-1,1)*shake.mag*k}; } return {x:0,y:0}; }
 
 /* ---------- Spell FX player (one-shot Super-Pixel-Effects @15fps) ---------- */
@@ -927,8 +927,65 @@ function battleUI(){
     if(B.menu!=='root'){ var d=list[B.cursor]&&list[B.cursor].desc; if(d){ ctx.font='10px Trebuchet MS'; ctx.fillStyle='#9c957f'; wrapText(d,cx+10,py+ch-8,cw-16,12,'left'); } }
   }
 }
-/* ---------- Title / Game Over ---------- */
+/* ---------- Title / Options / Intro / Game Over ---------- */
 var state='boot', gameOverMsg='', titleT=0, emberT=0;
+
+/* ===== Player options (persisted to localStorage) ===== */
+var OPT={sfx:true,music:true,shake:true,haptics:true,speed:1};
+var OPT_KEY='tribes_opts_v1';
+function loadOpts(){ try{var o=JSON.parse(localStorage.getItem(OPT_KEY)); if(o)for(var k in o)if(k in OPT)OPT[k]=o[k];}catch(e){} }
+function saveOpts(){ try{localStorage.setItem(OPT_KEY,JSON.stringify(OPT));}catch(e){} }
+loadOpts();
+
+/* ======================================================================
+   STORY  —  >>>>>  REPLACE-ME: swap this whole block for the real story  <<<<<
+   Each string in `intro` is ONE page of the opening story crawl.
+   Code-only, no assets needed. Edit the text freely; length is flexible.
+   ====================================================================== */
+var STORY={
+  heading:'TRIBES',
+  tagline:'An Olden Fantasy Saga',
+  intro:[
+    'PLACEHOLDER \u2014 Long ago the Ember burned as one flame, and every tribe warmed its hands at a single hearth.',
+    'PLACEHOLDER \u2014 Then the fire was shattered, scattered into embers across a hundred quarrelling clans.',
+    'PLACEHOLDER \u2014 From the ash-choked north rose Grimspire, whose Warchief gathered the broken sparks to forge a darker fire.',
+    'PLACEHOLDER \u2014 You are the Vanguard, last ember of the old hearth. Rekindle the tribes and carry the flame to Grimspire\u2019s gate.'
+  ]
+};
+/* ===== end REPLACE-ME ===== */
+
+/* ===== Kenney 9-slice panel (falls back to ornate panel if art missing) ===== */
+function panelK(x,y,w,h){
+  var img=images['ui_panel'], m=A.ui.panel;
+  if(!imgReady(img)){ panel(x,y,w,h); return; }
+  var c=m.corner, S=m.w, mw=S-2*c, mh=m.h-2*c, iw=w-2*c, ih=h-2*c;
+  ctx.drawImage(img,0,0,c,c, x,y,c,c);
+  ctx.drawImage(img,S-c,0,c,c, x+w-c,y,c,c);
+  ctx.drawImage(img,0,m.h-c,c,c, x,y+h-c,c,c);
+  ctx.drawImage(img,S-c,m.h-c,c,c, x+w-c,y+h-c,c,c);
+  ctx.drawImage(img,c,0,mw,c, x+c,y,iw,c);
+  ctx.drawImage(img,c,m.h-c,mw,c, x+c,y+h-c,iw,c);
+  ctx.drawImage(img,0,c,c,mh, x,y+c,c,ih);
+  ctx.drawImage(img,S-c,c,c,mh, x+w-c,y+c,c,ih);
+  ctx.drawImage(img,c,c,mw,mh, x+c,y+c,iw,ih);
+}
+
+/* ===== Tiny Swords 3-slice button (text label ALWAYS drawn) ===== */
+function uiButton(x,y,w,h,label,sel,down,red){
+  var img=images[red?'ui_btnRed':'ui_btn'], m=red?A.ui.btnRed:A.ui.btn;
+  var oy=down?3:0, yy=y+oy;
+  if(imgReady(img)){
+    var sc=h/m.h, ct=m.cap*sc, mid=m.w-2*m.cap;
+    ctx.drawImage(img,0,0,m.cap,m.h, x,yy,ct,h);
+    ctx.drawImage(img,m.cap,0,mid,m.h, x+ct,yy,w-2*ct,h);
+    ctx.drawImage(img,m.w-m.cap,0,m.cap,m.h, x+w-ct,yy,ct,h);
+  } else { panelK(x,yy,w,h); }
+  if(sel){ ctx.save(); ctx.strokeStyle='#ffe3a0'; ctx.lineWidth=2.5; roundRect(x+3,yy+3,w-6,h-6,9); ctx.stroke(); ctx.restore(); }
+  ctx.textAlign='center'; ctx.font='bold 17px Trebuchet MS';
+  ctx.fillStyle='rgba(0,0,0,.45)'; ctx.fillText(label, x+w/2+1, yy+h/2+6+1);
+  ctx.fillStyle=sel?'#fff':'#f6edd6'; ctx.fillText(label, x+w/2, yy+h/2+6);
+  ctx.textAlign='left';
+}
 function newGame(){
   player.level=1;player.xp=0;player.xpNext=30;player.job='Vanguard';
   player.hp=120;player.hpMax=120;player.mp=28;player.mpMax=28;player.atk=14;player.def=6;
@@ -938,33 +995,139 @@ function newGame(){
 function continueGame(){ loadSave(); genWorld(); state='overworld'; }
 function gameOver(msg){ gameOverMsg=msg; state='gameover'; B=null; try{localStorage.removeItem(SAVE_KEY);}catch(e){} haptic('heavy'); }
 
+/* ---------- Title dashboard (nav menu: New Saga / Continue / Options) ---------- */
+var titleMenu=[], titleSel=0;
+function buildTitleMenu(){
+  titleMenu=[{k:'new',label:'New Saga'}];
+  if(hasSave()) titleMenu.push({k:'cont',label:'Continue'});
+  titleMenu.push({k:'opts',label:'Options'});
+  if(titleSel>=titleMenu.length) titleSel=0;
+}
+function selectTitle(){ var it=titleMenu[titleSel]; if(!it)return; haptic('light');
+  if(it.k==='new') startIntro();
+  else if(it.k==='cont') continueGame();
+  else if(it.k==='opts'){ state='options'; optSel=0; }
+}
+function handleTitleTap(cx,cy){
+  for(var i=0;i<titleMenu.length;i++){ var r=titleMenu[i]._r;
+    if(r&&cx>=r.x&&cx<=r.x+r.w&&cy>=r.y&&cy<=r.y+r.h){ titleSel=i; selectTitle(); return; } }
+}
 function titleUpdate(dt){ titleT+=dt; emberT+=dt;
   if(emberT>0.05){ emberT=0; emit(rand(VW*0.2,VW*0.8), VH*0.5, 1, {col:choice(['#ffcf6b','#ff8a3c','#ffe3a0']),sp0:10,sp1:40,ang:-1.57,g:-40,l0:1.0,l1:1.8,r0:1.5,r1:3}); }
-  updPP(dt);
-  if(consume('a')) newGame();
+  updPP(dt); buildTitleMenu();
+  if(navEdge('up')){ titleSel=(titleSel-1+titleMenu.length)%titleMenu.length; haptic('sel'); }
+  if(navEdge('down')){ titleSel=(titleSel+1)%titleMenu.length; haptic('sel'); }
+  if(consume('a')) selectTitle();
   if(consume('b') && hasSave()) continueGame();
 }
 function titleDraw(){
   var gg=ctx.createLinearGradient(0,0,0,VH); gg.addColorStop(0,'#132a16'); gg.addColorStop(1,'#060a05');
   ctx.fillStyle=gg; ctx.fillRect(0,0,VW,VH); drawPP(0,0);
   ctx.textAlign='center';
-  ctx.font='bold 64px Trebuchet MS'; var ty=VH*0.4;
-  ctx.fillStyle='#0c1708'; ctx.fillText('TRIBES',VW/2+3,ty+3);
+  ctx.font='bold 64px Trebuchet MS'; var ty=VH*0.34;
+  ctx.fillStyle='#0c1708'; ctx.fillText(STORY.heading,VW/2+3,ty+3);
   var grd=ctx.createLinearGradient(0,ty-50,0,ty+10); grd.addColorStop(0,'#ffe3a0'); grd.addColorStop(1,'#d2672e');
-  ctx.fillStyle=grd; ctx.fillText('TRIBES',VW/2,ty);
-  ctx.font='14px Trebuchet MS'; ctx.fillStyle='#c9b071'; ctx.fillText('An Olden Fantasy Saga',VW/2,ty+30);
-  var a=0.5+0.5*Math.sin(titleT*3);
-  ctx.globalAlpha=a; ctx.font='bold 18px Trebuchet MS'; ctx.fillStyle='#f3e9d2';
-  ctx.fillText('Press  A  —  New Saga', VW/2, VH*0.66); ctx.globalAlpha=1;
-  if(hasSave()){ ctx.fillStyle='#9fd4ff'; ctx.font='15px Trebuchet MS'; ctx.fillText('Press  B  —  Continue', VW/2, VH*0.72); }
+  ctx.fillStyle=grd; ctx.fillText(STORY.heading,VW/2,ty);
+  ctx.font='14px Trebuchet MS'; ctx.fillStyle='#c9b071'; ctx.fillText(STORY.tagline,VW/2,ty+30);
+  buildTitleMenu();
+  var bw=Math.min(260,VW*0.72), bh=48, gap=14, n=titleMenu.length, y0=VH*0.5;
+  for(var i=0;i<n;i++){ var bx=VW/2-bw/2, by=y0+i*(bh+gap);
+    uiButton(bx,by,bw,bh, titleMenu[i].label, i===titleSel, i===titleSel&&keys.a);
+    titleMenu[i]._r={x:bx,y:by,w:bw,h:bh}; }
+  ctx.font='11px Trebuchet MS'; ctx.fillStyle='rgba(230,220,190,.5)';
+  ctx.fillText('\u2191\u2193 choose    A select', VW/2, y0+n*(bh+gap)+14);
   ctx.textAlign='left';
 }
+/* ---------- Opening story (intro crawl) ---------- */
+var intro={idx:0,t:0}; var CPS=[18,32,99999];  /* chars/sec by OPT.speed (Slow/Normal/Instant) */
+function startIntro(){ intro.idx=0; intro.t=0; state='intro'; }
+function introAdvance(){
+  var full=STORY.intro[intro.idx]||'', cps=CPS[OPT.speed]||32, shown=Math.floor(intro.t*cps);
+  if(shown<full.length){ intro.t=full.length/cps+0.01; return; }   /* 1st press reveals rest */
+  intro.idx++; intro.t=0;
+  if(intro.idx>=STORY.intro.length) newGame();
+}
+function introUpdate(dt){ titleT+=dt; emberT+=dt;
+  if(emberT>0.08){ emberT=0; emit(rand(VW*0.15,VW*0.85), VH*0.92, 1, {col:choice(['#ffcf6b','#ff8a3c']),sp0:8,sp1:30,ang:-1.57,g:-30,l0:1.2,l1:2.2,r0:1,r1:2.5}); }
+  intro.t+=dt; updPP(dt);
+  if(consume('a')) introAdvance();
+  if(consume('b')) newGame();
+}
+function introDraw(){
+  ctx.fillStyle='#070b06'; ctx.fillRect(0,0,VW,VH); drawPP(0,0);
+  var pw=Math.min(360,VW*0.86), ph=Math.min(236,VH*0.5), px=VW/2-pw/2, py=VH*0.26;
+  panelK(px,py,pw,ph);
+  ctx.textAlign='center';
+  ctx.font='italic 13px Trebuchet MS'; ctx.fillStyle='#c9b071';
+  ctx.fillText('Chapter '+(intro.idx+1)+' of '+STORY.intro.length, VW/2, py+26);
+  var full=STORY.intro[intro.idx]||'', cps=CPS[OPT.speed]||32, n=Math.floor(intro.t*cps);
+  ctx.font='16px Trebuchet MS'; ctx.fillStyle='#f3e9d2';
+  wrapText(full.slice(0,n), VW/2, py+58, pw-48, 24, 'center');
+  var a=0.4+0.4*Math.sin(titleT*4);
+  ctx.globalAlpha=a; ctx.font='bold 14px Trebuchet MS'; ctx.fillStyle='#ffe3a0';
+  ctx.fillText('A \u25b8 continue', VW/2, py+ph-18); ctx.globalAlpha=1;
+  ctx.font='11px Trebuchet MS'; ctx.fillStyle='rgba(230,220,190,.5)';
+  ctx.fillText('B \u25b8 skip', VW/2, py+ph+16);
+  ctx.textAlign='left';
+}
+
+/* ---------- Options (functional toggles; persisted) ---------- */
+var optSel=0;
+var OPTITEMS=[
+  {k:'sfx',label:'Sound Effects',type:'bool'},
+  {k:'music',label:'Music',type:'bool'},
+  {k:'shake',label:'Screen Shake',type:'bool'},
+  {k:'haptics',label:'Haptics',type:'bool'},
+  {k:'speed',label:'Story Speed',type:'enum',opts:['Slow','Normal','Instant']},
+  {k:'back',label:'Back',type:'back'}
+];
+function optAdjust(d){ var it=OPTITEMS[optSel];
+  if(it.type==='bool'){ OPT[it.k]=!OPT[it.k]; saveOpts(); haptic('sel'); }
+  else if(it.type==='enum'){ OPT[it.k]=(OPT[it.k]+d+it.opts.length)%it.opts.length; saveOpts(); haptic('sel'); } }
+function optActivate(){ var it=OPTITEMS[optSel];
+  if(it.type==='back'){ state='title'; haptic('light'); } else optAdjust(1); }
+function optValText(it){ if(it.type==='bool')return OPT[it.k]?'On':'Off'; if(it.type==='enum')return it.opts[OPT[it.k]]; return ''; }
+function handleOptionsTap(cx,cy){
+  for(var i=0;i<OPTITEMS.length;i++){ var r=OPTITEMS[i]._r;
+    if(r&&cx>=r.x&&cx<=r.x+r.w&&cy>=r.y&&cy<=r.y+r.h){ optSel=i; optActivate(); return; } }
+}
+function optionsUpdate(dt){ titleT+=dt; updPP(dt);
+  if(navEdge('up')){ optSel=(optSel-1+OPTITEMS.length)%OPTITEMS.length; haptic('sel'); }
+  if(navEdge('down')){ optSel=(optSel+1)%OPTITEMS.length; haptic('sel'); }
+  if(navEdge('left')) optAdjust(-1);
+  if(navEdge('right')) optAdjust(1);
+  if(consume('a')) optActivate();
+  if(consume('b')){ state='title'; haptic('light'); }
+}
+function optionsDraw(){
+  var gg=ctx.createLinearGradient(0,0,0,VH); gg.addColorStop(0,'#101d26'); gg.addColorStop(1,'#060a0d');
+  ctx.fillStyle=gg; ctx.fillRect(0,0,VW,VH); drawPP(0,0);
+  ctx.textAlign='center'; ctx.font='bold 30px Trebuchet MS'; ctx.fillStyle='#ffe3a0';
+  ctx.fillText('Options', VW/2, VH*0.16);
+  var rh=46, pad=18, pw=Math.min(340,VW*0.88), ph=OPTITEMS.length*rh+pad*2, px=VW/2-pw/2, py=VH*0.22;
+  panelK(px,py,pw,ph);
+  for(var i=0;i<OPTITEMS.length;i++){ var it=OPTITEMS[i];
+    var rx=px+14, ry=py+pad+i*rh, rw=pw-28, sel=i===optSel;
+    if(sel){ ctx.fillStyle='rgba(255,227,160,.14)'; roundRect(rx,ry,rw,rh-6,8); ctx.fill();
+             ctx.strokeStyle='#ffe3a0'; ctx.lineWidth=2; roundRect(rx,ry,rw,rh-6,8); ctx.stroke(); }
+    ctx.textAlign='left'; ctx.font='bold 16px Trebuchet MS'; ctx.fillStyle=sel?'#fff':'#e8dcc0';
+    ctx.fillText(it.label, rx+14, ry+(rh-6)/2+6);
+    ctx.textAlign='right'; var v=optValText(it);
+    if(it.type==='bool') ctx.fillStyle=OPT[it.k]?'#8ad17a':'#d2726a'; else ctx.fillStyle='#9fd4ff';
+    ctx.font='bold 15px Trebuchet MS'; ctx.fillText(v, rx+rw-14, ry+(rh-6)/2+6);
+    it._r={x:rx,y:ry,w:rw,h:rh-6}; }
+  ctx.textAlign='center'; ctx.font='11px Trebuchet MS'; ctx.fillStyle='rgba(230,220,190,.5)';
+  ctx.fillText('\u2191\u2193 move   \u2190\u2192 change   A toggle   B back', VW/2, py+ph+20);
+  ctx.textAlign='left';
+}
+
 function gameoverUpdate(dt){ updPP(dt); if(consume('a')) state='title'; }
 function gameoverDraw(){
   ctx.fillStyle='#060a05'; ctx.fillRect(0,0,VW,VH); ctx.textAlign='center';
   ctx.font='bold 40px Trebuchet MS'; ctx.fillStyle='#d2443a'; ctx.fillText('You Have Fallen',VW/2,VH*0.4);
   ctx.font='15px Trebuchet MS'; ctx.fillStyle='#cfe0b0'; wrapText(gameOverMsg,VW/2,VH*0.47,VW*0.8,20,'center');
-  ctx.fillStyle='#f3e9d2'; ctx.font='bold 16px Trebuchet MS'; ctx.fillText('Press  A  —  Return',VW/2,VH*0.6);
+  var bw=Math.min(220,VW*0.6), bh=46;
+  uiButton(VW/2-bw/2, VH*0.58, bw, bh, 'Return', true, keys.a);
   ctx.textAlign='left';
 }
 
@@ -1052,7 +1215,9 @@ function drawInteriorDialogue(){
    TOUCH \u2014 tap-to-move / tap-to-act (native mobile controls)
    ============================================================ */
 function canvasTap(cx,cy){
-  if(state==='title'){ newGame(); return; }
+  if(state==='title'){ handleTitleTap(cx,cy); return; }
+  if(state==='intro'){ introAdvance(); return; }
+  if(state==='options'){ handleOptionsTap(cx,cy); return; }
   if(state==='gameover'){ state='title'; return; }
   if(state==='interior'){ handleInteriorTap(cx,cy); return; }
   if(state==='overworld'){ handleOverworldTap(cx,cy); return; }
@@ -1103,6 +1268,8 @@ function frame(ts){
   var sh=shakeOff(dt);
   ctx.clearRect(0,0,VW,VH);
   if(state==='title'){ titleUpdate(dt); titleDraw(); }
+  else if(state==='intro'){ introUpdate(dt); introDraw(); }
+  else if(state==='options'){ optionsUpdate(dt); optionsDraw(); }
   else if(state==='overworld'){ overworldUpdate(dt); overworldDraw(sh); }
   else if(state==='interior'){ interiorUpdate(dt); interiorDraw(); }
   else if(state==='battle'){ battleUpdate(dt); if(B) battleDraw(sh); }

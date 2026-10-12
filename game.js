@@ -61,6 +61,8 @@ function loadAll(cb){
   walk(A.hero,'hero'); walk(A.npc,'npc'); walk(A.mob,'mob');
   walk(A.build,'build'); walk(A.terr,'terr'); walk(A.spell,'spell'); walk(A.status,'status');
   walk(A.prop,'prop'); walk(A.critter,'critter'); walk(A.ui,'ui');
+  A.char={hero1:{file:'assets2/char/hero1.png',fw:16,fh:20},hero2:{file:'assets2/char/hero2.png',fw:16,fh:20},hero3:{file:'assets2/char/hero3.png',fw:16,fh:20}};
+  walk(A.char,'char');
   var waited=0, MAXW=12000;
   (function wait(){
     setLoadMsg('Mustering the tribe\u2026 '+loaded+'/'+toLoad);
@@ -582,6 +584,7 @@ function overworldDraw(sh){
   // hero
   list.push({y:player.wy, fn:function(){ var hd=A.hero[player.anim][player.dir];
     drawShadow(player.wx-cam.x, player.wy-cam.y, 15);
+    if(drawRetroHero(player.wx-cam.x, player.wy-cam.y)) return;
     var fl=(player.dir==='side'&&player.facing<0);
     if(!drawFrame(images['hero_'+player.anim+'_'+player.dir], hd.fw,hd.fh, Math.min(player.frame,hd.frames-1), player.wx-cam.x, player.wy-cam.y, 0.9, fl)){
       ctx.fillStyle='#6cc5ff'; ctx.fillRect(player.wx-cam.x-10, player.wy-cam.y-40, 20,40); } }});
@@ -946,10 +949,11 @@ var STORY={
   heading:'TRIBES',
   tagline:'An Olden Fantasy Saga',
   intro:[
-    'PLACEHOLDER \u2014 Long ago the Ember burned as one flame, and every tribe warmed its hands at a single hearth.',
-    'PLACEHOLDER \u2014 Then the fire was shattered, scattered into embers across a hundred quarrelling clans.',
-    'PLACEHOLDER \u2014 From the ash-choked north rose Grimspire, whose Warchief gathered the broken sparks to forge a darker fire.',
-    'PLACEHOLDER \u2014 You are the Vanguard, last ember of the old hearth. Rekindle the tribes and carry the flame to Grimspire\u2019s gate.'
+    'For a thousand years the Ember burned as a single flame, and every tribe of the realm warmed its hands at one shared hearth.',
+    'Then the Palatine Empire rose in the north. Its legions smothered the great fire and carried the stolen embers behind the black walls of Grimspire.',
+    'The tribes were scattered, their hearths cold, their songs forbidden. Hope guttered low — but it did not go out.',
+    'In a quiet border village, a {JOB} named {HERO} takes up arms. The last free ember still burns in their heart.',
+    'This is where the rebellion begins. Rekindle the tribes, {HERO}, and carry the flame to the gates of Grimspire.'
   ]
 };
 /* ===== end REPLACE-ME ===== */
@@ -986,9 +990,79 @@ function uiButton(x,y,w,h,label,sel,down,red){
   ctx.fillStyle=sel?'#fff':'#f6edd6'; ctx.fillText(label, x+w/2, yy+h/2+6);
   ctx.textAlign='left';
 }
+/* ---------- Character selection (FF-style hero pick) ---------- */
+var HEROES=[
+  {key:'hero1', name:'Firion', job:'Warrior',  hp:140, mp:18, atk:17, def:8,  blurb:'A steadfast blade. High vitality and raw strength — forgiving for new rebels.'},
+  {key:'hero2', name:'Maria',  job:'Mage',     hp:96,  mp:40, atk:11, def:5,  blurb:'Master of the arcane. Deep magic reserves, but frail in melee.'},
+  {key:'hero3', name:'Guy',    job:'Guardian', hp:160, mp:12, atk:14, def:11, blurb:'An unbreakable wall. Towering defense; magic runs shallow.'}
+];
+var HERO=null, heroSel=0, heroCards=[];
+function startCharSel(){ heroSel=0; state='charsel'; }
+function confirmHero(){ HERO=HEROES[heroSel]||HEROES[0]; haptic('light'); startIntro(); }
+function charselUpdate(dt){ titleT+=dt; emberT+=dt;
+  if(emberT>0.1){ emberT=0; emit(rand(VW*0.15,VW*0.85), VH*0.95, 1, {col:choice(['#ffcf6b','#ff8a3c']),sp0:6,sp1:24,ang:-1.57,g:-26,l0:1.2,l1:2.2,r0:1,r1:2.2}); }
+  updPP(dt);
+  if(navEdge('left')){ heroSel=(heroSel-1+HEROES.length)%HEROES.length; haptic('sel'); }
+  if(navEdge('right')){ heroSel=(heroSel+1)%HEROES.length; haptic('sel'); }
+  if(consume('a')) confirmHero();
+  if(consume('b')){ state='title'; haptic('light'); }
+}
+function drawHeroSprite(key,col,row,cx,cy,scale){
+  var img=images['char_'+key], m=A.char&&A.char[key]; if(!imgReady(img)||!m) return false;
+  var w=m.fw*scale, h=m.fh*scale;
+  ctx.imageSmoothingEnabled=false;
+  ctx.drawImage(img, col*m.fw, row*m.fh, m.fw, m.fh, Math.round(cx-w/2), Math.round(cy-h), w, h);
+  ctx.imageSmoothingEnabled=true; return true;
+}
+function drawRetroHero(dx,dy){
+  if(!HERO) return false;
+  var row = player.dir==='up'?3 : (player.dir==='down'?0 : (player.facing<0?1:2));
+  var col = player.moving ? [1,0,1,2][Math.floor(player.frame)%4] : 1;
+  return drawHeroSprite(HERO.key, col, row, dx, dy, 2.8);
+}
+function charselDraw(){
+  var gg=ctx.createLinearGradient(0,0,0,VH); gg.addColorStop(0,'#1a2233'); gg.addColorStop(1,'#070a10');
+  ctx.fillStyle=gg; ctx.fillRect(0,0,VW,VH); drawPP(0,0);
+  ctx.textAlign='center'; ctx.font='bold 24px Trebuchet MS'; ctx.fillStyle='#ffe3a0';
+  ctx.fillText('Choose Your Hero', VW/2, VH*0.12);
+  var n=HEROES.length, slotW=Math.min(104,VW/(n+0.6)), gap=slotW*0.14;
+  var totalW=n*slotW+(n-1)*gap, x0=VW/2-totalW/2, cy=VH*0.47;
+  var walkCol=[1,0,1,2][Math.floor(titleT*6)%4];
+  var cardY=VH*0.2, cardH=VH*0.42;
+  heroCards=[];
+  for(var i=0;i<n;i++){ var hx=x0+i*(slotW+gap)+slotW/2, sel=i===heroSel;
+    if(sel){ ctx.fillStyle='rgba(255,227,160,.10)'; roundRect(hx-slotW/2,cardY,slotW,cardH,10); ctx.fill();
+             ctx.strokeStyle='#ffe3a0'; ctx.lineWidth=2.5; roundRect(hx-slotW/2,cardY,slotW,cardH,10); ctx.stroke(); }
+    drawShadow(hx, cy, sel?17:13);
+    if(!drawHeroSprite(HEROES[i].key, sel?walkCol:1, 0, hx, cy, sel?3.4:2.8)){
+      ctx.fillStyle='#6cc5ff'; ctx.fillRect(hx-14,cy-50,28,50); }
+    ctx.fillStyle=sel?'#fff':'#cbd4e0'; ctx.font='bold 14px Trebuchet MS';
+    ctx.fillText(HEROES[i].name, hx, cy+26);
+    ctx.fillStyle=sel?'#ffd98a':'#8c96a6'; ctx.font='11px Trebuchet MS';
+    ctx.fillText(HEROES[i].job, hx, cy+42);
+    heroCards.push({x:hx-slotW/2,y:cardY,w:slotW,h:cardH,i:i});
+  }
+  var h=HEROES[heroSel], pw=Math.min(344,VW*0.88), px=VW/2-pw/2, py=VH*0.66, ph=VH*0.22;
+  panelK(px,py,pw,ph);
+  ctx.textAlign='center'; ctx.font='italic 13px Trebuchet MS'; ctx.fillStyle='#e8dcc0';
+  wrapText(h.blurb, VW/2, py+22, pw-40, 17, 'center');
+  ctx.font='bold 13px Trebuchet MS'; ctx.fillStyle='#cfe0b0';
+  ctx.fillText('HP '+h.hp+'   MP '+h.mp+'   ATK '+h.atk+'   DEF '+h.def, VW/2, py+ph-30);
+  var a=0.4+0.4*Math.sin(titleT*4); ctx.globalAlpha=a; ctx.fillStyle='#ffe3a0'; ctx.font='bold 14px Trebuchet MS';
+  ctx.fillText('A \u25b8 begin saga', VW/2, py+ph-9); ctx.globalAlpha=1;
+  ctx.font='11px Trebuchet MS'; ctx.fillStyle='rgba(230,220,190,.5)';
+  ctx.fillText('\u2190 \u2192 choose     B back', VW/2, py+ph+16);
+  ctx.textAlign='left';
+}
+function handleCharselTap(cx,cy){
+  for(var i=0;i<heroCards.length;i++){ var r=heroCards[i];
+    if(cx>=r.x&&cx<=r.x+r.w&&cy>=r.y&&cy<=r.y+r.h){ if(heroSel===r.i) confirmHero(); else { heroSel=r.i; haptic('sel'); } return; } }
+  confirmHero();
+}
 function newGame(){
-  player.level=1;player.xp=0;player.xpNext=30;player.job='Vanguard';
-  player.hp=120;player.hpMax=120;player.mp=28;player.mpMax=28;player.atk=14;player.def=6;
+  var H=(typeof HERO!=='undefined'&&HERO)?HERO:HEROES[0];
+  player.level=1;player.xp=0;player.xpNext=30;player.job=H.job;
+  player.hp=H.hp;player.hpMax=H.hp;player.mp=H.mp;player.mpMax=H.mp;player.atk=H.atk;player.def=H.def;
   player.gold=0;player.potions=3;player.ethers=2;player.invuln=1.2;
   player.wx=0;player.wy=0; genWorld(); state='overworld'; try{localStorage.removeItem(SAVE_KEY);}catch(e){}
 }
@@ -1004,7 +1078,7 @@ function buildTitleMenu(){
   if(titleSel>=titleMenu.length) titleSel=0;
 }
 function selectTitle(){ var it=titleMenu[titleSel]; if(!it)return; haptic('light');
-  if(it.k==='new') startIntro();
+  if(it.k==='new') startCharSel();
   else if(it.k==='cont') continueGame();
   else if(it.k==='opts'){ state='options'; optSel=0; }
 }
@@ -1040,9 +1114,11 @@ function titleDraw(){
 }
 /* ---------- Opening story (intro crawl) ---------- */
 var intro={idx:0,t:0}; var CPS=[18,32,99999];  /* chars/sec by OPT.speed (Slow/Normal/Instant) */
+function storyLine(i){ var s=STORY.intro[i]||''; var H=(typeof HERO!=='undefined'&&HERO)?HERO:HEROES[0];
+  return s.replace(/\{HERO\}/g, H?H.name:'the hero').replace(/\{JOB\}/g, H?H.job.toLowerCase():'warrior'); }
 function startIntro(){ intro.idx=0; intro.t=0; state='intro'; }
 function introAdvance(){
-  var full=STORY.intro[intro.idx]||'', cps=CPS[OPT.speed]||32, shown=Math.floor(intro.t*cps);
+  var full=storyLine(intro.idx), cps=CPS[OPT.speed]||32, shown=Math.floor(intro.t*cps);
   if(shown<full.length){ intro.t=full.length/cps+0.01; return; }   /* 1st press reveals rest */
   intro.idx++; intro.t=0;
   if(intro.idx>=STORY.intro.length) newGame();
@@ -1060,7 +1136,7 @@ function introDraw(){
   ctx.textAlign='center';
   ctx.font='italic 13px Trebuchet MS'; ctx.fillStyle='#c9b071';
   ctx.fillText('Chapter '+(intro.idx+1)+' of '+STORY.intro.length, VW/2, py+26);
-  var full=STORY.intro[intro.idx]||'', cps=CPS[OPT.speed]||32, n=Math.floor(intro.t*cps);
+  var full=storyLine(intro.idx), cps=CPS[OPT.speed]||32, n=Math.floor(intro.t*cps);
   ctx.font='16px Trebuchet MS'; ctx.fillStyle='#f3e9d2';
   wrapText(full.slice(0,n), VW/2, py+58, pw-48, 24, 'center');
   var a=0.4+0.4*Math.sin(titleT*4);
@@ -1193,6 +1269,7 @@ function interiorDraw(){
   if(imgReady(images['npc_'+cfg.keeper])) drawFrame(images['npc_'+cfg.keeper], km.fw,km.fh, Math.floor(INT.t*4)%km.frames, kx, ky, km.fh>=64?1.6:2.8, false);
   // hero before the keeper
   var hm=A.hero.idle.down; drawShadow(VW*0.5, VH*0.78, 15);
+  if(!(HERO && drawHeroSprite(HERO.key, 0, 0, VW*0.5, VH*0.78, 3.6)))
   drawFrame(images['hero_idle_down'], hm.fw,hm.fh, Math.floor(INT.t*5)%hm.frames, VW*0.5, VH*0.78, 1.4, false);
   // title
   ctx.textAlign='center'; ctx.fillStyle=cfg.accent; ctx.font='bold 20px Trebuchet MS'; ctx.fillText(INT.name, VW/2, 42);
@@ -1217,6 +1294,7 @@ function drawInteriorDialogue(){
 function canvasTap(cx,cy){
   if(state==='title'){ handleTitleTap(cx,cy); return; }
   if(state==='intro'){ introAdvance(); return; }
+  if(state==='charsel'){ handleCharselTap(cx,cy); return; }
   if(state==='options'){ handleOptionsTap(cx,cy); return; }
   if(state==='gameover'){ state='title'; return; }
   if(state==='interior'){ handleInteriorTap(cx,cy); return; }
@@ -1269,6 +1347,7 @@ function frame(ts){
   ctx.clearRect(0,0,VW,VH);
   if(state==='title'){ titleUpdate(dt); titleDraw(); }
   else if(state==='intro'){ introUpdate(dt); introDraw(); }
+  else if(state==='charsel'){ charselUpdate(dt); charselDraw(); }
   else if(state==='options'){ optionsUpdate(dt); optionsDraw(); }
   else if(state==='overworld'){ overworldUpdate(dt); overworldDraw(sh); }
   else if(state==='interior'){ interiorUpdate(dt); interiorDraw(); }

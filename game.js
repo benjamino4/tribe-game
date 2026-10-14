@@ -98,9 +98,9 @@ function drawStatic(img,w,h,dx,dy,scale){
 function drawShadow(dx,dy,rw){ ctx.save(); ctx.globalAlpha=0.3; ctx.fillStyle='#000';
   ctx.beginPath(); ctx.ellipse(dx,dy,rw,rw*0.4,0,0,6.283); ctx.fill(); ctx.restore(); }
 /* ---------- Input ---------- */
-var keys={up:false,down:false,left:false,right:false,a:false,b:false};
-var pressed={a:false,b:false};
-function setKey(k,v){ if(!(k in keys))return; if(v&&!keys[k]&&(k==='a'||k==='b'))pressed[k]=true; keys[k]=v; }
+var keys={up:false,down:false,left:false,right:false,a:false,b:false,menu:false};
+var pressed={a:false,b:false,menu:false};
+function setKey(k,v){ if(!(k in keys))return; if(v&&!keys[k]&&(k==='a'||k==='b'||k==='menu'))pressed[k]=true; keys[k]=v; }
 Array.prototype.forEach.call(document.querySelectorAll('.dbtn,.abtn'),function(btn){
   var k=btn.getAttribute('data-k');
   function dn(e){ e.preventDefault(); setKey(k,true); btn.classList.add('pressed'); if(k==='a'||k==='b')haptic('light'); }
@@ -110,7 +110,7 @@ Array.prototype.forEach.call(document.querySelectorAll('.dbtn,.abtn'),function(b
   btn.addEventListener('touchcancel',up,{passive:false});
   btn.addEventListener('mousedown',dn); btn.addEventListener('mouseup',up); btn.addEventListener('mouseleave',up);
 });
-var KMAP={ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right',w:'up',s:'down',a:'left',d:'right',j:'a',z:'a',Enter:'a',k:'b',x:'b',Shift:'b'};
+var KMAP={ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right',w:'up',s:'down',a:'left',d:'right',j:'a',z:'a',Enter:'a',k:'b',x:'b',Shift:'b',m:'menu',i:'menu',Tab:'menu',Escape:'menu'};
 window.addEventListener('keydown',function(e){ var k=KMAP[e.key]; if(k){ setKey(k,true); e.preventDefault(); } });
 window.addEventListener('keyup',function(e){ var k=KMAP[e.key]; if(k){ setKey(k,false); e.preventDefault(); } });
 function consume(k){ if(pressed[k]){ pressed[k]=false; return true; } return false; }
@@ -172,16 +172,20 @@ var WMAX_X=MW*TILE, WMAX_Y=MH*TILE;
 var player={
   wx:0, wy:0, dir:'down', facing:1, moving:false, anim:'idle', t:0, frame:0,
   level:1, xp:0, xpNext:30, job:'Vanguard',
-  hp:120, hpMax:120, mp:28, mpMax:28, atk:14, def:6,
-  gold:0, invuln:0, potions:3, ethers:2
+  hp:120, hpMax:120, mp:28, mpMax:28, atk:14, def:6, baseAtk:14, baseDef:6,
+  gold:0, invuln:0, potions:3, ethers:2,
+  weapon:'w0', armor:'a0', owned:['w0','a0']
 };
 var SAVE_KEY='tribes_save_v2';
 function save(){ try{ localStorage.setItem(SAVE_KEY, JSON.stringify({
   level:player.level,xp:player.xp,xpNext:player.xpNext,
   hp:player.hp,hpMax:player.hpMax,mp:player.mp,mpMax:player.mpMax,atk:player.atk,def:player.def,
-  gold:player.gold,potions:player.potions,ethers:player.ethers,wx:player.wx,wy:player.wy
+  baseAtk:player.baseAtk,baseDef:player.baseDef,weapon:player.weapon,armor:player.armor,owned:player.owned,
+  gold:player.gold,potions:player.potions,ethers:player.ethers,wx:player.wx,wy:player.wy,heroKey:(HERO&&HERO.key)||null
 })); }catch(e){} }
-function loadSave(){ try{ var s=JSON.parse(localStorage.getItem(SAVE_KEY)); if(s){ for(var k in s) player[k]=s[k]; return true; } }catch(e){} return false; }
+function loadSave(){ try{ var s=JSON.parse(localStorage.getItem(SAVE_KEY)); if(s){ for(var k in s) player[k]=s[k];
+  if(s.heroKey){ for(var hi=0;hi<HEROES.length;hi++) if(HEROES[hi].key===s.heroKey) HERO=HEROES[hi]; }
+  if(!player.owned) player.owned=['w0','a0']; recalcStats(); return true; } }catch(e){} return false; }
 function hasSave(){ try{ return !!localStorage.getItem(SAVE_KEY); }catch(e){ return false; } }
 
 /* ---------- Monster catalog (named, with stats + element) ---------- */
@@ -213,6 +217,41 @@ var ITEMS=[
   {name:'Potion', key:'potions', desc:'Restore 60 HP.'},
   {name:'Ether',  key:'ethers',  desc:'Restore 18 MP.'}
 ];
+/* ---------- Equipment + shop economy (FF-style) ---------- */
+var GEAR={
+  weapon:[
+    {id:'w0', slot:'weapon', name:'Rusted Sword',    atk:0,  cost:0,   desc:'A worn starter blade.'},
+    {id:'w1', slot:'weapon', name:'Iron Sword',      atk:6,  cost:120, desc:'+6 ATK. Reliable steel.'},
+    {id:'w2', slot:'weapon', name:'Knight\u2019s Sabre',  atk:12, cost:360, desc:'+12 ATK. A soldier\u2019s pride.'},
+    {id:'w3', slot:'weapon', name:'Flame Tongue',    atk:19, cost:820, desc:'+19 ATK. Wreathed in embers.'},
+    {id:'w4', slot:'weapon', name:'Ember Greatblade',atk:28, cost:1700,desc:'+28 ATK. Forged from the old hearth.'}
+  ],
+  armor:[
+    {id:'a0', slot:'armor', name:'Travel Clothes', def:0,  cost:0,   desc:'Simple cloth.'},
+    {id:'a1', slot:'armor', name:'Leather Mail',   def:5,  cost:110, desc:'+5 DEF. Boiled hide.'},
+    {id:'a2', slot:'armor', name:'Chain Hauberk',  def:10, cost:340, desc:'+10 DEF. Woven rings.'},
+    {id:'a3', slot:'armor', name:'Knight Plate',   def:16, cost:780, desc:'+16 DEF. Full steel.'},
+    {id:'a4', slot:'armor', name:'Emberplate',     def:24, cost:1600,desc:'+24 DEF. Ash-forged ward.'}
+  ]
+};
+var SHOP_ITEMS=[
+  {id:'potions', consumable:true, key:'potions', name:'Potion', cost:30, desc:'Restore 60 HP.'},
+  {id:'ethers',  consumable:true, key:'ethers',  name:'Ether',  cost:50, desc:'Restore 18 MP.'}
+];
+function gearById(id){ var all=GEAR.weapon.concat(GEAR.armor); for(var i=0;i<all.length;i++) if(all[i].id===id) return all[i]; return null; }
+function gName(id){ var g=gearById(id); return g?g.name:'\u2014'; }
+function ownsGear(id){ return player.owned && player.owned.indexOf(id)>=0; }
+function recalcStats(){ var w=gearById(player.weapon), a=gearById(player.armor);
+  player.atk=(player.baseAtk||player.atk)+(w?(w.atk||0):0);
+  player.def=(player.baseDef||player.def)+(a?(a.def||0):0); }
+function ownedBySlot(slot){ var r=[]; if(!player.owned)return r;
+  for(var i=0;i<player.owned.length;i++){ var g=gearById(player.owned[i]); if(g&&g.slot===slot) r.push(g); } return r; }
+function equipNext(slot){ var list=ownedBySlot(slot); if(list.length<2)return false;
+  var cur=slot==='weapon'?player.weapon:player.armor, idx=0;
+  for(var i=0;i<list.length;i++) if(list[i].id===cur) idx=i;
+  var nx=list[(idx+1)%list.length];
+  if(slot==='weapon') player.weapon=nx.id; else player.armor=nx.id;
+  recalcStats(); return true; }
 /* ---------- World state ---------- */
 var BSCALE=0.7;
 var buildings=[];   // {key,wx,wy,scale,name,town}
@@ -235,6 +274,8 @@ function addBuild(key,tx,ty,name,town){
 }
 function buildEnterType(key,name){
   var n=(name||'').toLowerCase();
+  if(n.indexOf('trading')>=0||n.indexOf('shop')>=0||n.indexOf('market')>=0||n.indexOf('post')>=0||n.indexOf('supply')>=0||n.indexOf('store')>=0) return 'shop';
+  if(n.indexOf('smith')>=0||n.indexOf('forge')>=0||n.indexOf('armory')>=0||n.indexOf('armoury')>=0) return 'smith';
   if(n.indexOf('tavern')>=0) return 'tavern';
   if(n.indexOf('castle')>=0||n.indexOf('keep')>=0) return 'castle';
   if(n.indexOf('barrack')>=0||n.indexOf('war pit')>=0||n.indexOf('archery')>=0) return 'barracks';
@@ -312,7 +353,8 @@ function genWorld(){
   addBuild('blue_castle',10,8,'Emberhold Castle','Emberhold');
   addBuild('blue_tower',6,7,'Watchtower','Emberhold');
   addBuild('blue_monastery',14,8,'Monastery of Dawn','Emberhold');
-  addBuild('blue_house1',7,11,'Cottage','Emberhold');
+  addBuild('blue_house1',7,11,'Trading Post','Emberhold');
+  addBuild('blue_house3',16,11,'Ember Smithy','Emberhold');
   addBuild('blue_house2',13,12,'Tavern of the Ember','Emberhold');
   addNPC('knight',10,11,'King Aldric',['Welcome home, Vanguard.','Grimspire Keep stirs in the north-east.','Drive back the Warchief and the realm is yours.']);
   addNPC('wizard',8,10,'Sage Morwen',['Magic flows through you, child.','Press Magic in battle to unleash Firaga or Thundara.','Thunder bites hardest against the undead.']);
@@ -323,6 +365,7 @@ function genWorld(){
   addBuild('blue_barracks',33,32,'Ravenmoor Barracks','Ravenmoor');
   addBuild('blue_archery',37,33,'Archery Range','Ravenmoor');
   addBuild('blue_house3',30,33,'Fisher\'s Hut','Ravenmoor');
+  addBuild('blue_house1',31,31,'Ravenmoor Supply','Ravenmoor');
   addBuild('blue_tower',37,30,'South Watchtower','Ravenmoor');
   addNPC('knight',33,35,'Capt. Doran',['Hold, soldier. The roads crawl with orc raiders.','Train hard — each kill makes you stronger.']);
   addNPC('rogue',31,34,'Sly Finn',['Psst. Potions sell cheap if you had any coin.','Venom magic? Cowardly. I love it.']);
@@ -418,6 +461,7 @@ function overworldUpdate(dt){
     if(consume('b')) dlg.active=false;
     return;
   }
+  if(consume('menu')){ openMenu(); return; }
   var ix=(keys.right?1:0)-(keys.left?1:0), iy=(keys.down?1:0)-(keys.up?1:0);
   var usingTap=false;
   if(!ix && !iy && moveTarget){ var ddx=moveTarget.x-player.wx, ddy=moveTarget.y-player.wy, dm=Math.hypot(ddx,ddy);
@@ -645,7 +689,12 @@ function drawHUD(){
   bar(16,VH-150-14,100,7,player.mp,player.mpMax,'#3f74d6');
   ctx.fillStyle='#cfe0b0'; ctx.font='9px Trebuchet MS';
   ctx.fillText('HP',120,VH-150-18); ctx.fillText('MP',120,VH-150-8);
+  // touch pack/menu button (top-right)
+  var mb=menuBtnRect(); panel(mb.x,mb.y,mb.w,mb.h);
+  ctx.fillStyle='#ffe3a0'; ctx.font='bold 18px Trebuchet MS'; ctx.textAlign='center';
+  ctx.fillText('\u2630', mb.x+mb.w/2, mb.y+mb.h/2+6); ctx.textAlign='left';
 }
+function menuBtnRect(){ var w=42,h=42; return {x:VW-w-10, y:VH-150-46, w:w, h:h}; }
 /* ============================================================
    BATTLE  (side-view, turn-based, animated + magic VFX)
    ============================================================ */
@@ -1062,8 +1111,11 @@ function handleCharselTap(cx,cy){
 function newGame(){
   var H=(typeof HERO!=='undefined'&&HERO)?HERO:HEROES[0];
   player.level=1;player.xp=0;player.xpNext=30;player.job=H.job;
-  player.hp=H.hp;player.hpMax=H.hp;player.mp=H.mp;player.mpMax=H.mp;player.atk=H.atk;player.def=H.def;
-  player.gold=0;player.potions=3;player.ethers=2;player.invuln=1.2;
+  player.hp=H.hp;player.hpMax=H.hp;player.mp=H.mp;player.mpMax=H.mp;
+  player.baseAtk=H.atk;player.baseDef=H.def;
+  player.weapon='w0';player.armor='a0';player.owned=['w0','a0'];
+  recalcStats();
+  player.gold=80;player.potions=3;player.ethers=2;player.invuln=1.2;
   player.wx=0;player.wy=0; genWorld(); state='overworld'; try{localStorage.removeItem(SAVE_KEY);}catch(e){}
 }
 function continueGame(){ loadSave(); genWorld(); state='overworld'; }
@@ -1222,11 +1274,16 @@ var INTERIORS={
   tower:   {title:'The Watchtower',    floor:'#3a4238', wall:'#242a22', accent:'#9fd4a0', keeper:'rogue',  keeperName:'The Watchman',
             lines:['From here I see the whole vale.','Dark banners mass to the north-east \u2014 Grimspire stirs.','Keep your blade close on the roads.'], heal:false},
   home:    {title:'A Humble Dwelling', floor:'#4e3b2a', wall:'#30241a', accent:'#c9a06a', keeper:'peasant',keeperName:'Villager',
-            lines:['Welcome, friend. Mind the dust.','We pray for your victory each dawn.','Safe travels out there.'], heal:false}
+            lines:['Welcome, friend. Mind the dust.','We pray for your victory each dawn.','Safe travels out there.'], heal:false},
+  shop:    {title:'Trading Post', floor:'#4a3d26', wall:'#2d2416', accent:'#ffd98a', keeper:'peasant', keeperName:'Merchant Pell', shop:'items',
+            lines:['Potions and ethers — best prices in the vale.','Buy low, bleed less. That’s my motto.','Spend your coin wisely, Vanguard.']},
+  smith:   {title:'The Smithy', floor:'#3a3630', wall:'#241f1a', accent:'#ff9a5a', keeper:'knight', keeperName:'Smith Garrok', shop:'gear',
+            lines:['Steel for coin, warrior. Pick your weapon.','Good armour outlives a reckless blade.','Equip what you buy from your pack menu.']}
 };
 var INT=null;
 function enterInterior(b){
   var cfg=INTERIORS[b.enter]||INTERIORS.home;
+  if(cfg.shop){ enterShop(b,cfg); return; }
   INT={cfg:cfg, name:b.name, idx:0, dlg:false, t:0, bx:b.wx, by:b.wy};
   state='interior'; moveTarget=null; haptic('medium');
   if(cfg.heal){ player.hp=player.hpMax; player.mp=player.mpMax; floatText(VW/2,VH*0.5,'Restored!','#8fe36b'); }
@@ -1238,6 +1295,157 @@ function exitInterior(){
   player.wx=INT.bx; player.wy=INT.by+TILE*1.2;   // step out below the door
   player.dir='down'; player.anim='idle'; moveTarget=null;
   INT=null; haptic('light');
+}
+/* ============================================================
+   SHOP — buy / sell items + equipment (gold economy)
+   ============================================================ */
+var SHOP=null;
+function enterShop(b,cfg){
+  SHOP={cfg:cfg, name:b.name, bx:b.wx, by:b.wy, tab:'buy', sel:0, t:0, msg:'', msgT:0};
+  state='shop'; moveTarget=null; haptic('medium'); save();
+}
+function exitShop(){ if(!SHOP)return; state='overworld'; player.invuln=0.6;
+  player.wx=SHOP.bx; player.wy=SHOP.by+TILE*1.2; player.dir='down'; player.anim='idle'; moveTarget=null;
+  SHOP=null; haptic('light'); }
+function shopBuyList(){ return SHOP.cfg.shop==='gear' ? GEAR.weapon.concat(GEAR.armor).filter(function(g){return g.cost>0;}) : SHOP_ITEMS.slice(); }
+function shopSellList(){ var r=[];
+  if(SHOP.cfg.shop==='gear'){ for(var i=0;i<player.owned.length;i++){ var g=gearById(player.owned[i]);
+      if(g && g.cost>0 && g.id!==player.weapon && g.id!==player.armor) r.push(g); } }
+  else { if(player.potions>0) r.push(SHOP_ITEMS[0]); if(player.ethers>0) r.push(SHOP_ITEMS[1]); }
+  return r; }
+function shopMsg(m){ SHOP.msg=m; SHOP.msgT=1.6; }
+function shopConfirm(){
+  var list=SHOP.tab==='buy'?shopBuyList():shopSellList(), g=list[SHOP.sel]; if(!g)return;
+  if(SHOP.tab==='buy'){
+    if(player.gold<g.cost){ shopMsg('Not enough gold.'); haptic('heavy'); return; }
+    if(g.consumable){ player.gold-=g.cost; player[g.key]=(player[g.key]||0)+1; shopMsg('Bought '+g.name+'.'); }
+    else { if(ownsGear(g.id)){ shopMsg('Already owned.'); haptic('light'); return; }
+      player.gold-=g.cost; player.owned.push(g.id); shopMsg('Bought '+g.name+' — equip it in your Pack.'); }
+    haptic('medium'); save();
+  } else {
+    var val=Math.floor(g.cost/2);
+    if(g.consumable){ if((player[g.key]||0)<=0){ shopMsg('None to sell.'); return; }
+      player[g.key]--; player.gold+=val; shopMsg('Sold '+g.name+' for '+val+'g.'); }
+    else { var idx=player.owned.indexOf(g.id); if(idx<0)return; player.owned.splice(idx,1); player.gold+=val; shopMsg('Sold '+g.name+' for '+val+'g.'); }
+    haptic('medium'); save();
+    var sl=shopSellList(); if(SHOP.sel>=sl.length) SHOP.sel=Math.max(0,sl.length-1);
+  }
+}
+function shopUpdate(dt){ SHOP.t+=dt; if(SHOP.msgT>0)SHOP.msgT-=dt; updPP(dt); updFloats(dt);
+  var list=SHOP.tab==='buy'?shopBuyList():shopSellList(), n=Math.max(1,list.length);
+  if(navEdge('up')){ SHOP.sel=(SHOP.sel-1+n)%n; haptic('sel'); }
+  if(navEdge('down')){ SHOP.sel=(SHOP.sel+1)%n; haptic('sel'); }
+  if(navEdge('left')||navEdge('right')){ SHOP.tab=SHOP.tab==='buy'?'sell':'buy'; SHOP.sel=0; haptic('sel'); }
+  if(consume('a')) shopConfirm();
+  if(consume('b')||consume('menu')) exitShop();
+}
+function shopTab(x,y,w,label,on){ var h=26;
+  ctx.fillStyle=on?'rgba(255,227,160,.18)':'rgba(0,0,0,.25)'; roundRect(x,y,w,h,7); ctx.fill();
+  ctx.strokeStyle=on?'#ffe3a0':'rgba(255,255,255,.15)'; ctx.lineWidth=2; roundRect(x,y,w,h,7); ctx.stroke();
+  ctx.textAlign='center'; ctx.fillStyle=on?'#fff':'#b7ad97'; ctx.font='bold 13px Trebuchet MS';
+  ctx.fillText(label, x+w/2, y+17); ctx.textAlign='left'; }
+function shopDraw(){
+  var cfg=SHOP.cfg;
+  ctx.fillStyle=cfg.wall||'#2d2416'; ctx.fillRect(0,0,VW,VH);
+  ctx.fillStyle=cfg.floor||'#4a3d26'; ctx.fillRect(0,VH*0.42,VW,VH);
+  ctx.textAlign='center'; ctx.fillStyle=cfg.accent||'#ffd98a'; ctx.font='bold 20px Trebuchet MS'; ctx.fillText(SHOP.name, VW/2, 34);
+  ctx.fillStyle='#f3e9d2'; ctx.font='12px Trebuchet MS'; ctx.fillText(cfg.keeperName, VW/2, 54);
+  ctx.textAlign='right'; ctx.fillStyle='#ffe08a'; ctx.font='bold 15px Trebuchet MS'; ctx.fillText(player.gold+' G', VW-16, 34); ctx.textAlign='left';
+  var tabW=84; shopTab(VW/2-tabW-6,66,tabW,'Buy',SHOP.tab==='buy'); shopTab(VW/2+6,66,tabW,'Sell',SHOP.tab==='sell');
+  var px=16, py=104, pw=VW-32, ph=VH-104-150-14; panelK(px,py,pw,ph);
+  var list=SHOP.tab==='buy'?shopBuyList():shopSellList();
+  if(!list.length){ ctx.textAlign='center'; ctx.fillStyle='rgba(243,233,210,.6)'; ctx.font='14px Trebuchet MS';
+    ctx.fillText(SHOP.tab==='buy'?'Nothing for sale.':'Nothing to sell.', VW/2, py+ph/2); ctx.textAlign='left'; }
+  var rowH=30, maxRows=Math.max(1,Math.floor((ph-16)/rowH)), top=0; if(SHOP.sel>=maxRows) top=SHOP.sel-maxRows+1;
+  for(var r=0;r<Math.min(maxRows,list.length);r++){ var gi=top+r, g=list[gi]; if(!g)break;
+    var ry=py+10+r*rowH, sel=gi===SHOP.sel;
+    if(sel){ ctx.fillStyle='rgba(255,227,160,.14)'; roundRect(px+6,ry-4,pw-12,rowH-2,6); ctx.fill(); }
+    ctx.fillStyle=sel?'#fff':'#e6dcc4'; ctx.font=(sel?'bold ':'')+'14px Trebuchet MS'; ctx.textAlign='left';
+    var label=g.name; if(!g.consumable && ownsGear(g.id)) label+='  (owned)';
+    ctx.fillText(label, px+16, ry+15);
+    var price=SHOP.tab==='buy'?g.cost:Math.floor(g.cost/2);
+    ctx.textAlign='right'; ctx.fillStyle='#ffe08a'; ctx.fillText(price+'g', px+pw-16, ry+15); ctx.textAlign='left'; }
+  var selG=list[SHOP.sel], dy=py+ph+6;
+  if(selG){ ctx.fillStyle='rgba(243,233,210,.85)'; ctx.font='italic 12px Trebuchet MS'; ctx.textAlign='center';
+    var det=selG.desc||''; if(selG.key) det+='  (have '+(player[selG.key]||0)+')'; ctx.fillText(det, VW/2, dy+14); ctx.textAlign='left'; }
+  if(SHOP.msgT>0){ ctx.textAlign='center'; ctx.fillStyle='#8fe36b'; ctx.font='bold 13px Trebuchet MS'; ctx.fillText(SHOP.msg, VW/2, dy+34); ctx.textAlign='left'; }
+  ctx.textAlign='center'; ctx.fillStyle='rgba(230,220,190,.6)'; ctx.font='11px Trebuchet MS';
+  ctx.fillText('\u2191\u2193 choose   \u2190\u2192 Buy/Sell   A confirm   B leave', VW/2, VH-14); ctx.textAlign='left';
+  drawPP(0,0); drawFloats(0,0);
+}
+function handleShopTap(cx,cy){
+  if(cy>=66 && cy<=92){ SHOP.tab=cx<VW/2?'buy':'sell'; SHOP.sel=0; haptic('sel'); return; }
+  if(cy>VH-28){ exitShop(); return; }
+  var px=16, py=104, pw=VW-32, ph=VH-104-150-14, rowH=30, maxRows=Math.max(1,Math.floor((ph-16)/rowH));
+  var list=SHOP.tab==='buy'?shopBuyList():shopSellList(), top=0; if(SHOP.sel>=maxRows) top=SHOP.sel-maxRows+1;
+  if(cx>=px && cx<=px+pw && cy>=py+6){ var r=Math.floor((cy-(py+6))/rowH), gi=top+r;
+    if(gi>=0 && gi<list.length){ if(SHOP.sel===gi) shopConfirm(); else { SHOP.sel=gi; haptic('sel'); } } }
+}
+/* ============================================================
+   PACK — inventory / equipment / status menu (overworld pause)
+   ============================================================ */
+var MENU=null;
+function openMenu(){ MENU={sel:0, t:0, msg:'', msgT:0}; state='menu'; haptic('medium'); }
+function closeMenu(){ state='overworld'; MENU=null; haptic('light'); }
+function menuMsg(m){ MENU.msg=m; MENU.msgT=1.4; }
+function menuRows(){ return [
+  {k:'potion', label:'Use Potion', val:player.potions},
+  {k:'ether',  label:'Use Ether',  val:player.ethers},
+  {k:'weapon', label:'Weapon', val:gName(player.weapon)},
+  {k:'armor',  label:'Armor',  val:gName(player.armor)},
+  {k:'close',  label:'Close',  val:''}
+]; }
+function menuActivate(){ var rows=menuRows(), row=rows[MENU.sel]; if(!row)return;
+  if(row.k==='potion'){ if(player.potions<=0){ menuMsg('No potions left.'); haptic('light'); return; }
+    if(player.hp>=player.hpMax){ menuMsg('HP already full.'); return; }
+    player.potions--; player.hp=Math.min(player.hpMax,player.hp+60); menuMsg('Restored 60 HP.'); haptic('medium'); save(); }
+  else if(row.k==='ether'){ if(player.ethers<=0){ menuMsg('No ethers left.'); haptic('light'); return; }
+    if(player.mp>=player.mpMax){ menuMsg('MP already full.'); return; }
+    player.ethers--; player.mp=Math.min(player.mpMax,player.mp+18); menuMsg('Restored 18 MP.'); haptic('medium'); save(); }
+  else if(row.k==='weapon'){ if(equipNext('weapon')){ menuMsg('Equipped '+gName(player.weapon)+'.'); haptic('sel'); save(); } else menuMsg('No other weapon owned.'); }
+  else if(row.k==='armor'){ if(equipNext('armor')){ menuMsg('Equipped '+gName(player.armor)+'.'); haptic('sel'); save(); } else menuMsg('No other armour owned.'); }
+  else if(row.k==='close'){ closeMenu(); }
+}
+function menuUpdate(dt){ MENU.t+=dt; if(MENU.msgT>0)MENU.msgT-=dt; updPP(dt);
+  var rows=menuRows();
+  if(navEdge('up')){ MENU.sel=(MENU.sel-1+rows.length)%rows.length; haptic('sel'); }
+  if(navEdge('down')){ MENU.sel=(MENU.sel+1)%rows.length; haptic('sel'); }
+  if(navEdge('left')||navEdge('right')){ var r=rows[MENU.sel];
+    if(r.k==='weapon'){ if(equipNext('weapon')){menuMsg('Equipped '+gName(player.weapon)+'.');save();} }
+    else if(r.k==='armor'){ if(equipNext('armor')){menuMsg('Equipped '+gName(player.armor)+'.');save();} } }
+  if(consume('a')) menuActivate();
+  if(consume('b')||consume('menu')) closeMenu();
+}
+function menuDraw(){
+  overworldDraw({x:0,y:0});
+  ctx.fillStyle='rgba(6,9,14,.72)'; ctx.fillRect(0,0,VW,VH);
+  var pw=Math.min(360,VW*0.9), px=VW/2-pw/2, py=VH*0.1, ph=VH*0.8; panelK(px,py,pw,ph);
+  ctx.textAlign='center'; ctx.fillStyle='#ffe3a0'; ctx.font='bold 20px Trebuchet MS';
+  ctx.fillText((HERO?HERO.name:'Hero')+'  \u00b7  '+player.job, VW/2, py+30);
+  if(HERO) drawHeroSprite(HERO.key,0,0, VW/2, py+120, 3.2);
+  var sx=px+24, sy=py+142; ctx.textAlign='left'; ctx.font='13px Trebuchet MS'; ctx.fillStyle='#e6dcc4';
+  var lines=['Level '+player.level+'    XP '+player.xp+'/'+player.xpNext,
+    'HP  '+Math.round(player.hp)+' / '+player.hpMax,
+    'MP  '+Math.round(player.mp)+' / '+player.mpMax,
+    'ATK '+player.atk+'    DEF '+player.def,
+    'Gold '+player.gold+' G'];
+  for(var i=0;i<lines.length;i++) ctx.fillText(lines[i], sx, sy+i*20);
+  var rows=menuRows(), ry0=sy+lines.length*20+16, rowH=30;
+  for(var r=0;r<rows.length;r++){ var row=rows[r], yy=ry0+r*rowH, sel=r===MENU.sel;
+    if(sel){ ctx.fillStyle='rgba(255,227,160,.14)'; roundRect(px+14,yy-4,pw-28,rowH-2,6); ctx.fill(); }
+    ctx.fillStyle=sel?'#fff':'#d8cfb9'; ctx.font=(sel?'bold ':'')+'14px Trebuchet MS'; ctx.textAlign='left';
+    ctx.fillText(row.label, sx, yy+15);
+    if(row.val!==''){ ctx.textAlign='right'; ctx.fillStyle='#ffe08a'; ctx.fillText(''+row.val, px+pw-24, yy+15); ctx.textAlign='left'; } }
+  if(MENU.msgT>0){ ctx.textAlign='center'; ctx.fillStyle='#8fe36b'; ctx.font='bold 13px Trebuchet MS'; ctx.fillText(MENU.msg, VW/2, py+ph-30); ctx.textAlign='left'; }
+  ctx.textAlign='center'; ctx.fillStyle='rgba(230,220,190,.6)'; ctx.font='11px Trebuchet MS';
+  ctx.fillText('\u2191\u2193 move   \u2190\u2192/A use   B close', VW/2, py+ph-10); ctx.textAlign='left';
+}
+function handleMenuTap(cx,cy){
+  var pw=Math.min(360,VW*0.9), px=VW/2-pw/2, py=VH*0.1, ph=VH*0.8;
+  if(cx<px||cx>px+pw||cy<py||cy>py+ph){ closeMenu(); return; }
+  var sx=px+24, sy=py+142, ry0=sy+5*20+16, rowH=30, rows=menuRows();
+  var r=Math.floor((cy-(ry0-4))/rowH);
+  if(r>=0 && r<rows.length){ if(MENU.sel===r) menuActivate(); else { MENU.sel=r; haptic('sel'); } }
 }
 function interiorUpdate(dt){
   INT.t+=dt;
@@ -1298,10 +1506,14 @@ function canvasTap(cx,cy){
   if(state==='options'){ handleOptionsTap(cx,cy); return; }
   if(state==='gameover'){ state='title'; return; }
   if(state==='interior'){ handleInteriorTap(cx,cy); return; }
+  if(state==='shop'){ handleShopTap(cx,cy); return; }
+  if(state==='menu'){ handleMenuTap(cx,cy); return; }
   if(state==='overworld'){ handleOverworldTap(cx,cy); return; }
   if(state==='battle'){ handleBattleTap(cx,cy); return; }
 }
 function handleOverworldTap(cx,cy){
+  var mb=menuBtnRect();
+  if(cx>=mb.x && cx<=mb.x+mb.w && cy>=mb.y && cy<=mb.y+mb.h){ openMenu(); return; }
   if(dlg.active){ dlg.idx++; if(dlg.idx>=dlg.lines.length) dlg.active=false; haptic('sel'); return; }
   var wx=cam.x+cx, wy=cam.y+cy;
   for(var i=0;i<npcs.length;i++){ if(dist(wx,wy,npcs[i].wx,npcs[i].wy)<TILE && dist(player.wx,player.wy,npcs[i].wx,npcs[i].wy)<TILE*2.4){ startDialogue(npcs[i]); return; } }
@@ -1348,6 +1560,8 @@ function frame(ts){
   if(state==='title'){ titleUpdate(dt); titleDraw(); }
   else if(state==='intro'){ introUpdate(dt); introDraw(); }
   else if(state==='charsel'){ charselUpdate(dt); charselDraw(); }
+  else if(state==='shop'){ shopUpdate(dt); shopDraw(); }
+  else if(state==='menu'){ menuUpdate(dt); menuDraw(); }
   else if(state==='options'){ optionsUpdate(dt); optionsDraw(); }
   else if(state==='overworld'){ overworldUpdate(dt); overworldDraw(sh); }
   else if(state==='interior'){ interiorUpdate(dt); interiorDraw(); }

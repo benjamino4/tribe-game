@@ -82,12 +82,13 @@ function choice(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
 function dist(ax,ay,bx,by){ return Math.hypot(ax-bx,ay-by); }
 
 /* ---------- Sprite helpers ---------- */
-// draw one frame of a horizontal strip, anchored bottom-centre at (dx,dy)
-function drawFrame(img,fw,fh,fi,dx,dy,scale,flip){
+// draw one frame of a horizontal strip, anchored bottom-centre at (dx,dy).
+// footPad = transparent source pixels below the feet; shift down so feet land on dy.
+function drawFrame(img,fw,fh,fi,dx,dy,scale,flip,footPad){
   if(!imgReady(img)) return false;
-  var w=fw*scale, h=fh*scale;
+  var w=fw*scale, h=fh*scale, fp=(footPad||0)*scale;
   ctx.save(); ctx.translate(dx,dy); if(flip)ctx.scale(-1,1);
-  ctx.drawImage(img, fi*fw,0, fw,fh, -w/2,-h, w,h);
+  ctx.drawImage(img, fi*fw,0, fw,fh, -w/2,-h+fp, w,h);
   ctx.restore(); return true;
 }
 // draw a static image anchored bottom-centre
@@ -97,6 +98,8 @@ function drawStatic(img,w,h,dx,dy,scale){
 }
 function drawShadow(dx,dy,rw){ ctx.save(); ctx.globalAlpha=0.3; ctx.fillStyle='#000';
   ctx.beginPath(); ctx.ellipse(dx,dy,rw,rw*0.4,0,0,6.283); ctx.fill(); ctx.restore(); }
+// per-animation foot padding (transparent source px below feet) for 64px hero sheets
+var HFOOT={idle:16,walk:16,run:16,hit:16,slice:6,death:9};
 /* ---------- Input ---------- */
 var keys={up:false,down:false,left:false,right:false,a:false,b:false,menu:false};
 var pressed={a:false,b:false,menu:false};
@@ -434,7 +437,8 @@ function blocked(wx,wy){
 /* ---------- Overworld ---------- */
 var cam={x:0,y:0};
 var moveTarget=null;   // tap-to-move destination (world px)
-var gNearNPC=null, gNearBuild=null;
+var gNearNPC=null, gNearBuild=null, gNearTown=null;
+var owReturn=null;   // overworld hero position saved on entering a town scene
 var dlg={active:false,name:'',lines:[],idx:0};
 var nearInfo='';      // town/building name shown as a banner
 var waterT=0;
@@ -494,11 +498,21 @@ function overworldUpdate(dt){
   var nearBuild=null, bd=1e9;
   for(var bi=0;bi<buildings.length;bi++){ var bb=buildings[bi]; var dbld=dist(player.wx,player.wy,bb.wx,bb.wy+8);
     if(dbld<TILE*1.7 && dbld<bd){ bd=dbld; nearBuild=bb; } }
-  gNearNPC=nearNPC; gNearBuild=nearBuild;
+  // nearest friendly town centre (lets you enter villages that have no overworld building)
+  var gt=null;
+  if(!nearNPC){ for(var ti2=0;ti2<towns.length;ti2++){ var tw=towns[ti2];
+    if(TOWN_DEFS[tw.name] && dist(player.wx,player.wy,tw.wx,tw.wy)<TILE*4){ gt=tw.name; break; } } }
+  gNearNPC=nearNPC; gNearBuild=nearBuild; gNearTown=gt;
+  var buildTown = (nearBuild && nearBuild.town && TOWN_DEFS[nearBuild.town]) ? nearBuild.town : null;
   if(nearNPC) nearInfo=nearNPC.name+'  ▸ press A';
+  else if(buildTown) nearInfo='Enter '+buildTown+'  ▸ press A';
+  else if(gt) nearInfo='Enter '+gt+'  ▸ press A';
   else if(nearBuild) nearInfo='Enter '+nearBuild.name+'  ▸ press A';
   // interact
-  if(consume('a')){ if(nearNPC) startDialogue(nearNPC); else if(nearBuild) enterInterior(nearBuild); }
+  if(consume('a')){ if(nearNPC) startDialogue(nearNPC);
+    else if(buildTown) enterTown(buildTown);
+    else if(gt) enterTown(gt);
+    else if(nearBuild) enterInterior(nearBuild); }
   // roamers wander + chase, contact -> battle
   for(var ri=0;ri<roamers.length;ri++){ var ro=roamers[ri]; ro.t+=dt; ro.cool-=dt;
     var dx=player.wx-ro.wx, dy=player.wy-ro.wy, dd=Math.hypot(dx,dy);
@@ -621,7 +635,7 @@ function overworldDraw(sh){
     drawStatic(images['build_'+o.key], m.w,m.h, o.wx-cam.x, o.wy-cam.y, o.scale); }}); })(buildings[i]); }
   for(i=0;i<npcs.length;i++){ (function(o){ list.push({y:o.wy,fn:function(){
     drawShadow(o.wx-cam.x, o.wy-cam.y, 12);
-    drawFrame(images['npc_'+o.sprite], o.fw,o.fh, o.frame|0, o.wx-cam.x, o.wy-cam.y, o.scale, false); }}); })(npcs[i]); }
+    drawFrame(images['npc_'+o.sprite], o.fw,o.fh, o.frame|0, o.wx-cam.x, o.wy-cam.y, o.scale, false, o.fh>=64?16:0); }}); })(npcs[i]); }
   for(i=0;i<roamers.length;i++){ (function(o){ list.push({y:o.wy,fn:function(){ var m=A.mob[o.kind].idle;
     drawShadow(o.wx-cam.x, o.wy-cam.y, 13);
     drawFrame(images['mob_'+o.kind+'_idle'], m.fw,m.fh, o.frame|0, o.wx-cam.x, o.wy-cam.y, 1.35, o.dir<0); }}); })(roamers[i]); }
@@ -630,7 +644,7 @@ function overworldDraw(sh){
     drawShadow(player.wx-cam.x, player.wy-cam.y, 15);
     if(drawRetroHero(player.wx-cam.x, player.wy-cam.y)) return;
     var fl=(player.dir==='side'&&player.facing<0);
-    if(!drawFrame(images['hero_'+player.anim+'_'+player.dir], hd.fw,hd.fh, Math.min(player.frame,hd.frames-1), player.wx-cam.x, player.wy-cam.y, 0.9, fl)){
+    if(!drawFrame(images['hero_'+player.anim+'_'+player.dir], hd.fw,hd.fh, Math.min(player.frame,hd.frames-1), player.wx-cam.x, player.wy-cam.y, 0.9, fl, 16)){
       ctx.fillStyle='#6cc5ff'; ctx.fillRect(player.wx-cam.x-10, player.wy-cam.y-40, 20,40); } }});
   list.sort(function(a,b){return a.y-b.y;});
   for(i=0;i<list.length;i++) list[i].fn();
@@ -931,10 +945,10 @@ function battleDraw(sh){
       ctx.globalAlpha=1; ctx.globalCompositeOperation='source-over'; }
   }
   // hero (faces right toward enemy)
-  var hdef=A.hero[B.heroAnim].side;
-  drawFrame(images['hero_'+B.heroAnim+'_side'], hdef.fw,hdef.fh, Math.min(B.heroFrame,hdef.frames-1), hx, g, 1.7, false);
+  var hdef=A.hero[B.heroAnim].side, hfp=(HFOOT[B.heroAnim]||16);
+  drawFrame(images['hero_'+B.heroAnim+'_side'], hdef.fw,hdef.fh, Math.min(B.heroFrame,hdef.frames-1), hx, g, 1.7, false, hfp);
   if(B.flashH>0){ ctx.globalCompositeOperation='lighter'; ctx.globalAlpha=clamp(B.flashH*2.5,0,0.9);
-    drawFrame(images['hero_'+B.heroAnim+'_side'], hdef.fw,hdef.fh, Math.min(B.heroFrame,hdef.frames-1), hx, g, 1.7, false);
+    drawFrame(images['hero_'+B.heroAnim+'_side'], hdef.fw,hdef.fh, Math.min(B.heroFrame,hdef.frames-1), hx, g, 1.7, false, hfp);
     ctx.globalAlpha=1; ctx.globalCompositeOperation='source-over'; }
   drawFXAll(0,0); drawPP(0,0); drawFloats(0,0);
   // persistent status badges above the combatants + transient status bursts
@@ -1038,6 +1052,21 @@ function uiButton(x,y,w,h,label,sel,down,red){
   ctx.fillStyle='rgba(0,0,0,.45)'; ctx.fillText(label, x+w/2+1, yy+h/2+6+1);
   ctx.fillStyle=sel?'#fff':'#f6edd6'; ctx.fillText(label, x+w/2, yy+h/2+6);
   ctx.textAlign='left';
+}
+/* ===== pack-art progress bar (bar_base frame + bar_fill, tinted) ===== */
+function uiBar(x,y,w,h,val,max,tint){
+  var base=images['ui_barBase'], fill=images['ui_barFill'], k=clamp(max?val/max:0,0,1);
+  if(!imgReady(base)){ bar(x,y,w,h,val,max,tint||'#d2443a'); return; }
+  var m=A.ui.barBase, sc=h/m.h, ct=m.cap*sc, mid=m.w-2*m.cap, innerW=w-2*ct;
+  // empty track
+  ctx.drawImage(base,0,0,m.cap,m.h, x,y,ct,h);
+  ctx.drawImage(base,m.cap,0,mid,m.h, x+ct,y,innerW,h);
+  ctx.drawImage(base,m.w-m.cap,0,m.cap,m.h, x+w-ct,y,ct,h);
+  // tinted fill, clipped to current value
+  if(k>0){ ctx.save(); roundRect(x+ct, y+h*0.18, innerW*k, h*0.64, h*0.28); ctx.clip();
+    if(imgReady(fill)) ctx.drawImage(fill,0,0,64,64, x+ct, y, innerW, h);
+    ctx.globalCompositeOperation='source-atop'; ctx.globalAlpha=0.62; ctx.fillStyle=tint;
+    ctx.fillRect(x+ct, y, innerW, h); ctx.restore(); }
 }
 /* ---------- Character selection (FF-style hero pick) ---------- */
 var HEROES=[
@@ -1278,12 +1307,20 @@ var INTERIORS={
   shop:    {title:'Trading Post', floor:'#4a3d26', wall:'#2d2416', accent:'#ffd98a', keeper:'peasant', keeperName:'Merchant Pell', shop:'items',
             lines:['Potions and ethers — best prices in the vale.','Buy low, bleed less. That’s my motto.','Spend your coin wisely, Vanguard.']},
   smith:   {title:'The Smithy', floor:'#3a3630', wall:'#241f1a', accent:'#ff9a5a', keeper:'knight', keeperName:'Smith Garrok', shop:'gear',
-            lines:['Steel for coin, warrior. Pick your weapon.','Good armour outlives a reckless blade.','Equip what you buy from your pack menu.']}
+            lines:['Steel for coin, warrior. Pick your weapon.','Good armour outlives a reckless blade.','Equip what you buy from your pack menu.']},
+  weapon:  {title:'Blade & Anvil', floor:'#3a3630', wall:'#241f1a', accent:'#ff9a5a', keeper:'knight', keeperName:'Smith Garrok', shop:'weapon',
+            lines:['Finest steel in the realm, Vanguard.','A sharper blade ends fights faster.','Equip your new sword from the Pack menu.']},
+  armor:   {title:'Shield & Mail', floor:'#33383f', wall:'#1f242a', accent:'#9fd4ff', keeper:'knight', keeperName:'Armsmith Bryn', shop:'armor',
+            lines:['Plate and mail to turn aside the orc blade.','Defence wins the long war, not the quick kill.','Don the armour you buy from your Pack.']},
+  magic:   {title:'Arcane Emporium', floor:'#3a2f4a', wall:'#241c30', accent:'#c9a6ff', keeper:'wizard', keeperName:'Mage Elenwe', shop:'magic',
+            lines:['Potions and ethers, brewed by moonlight.','A full flask has saved many a hero.','Drink from your Pack when the tide turns.']}
 };
 var INT=null;
+var sceneFrom='overworld';   // where a shop/interior was entered from: 'overworld' | 'town'
 function enterInterior(b){
   var cfg=INTERIORS[b.enter]||INTERIORS.home;
   if(cfg.shop){ enterShop(b,cfg); return; }
+  sceneFrom=(state==='town')?'town':'overworld';
   INT={cfg:cfg, name:b.name, idx:0, dlg:false, t:0, bx:b.wx, by:b.wy};
   state='interior'; moveTarget=null; haptic('medium');
   if(cfg.heal){ player.hp=player.hpMax; player.mp=player.mpMax; floatText(VW/2,VH*0.5,'Restored!','#8fe36b'); }
@@ -1291,6 +1328,7 @@ function enterInterior(b){
 }
 function exitInterior(){
   if(!INT)return;
+  if(sceneFrom==='town'){ returnToTown(INT.bx,INT.by); INT=null; haptic('light'); return; }
   state='overworld'; player.invuln=0.6;
   player.wx=INT.bx; player.wy=INT.by+TILE*1.2;   // step out below the door
   player.dir='down'; player.anim='idle'; moveTarget=null;
@@ -1301,16 +1339,27 @@ function exitInterior(){
    ============================================================ */
 var SHOP=null;
 function enterShop(b,cfg){
+  sceneFrom=(state==='town')?'town':'overworld';
   SHOP={cfg:cfg, name:b.name, bx:b.wx, by:b.wy, tab:'buy', sel:0, t:0, msg:'', msgT:0};
   state='shop'; moveTarget=null; haptic('medium'); save();
 }
-function exitShop(){ if(!SHOP)return; state='overworld'; player.invuln=0.6;
+function exitShop(){ if(!SHOP)return;
+  if(sceneFrom==='town'){ var bx=SHOP.bx, by=SHOP.by; SHOP=null; returnToTown(bx,by); haptic('light'); return; }
+  state='overworld'; player.invuln=0.6;
   player.wx=SHOP.bx; player.wy=SHOP.by+TILE*1.2; player.dir='down'; player.anim='idle'; moveTarget=null;
   SHOP=null; haptic('light'); }
-function shopBuyList(){ return SHOP.cfg.shop==='gear' ? GEAR.weapon.concat(GEAR.armor).filter(function(g){return g.cost>0;}) : SHOP_ITEMS.slice(); }
-function shopSellList(){ var r=[];
-  if(SHOP.cfg.shop==='gear'){ for(var i=0;i<player.owned.length;i++){ var g=gearById(player.owned[i]);
-      if(g && g.cost>0 && g.id!==player.weapon && g.id!==player.armor) r.push(g); } }
+function shopBuyList(){ var s=SHOP.cfg.shop;
+  if(s==='weapon') return GEAR.weapon.filter(function(g){return g.cost>0;});
+  if(s==='armor')  return GEAR.armor.filter(function(g){return g.cost>0;});
+  if(s==='gear')   return GEAR.weapon.concat(GEAR.armor).filter(function(g){return g.cost>0;});
+  return SHOP_ITEMS.slice(); }
+function shopSellList(){ var r=[], s=SHOP.cfg.shop;
+  if(s==='weapon'||s==='armor'||s==='gear'){
+    for(var i=0;i<player.owned.length;i++){ var g=gearById(player.owned[i]);
+      if(!g||g.cost<=0) continue;
+      if(s!=='gear' && g.slot!==s) continue;
+      if(g.id===player.weapon||g.id===player.armor) continue;
+      r.push(g); } }
   else { if(player.potions>0) r.push(SHOP_ITEMS[0]); if(player.ethers>0) r.push(SHOP_ITEMS[1]); }
   return r; }
 function shopMsg(m){ SHOP.msg=m; SHOP.msgT=1.6; }
@@ -1385,8 +1434,9 @@ function handleShopTap(cx,cy){
    PACK — inventory / equipment / status menu (overworld pause)
    ============================================================ */
 var MENU=null;
-function openMenu(){ MENU={sel:0, t:0, msg:'', msgT:0}; state='menu'; haptic('medium'); }
-function closeMenu(){ state='overworld'; MENU=null; haptic('light'); }
+var menuFrom='overworld';
+function openMenu(){ menuFrom=(state==='town')?'town':'overworld'; MENU={sel:0, t:0, msg:'', msgT:0, btns:[]}; state='menu'; haptic('medium'); }
+function closeMenu(){ state=menuFrom; MENU=null; haptic('light'); }
 function menuMsg(m){ MENU.msg=m; MENU.msgT=1.4; }
 function menuRows(){ return [
   {k:'potion', label:'Use Potion', val:player.potions},
@@ -1417,35 +1467,52 @@ function menuUpdate(dt){ MENU.t+=dt; if(MENU.msgT>0)MENU.msgT-=dt; updPP(dt);
   if(consume('b')||consume('menu')) closeMenu();
 }
 function menuDraw(){
-  overworldDraw({x:0,y:0});
-  ctx.fillStyle='rgba(6,9,14,.72)'; ctx.fillRect(0,0,VW,VH);
-  var pw=Math.min(360,VW*0.9), px=VW/2-pw/2, py=VH*0.1, ph=VH*0.8; panelK(px,py,pw,ph);
+  if(menuFrom==='town' && TOWN) townDraw({x:0,y:0}); else overworldDraw({x:0,y:0});
+  ctx.fillStyle='rgba(6,9,14,.74)'; ctx.fillRect(0,0,VW,VH);
+  var pw=Math.min(380,VW*0.92), px=VW/2-pw/2, py=VH*0.07, ph=VH*0.86; panelK(px,py,pw,ph);
+  // title
   ctx.textAlign='center'; ctx.fillStyle='#ffe3a0'; ctx.font='bold 20px Trebuchet MS';
-  ctx.fillText((HERO?HERO.name:'Hero')+'  \u00b7  '+player.job, VW/2, py+30);
-  if(HERO) drawHeroSprite(HERO.key,0,0, VW/2, py+120, 3.2);
-  var sx=px+24, sy=py+142; ctx.textAlign='left'; ctx.font='13px Trebuchet MS'; ctx.fillStyle='#e6dcc4';
-  var lines=['Level '+player.level+'    XP '+player.xp+'/'+player.xpNext,
-    'HP  '+Math.round(player.hp)+' / '+player.hpMax,
-    'MP  '+Math.round(player.mp)+' / '+player.mpMax,
-    'ATK '+player.atk+'    DEF '+player.def,
-    'Gold '+player.gold+' G'];
-  for(var i=0;i<lines.length;i++) ctx.fillText(lines[i], sx, sy+i*20);
-  var rows=menuRows(), ry0=sy+lines.length*20+16, rowH=30;
-  for(var r=0;r<rows.length;r++){ var row=rows[r], yy=ry0+r*rowH, sel=r===MENU.sel;
-    if(sel){ ctx.fillStyle='rgba(255,227,160,.14)'; roundRect(px+14,yy-4,pw-28,rowH-2,6); ctx.fill(); }
-    ctx.fillStyle=sel?'#fff':'#d8cfb9'; ctx.font=(sel?'bold ':'')+'14px Trebuchet MS'; ctx.textAlign='left';
-    ctx.fillText(row.label, sx, yy+15);
-    if(row.val!==''){ ctx.textAlign='right'; ctx.fillStyle='#ffe08a'; ctx.fillText(''+row.val, px+pw-24, yy+15); ctx.textAlign='left'; } }
-  if(MENU.msgT>0){ ctx.textAlign='center'; ctx.fillStyle='#8fe36b'; ctx.font='bold 13px Trebuchet MS'; ctx.fillText(MENU.msg, VW/2, py+ph-30); ctx.textAlign='left'; }
+  ctx.fillText((HERO?HERO.name:'Hero')+'  \u00b7  '+player.job+'  \u00b7  Lv.'+player.level, VW/2, py+30);
+  // large character portrait inside a framed plate
+  var portH=Math.min(150,ph*0.3), portY=py+42, plateW=pw-48, plateX=px+24;
+  ctx.fillStyle='rgba(0,0,0,.3)'; roundRect(plateX,portY,plateW,portH,8); ctx.fill();
+  ctx.strokeStyle='rgba(255,232,170,.25)'; ctx.lineWidth=1; roundRect(plateX,portY,plateW,portH,8); ctx.stroke();
+  var baseY=portY+portH-14;
+  ctx.save(); ctx.beginPath(); roundRect(plateX,portY,plateW,portH,8); ctx.clip();
+  drawShadow(VW/2, baseY, 34);
+  if(!(HERO && drawHeroSprite(HERO.key, 1, 0, VW/2, baseY, Math.max(4.5,portH/20)))){
+    var hm=A.hero.idle.down; drawFrame(images['hero_idle_down'], hm.fw,hm.fh, Math.floor(MENU.t*5)%hm.frames, VW/2, baseY, 1.8, false, 16);
+  }
+  ctx.restore();
+  // HP / MP bars (pack art)
+  var barX=px+24, barW=pw-48, barY=portY+portH+10;
+  uiBar(barX, barY, barW, 18, player.hp, player.hpMax, '#d2443a');
+  uiBar(barX, barY+24, barW, 18, player.mp, player.mpMax, '#3f74d6');
+  ctx.textAlign='left'; ctx.fillStyle='#eafbe0'; ctx.font='bold 11px Trebuchet MS';
+  ctx.fillText('HP  '+Math.round(player.hp)+' / '+player.hpMax, barX+8, barY+13);
+  ctx.fillText('MP  '+Math.round(player.mp)+' / '+player.mpMax, barX+8, barY+24+13);
+  ctx.textAlign='right'; ctx.fillStyle='#ffe08a'; ctx.font='11px Trebuchet MS';
+  ctx.fillText('XP '+player.xp+'/'+player.xpNext, barX+barW-8, barY+13);
+  ctx.fillText('ATK '+player.atk+'   DEF '+player.def+'   '+player.gold+'G', barX+barW-8, barY+24+13);
+  ctx.textAlign='left';
+  // action buttons (3-slice pack buttons) with character-aware equip rows
+  var rows=menuRows(), bx=px+24, bw=pw-48, bh=42, gap=8, by0=barY+56;
+  MENU.btns=[];
+  for(var r=0;r<rows.length;r++){ var row=rows[r], yy=by0+r*(bh+gap), sel=r===MENU.sel;
+    var lbl=row.label + (row.val!==''?('   \u2014   '+row.val):'');
+    uiButton(bx, yy, bw, bh, lbl, sel, false, row.k==='close');
+    MENU.btns.push({x:bx,y:yy,w:bw,h:bh}); }
+  if(MENU.msgT>0){ ctx.textAlign='center'; ctx.fillStyle='#8fe36b'; ctx.font='bold 13px Trebuchet MS'; ctx.fillText(MENU.msg, VW/2, py+ph-28); ctx.textAlign='left'; }
   ctx.textAlign='center'; ctx.fillStyle='rgba(230,220,190,.6)'; ctx.font='11px Trebuchet MS';
   ctx.fillText('\u2191\u2193 move   \u2190\u2192/A use   B close', VW/2, py+ph-10); ctx.textAlign='left';
 }
 function handleMenuTap(cx,cy){
-  var pw=Math.min(360,VW*0.9), px=VW/2-pw/2, py=VH*0.1, ph=VH*0.8;
-  if(cx<px||cx>px+pw||cy<py||cy>py+ph){ closeMenu(); return; }
-  var sx=px+24, sy=py+142, ry0=sy+5*20+16, rowH=30, rows=menuRows();
-  var r=Math.floor((cy-(ry0-4))/rowH);
-  if(r>=0 && r<rows.length){ if(MENU.sel===r) menuActivate(); else { MENU.sel=r; haptic('sel'); } }
+  if(!MENU) return;
+  var rows=menuRows(), bs=MENU.btns||[];
+  for(var i=0;i<bs.length && i<rows.length;i++){ var b=bs[i];
+    if(cx>=b.x && cx<=b.x+b.w && cy>=b.y && cy<=b.y+b.h){ if(MENU.sel===i) menuActivate(); else { MENU.sel=i; haptic('sel'); } return; } }
+  var pw=Math.min(380,VW*0.92), px=VW/2-pw/2, py=VH*0.07, ph=VH*0.86;
+  if(cx<px||cx>px+pw||cy<py||cy>py+ph) closeMenu();
 }
 function interiorUpdate(dt){
   INT.t+=dt;
@@ -1474,11 +1541,11 @@ function interiorDraw(){
   // keeper on the back wall
   var kx=VW*0.5, ky=fy+14, km=A.npc[cfg.keeper];
   drawShadow(kx,ky,16);
-  if(imgReady(images['npc_'+cfg.keeper])) drawFrame(images['npc_'+cfg.keeper], km.fw,km.fh, Math.floor(INT.t*4)%km.frames, kx, ky, km.fh>=64?1.6:2.8, false);
+  if(imgReady(images['npc_'+cfg.keeper])) drawFrame(images['npc_'+cfg.keeper], km.fw,km.fh, Math.floor(INT.t*4)%km.frames, kx, ky, km.fh>=64?1.6:2.8, false, km.fh>=64?16:0);
   // hero before the keeper
   var hm=A.hero.idle.down; drawShadow(VW*0.5, VH*0.78, 15);
   if(!(HERO && drawHeroSprite(HERO.key, 0, 0, VW*0.5, VH*0.78, 3.6)))
-  drawFrame(images['hero_idle_down'], hm.fw,hm.fh, Math.floor(INT.t*5)%hm.frames, VW*0.5, VH*0.78, 1.4, false);
+  drawFrame(images['hero_idle_down'], hm.fw,hm.fh, Math.floor(INT.t*5)%hm.frames, VW*0.5, VH*0.78, 1.4, false, 16);
   // title
   ctx.textAlign='center'; ctx.fillStyle=cfg.accent; ctx.font='bold 20px Trebuchet MS'; ctx.fillText(INT.name, VW/2, 42);
   ctx.fillStyle='rgba(243,233,210,.7)'; ctx.font='12px Trebuchet MS'; ctx.fillText(cfg.title, VW/2, 62); ctx.textAlign='left';
@@ -1497,6 +1564,220 @@ function drawInteriorDialogue(){
   wrapText(cfg.lines[Math.min(INT.idx,cfg.lines.length-1)]||'', 28, y+54, VW-56, 22, 'left');
 }
 /* ============================================================
+   TOWN SCENES — enter a village from the world map; a full
+   self-contained town with stores, castle+king, houses & NPCs
+   ============================================================ */
+var TOWN=null;
+var TOWN_DEFS={
+  'Emberhold':{ cols:19, rows:14,
+    buildings:[
+      {key:'blue_castle',   tx:8,  ty:3,  name:'Emberhold Castle', enter:'castle'},
+      {key:'blue_house3',   tx:3,  ty:7,  name:'Blade & Anvil',     enter:'weapon'},
+      {key:'blue_house1',   tx:7,  ty:8,  name:'Shield & Mail',     enter:'armor'},
+      {key:'blue_monastery',tx:13, ty:8,  name:'Arcane Emporium',   enter:'magic'},
+      {key:'blue_house2',   tx:16, ty:4,  name:'The Ember Tavern',  enter:'tavern'},
+      {key:'blue_tower',    tx:3,  ty:3,  name:'Watchtower',        enter:'tower'},
+      {key:'blue_house1',   tx:16, ty:11, name:'Villager Cottage',  enter:'home'}
+    ],
+    npcs:[
+      {sprite:'knight', tx:9,  ty:7,  name:'Capt. of the Guard', lines:['Hail, Vanguard. The King awaits within the castle.','Dark banners mass at Grimspire, north-east of here.','Visit the Blade & Anvil before you march.']},
+      {sprite:'wizard', tx:12, ty:11, name:'Sage Morwen', lines:['The Arcane Emporium stocks potions and ethers.','Thunder bites the undead; flame scours the fiend.','Buy, then equip from your Pack menu.']},
+      {sprite:'peasant',tx:6,  ty:11, name:'Old Hensel', lines:['These streets were lively before the raids.','Rest at the tavern — the Keep heals you free.']},
+      {sprite:'tavern', tx:16, ty:5,  name:'Brida the Keep', lines:['Step close, champion — a hot meal mends all wounds.','There, good as new. Off you go.']},
+      {sprite:'rogue',  tx:10, ty:12, name:'Sly Finn', lines:['Psst — Shield & Mail has armour to turn an orc blade.','Coin buys survival. Spend it wisely.']}
+    ] },
+  'Ravenmoor':{ cols:18, rows:13,
+    buildings:[
+      {key:'blue_barracks',tx:8,  ty:3,  name:'Ravenmoor Barracks', enter:'barracks'},
+      {key:'blue_house1',  tx:3,  ty:7,  name:'Ravenmoor Supply',   enter:'shop'},
+      {key:'blue_house3',  tx:13, ty:7,  name:'Border Weaponsmith', enter:'weapon'},
+      {key:'blue_monastery',tx:9, ty:8,  name:'Shield & Mail',      enter:'armor'},
+      {key:'blue_tower',   tx:15, ty:3,  name:'South Watchtower',   enter:'tower'},
+      {key:'blue_house2',  tx:3,  ty:11, name:'Fisher\u2019s Hut',  enter:'home'}
+    ],
+    npcs:[
+      {sprite:'knight', tx:8,  ty:7,  name:'Capt. Doran', lines:['Hold, soldier. The roads crawl with orc raiders.','Train hard — each kill makes you stronger.','The Weaponsmith yonder keeps good steel.']},
+      {sprite:'rogue',  tx:5,  ty:10, name:'Sly Finn', lines:['Supply shop sells potions — if you have coin.','Venom magic? Cowardly. I love it.']},
+      {sprite:'peasant',tx:12, ty:11, name:'Goodwife Enna', lines:['My man fishes the moor at dawn.','Mind the dusk — skeletons walk the roads.']}
+    ] },
+  'Mirefen Hamlet':{ cols:15, rows:12,
+    buildings:[
+      {key:'blue_house2',  tx:4,  ty:4,  name:'The Mirefen Inn', enter:'tavern'},
+      {key:'blue_house1',  tx:8,  ty:4,  name:'Mara\u2019s Cottage', enter:'home'},
+      {key:'blue_house3',  tx:11, ty:6,  name:'Hamlet Trade Stall', enter:'shop'},
+      {key:'blue_monastery',tx:4, ty:8,  name:'Dawnlight Shrine',  enter:'temple'}
+    ],
+    npcs:[
+      {sprite:'tavern', tx:4,  ty:5,  name:'Innkeep Odo', lines:['Rest your boots — the hearth is warm.','Step close and I\u2019ll mend you, free of charge.','The orcs burned our east field. Avenge it, aye?']},
+      {sprite:'peasant',tx:9,  ty:8,  name:'Goodwife Mara', lines:['We farm what the raiders leave us.','The shrine keeper will patch your wounds.']},
+      {sprite:'wizard', tx:5,  ty:9,  name:'Shrine Keeper', lines:['Light flows through you once more.','Flame against the fiend, thunder against bone.']}
+    ] },
+  'Dunewatch':{ cols:14, rows:11,
+    buildings:[
+      {key:'blue_tower', tx:6, ty:3,  name:'Dune Watchpost', enter:'tower'},
+      {key:'blue_house3',tx:3, ty:7,  name:'Fisher\u2019s Lodge', enter:'home'},
+      {key:'blue_house1',tx:9, ty:7,  name:'Dune Supply',    enter:'shop'}
+    ],
+    npcs:[
+      {sprite:'rogue',  tx:6,  ty:7,  name:'Fisher Cael', lines:['The lake gives, when the drowned things sleep.','Shore stones hide coin — and worse.']},
+      {sprite:'peasant',tx:9,  ty:9,  name:'Netmender Pol', lines:['Salt in the nets, salt in the wounds.','Supply shack has flasks if the deep calls.']}
+    ] }
+};
+function buildTownScene(def){
+  var tb=[], tn=[], ts=[];
+  for(var i=0;i<def.buildings.length;i++){ var b=def.buildings[i], m=A.build[b.key];
+    var wx=b.tx*TILE+TILE/2, wy=b.ty*TILE+TILE;
+    tb.push({key:b.key,wx:wx,wy:wy,scale:BSCALE,name:b.name,enter:b.enter});
+    var bw=m.w*BSCALE*0.55; ts.push({x:wx-bw/2,y:wy-18,w:bw,h:20}); }
+  for(var j=0;j<def.npcs.length;j++){ var n=def.npcs[j], nm=A.npc[n.sprite];
+    tn.push({name:n.name,sprite:n.sprite,wx:n.tx*TILE+TILE/2,wy:n.ty*TILE+TILE,
+      lines:n.lines,t:rand(0,2),frame:0,fw:nm.fw,fh:nm.fh,frames:nm.frames,scale:nm.fh>=64?0.9:1.7}); }
+  return {buildings:tb, npcs:tn, solids:ts};
+}
+function enterTown(name){
+  var def=TOWN_DEFS[name]; if(!def){ return; }
+  owReturn={wx:player.wx, wy:player.wy};
+  var sc=buildTownScene(def), W=def.cols*TILE, H=def.rows*TILE;
+  TOWN={def:def, name:name, W:W, H:H, buildings:sc.buildings, npcs:sc.npcs, solids:sc.solids,
+    cam:{x:0,y:0}, nearB:null, nearN:null, atGate:false, info:'', t:0, tgt:null,
+    gate:{x:W/2-TILE, y:H-TILE*0.9, w:TILE*2, h:TILE*0.9},
+    hero:{wx:W/2, wy:H-TILE*1.4, dir:'up', facing:1, anim:'idle', frame:0, t:0, moving:false},
+    dlg:{active:false,name:'',lines:[],idx:0}};
+  state='town'; moveTarget=null; haptic('medium'); save();
+}
+function exitTown(){ if(!TOWN)return;
+  state='overworld'; player.invuln=0.6;
+  if(owReturn){ player.wx=owReturn.wx; player.wy=owReturn.wy+TILE*0.6; }
+  player.dir='down'; player.anim='idle'; moveTarget=null; TOWN=null; haptic('light'); }
+function returnToTown(bx,by){
+  if(!TOWN){ state='overworld'; if(owReturn){ player.wx=owReturn.wx; player.wy=owReturn.wy; } return; }
+  state='town'; TOWN.hero.wx=bx; TOWN.hero.wy=by+TILE*1.1;
+  TOWN.hero.dir='down'; TOWN.hero.anim='idle'; TOWN.hero.moving=false; TOWN.tgt=null; }
+function townBlocked(wx,wy){
+  if(wx<TILE*0.4||wy<TILE*0.4||wx>TOWN.W-TILE*0.4||wy>TOWN.H-TILE*0.15) return true;
+  for(var i=0;i<TOWN.solids.length;i++){ var s=TOWN.solids[i];
+    if(wx>s.x&&wx<s.x+s.w&&wy>s.y&&wy<s.y+s.h) return true; }
+  return false;
+}
+function startTownDialogue(np){ var d=TOWN.dlg; d.active=true; d.name=np.name; d.lines=np.lines; d.idx=0; TOWN.tgt=null; haptic('light');
+  if(np.sprite==='tavern'){ player.hp=player.hpMax; player.mp=player.mpMax; floatText(np.wx,np.wy-TILE,'Fully healed!','#8fe36b'); } }
+function townUpdate(dt){
+  TOWN.t+=dt;
+  for(var ni=0;ni<TOWN.npcs.length;ni++){ var np=TOWN.npcs[ni]; np.t+=dt; if(np.t>=0.28){ np.t=0; np.frame=(np.frame+1)%np.frames; } }
+  var d=TOWN.dlg;
+  if(d.active){ if(consume('a')){ d.idx++; haptic('sel'); if(d.idx>=d.lines.length) d.active=false; }
+    if(consume('b')) d.active=false; return; }
+  if(consume('menu')){ openMenu(); return; }
+  var h=TOWN.hero;
+  var ix=(keys.right?1:0)-(keys.left?1:0), iy=(keys.down?1:0)-(keys.up?1:0), usingTap=false;
+  if(!ix && !iy && TOWN.tgt){ var ddx=TOWN.tgt.x-h.wx, ddy=TOWN.tgt.y-h.wy, dm=Math.hypot(ddx,ddy);
+    if(dm<6) TOWN.tgt=null; else { ix=ddx/dm; iy=ddy/dm; usingTap=true; } }
+  var running=keys.b && (ix||iy), sp=running?150:105;
+  if(ix||iy){
+    if(Math.abs(ix)>Math.abs(iy)){ h.dir='side'; h.facing=ix>0?1:-1; } else h.dir=iy>0?'down':'up';
+    var len=Math.hypot(ix,iy)||1, nx=h.wx+ix/len*sp*dt, ny=h.wy+iy/len*sp*dt, mvd=false;
+    if(!townBlocked(nx,h.wy)){ h.wx=nx; mvd=true; }
+    if(!townBlocked(h.wx,ny)){ h.wy=ny; mvd=true; }
+    if(usingTap && !mvd) TOWN.tgt=null;
+    h.moving=true; h.anim=running?'run':'walk';
+  } else { h.moving=false; h.anim='idle'; }
+  var dkey=(h.dir==='side')?'side':h.dir, hd=A.hero[h.anim][dkey], fps=h.anim==='run'?12:(h.anim==='walk'?9:5);
+  h.t+=dt; if(h.t>=1/fps){ h.t=0; h.frame=(h.frame+1)%hd.frames; }
+  // nearest npc / building / gate
+  var nn=null, nd=1e9;
+  for(ni=0;ni<TOWN.npcs.length;ni++){ var d2=dist(h.wx,h.wy,TOWN.npcs[ni].wx,TOWN.npcs[ni].wy); if(d2<TILE*1.3&&d2<nd){ nd=d2; nn=TOWN.npcs[ni]; } }
+  var nb=null, bd=1e9;
+  for(var bi=0;bi<TOWN.buildings.length;bi++){ var bb=TOWN.buildings[bi], dbld=dist(h.wx,h.wy,bb.wx,bb.wy+8); if(dbld<TILE*1.7&&dbld<bd){ bd=dbld; nb=bb; } }
+  var g=TOWN.gate, atGate=(h.wx>g.x&&h.wx<g.x+g.w&&h.wy>g.y-TILE*0.6);
+  TOWN.nearN=nn; TOWN.nearB=nb; TOWN.atGate=(atGate&&!nb&&!nn);
+  TOWN.info='';
+  if(nn) TOWN.info=nn.name+'  \u25b8 press A';
+  else if(nb) TOWN.info='Enter '+nb.name+'  \u25b8 press A';
+  else if(TOWN.atGate) TOWN.info='Leave '+TOWN.name+'  \u25b8 press A';
+  if(consume('a')){ if(nn) startTownDialogue(nn); else if(nb) enterInterior(nb); else if(TOWN.atGate) exitTown(); }
+  TOWN.cam.x=clamp(h.wx-VW/2,0,Math.max(0,TOWN.W-VW)); if(TOWN.W<VW)TOWN.cam.x=(TOWN.W-VW)/2;
+  TOWN.cam.y=clamp(h.wy-VH/2,0,Math.max(0,TOWN.H-VH)); if(TOWN.H<VH)TOWN.cam.y=(TOWN.H-VH)/2;
+  updPP(dt); updFloats(dt);
+}
+function drawTownGround(){
+  var cob=images['terr_cobble']||images['terr_cobble2'], dirt=images['terr_dirt'], gr=images['terr_grass'];
+  var tx0=Math.floor(TOWN.cam.x/TILE)-1, ty0=Math.floor(TOWN.cam.y/TILE)-1;
+  var tx1=Math.ceil((TOWN.cam.x+VW)/TILE)+1, ty1=Math.ceil((TOWN.cam.y+VH)/TILE)+1;
+  var cx=Math.floor(TOWN.def.cols/2);
+  for(var ty=ty0;ty<=ty1;ty++) for(var tx=tx0;tx<=tx1;tx++){
+    var dx=tx*TILE-TOWN.cam.x, dy=ty*TILE-TOWN.cam.y;
+    var inside=(tx>=0&&ty>=0&&tx<TOWN.def.cols&&ty<TOWN.def.rows);
+    if(!inside){ if(imgReady(gr)) ctx.drawImage(gr,64,64,64,64,dx,dy,TILE+1,TILE+1);
+      else { ctx.fillStyle='#3c5e30'; ctx.fillRect(dx,dy,TILE+1,TILE+1); } continue; }
+    var isPath=(tx===cx||tx===cx-1||ty===Math.floor(TOWN.def.rows*0.55));
+    if(isPath && imgReady(dirt)) ctx.drawImage(dirt,0,0,64,64,dx,dy,TILE+1,TILE+1);
+    else if(imgReady(cob)) ctx.drawImage(cob,0,0,64,64,dx,dy,TILE+1,TILE+1);
+    else { ctx.fillStyle=isPath?'#7a5a34':'#8a7d66'; ctx.fillRect(dx,dy,TILE+1,TILE+1); }
+    var hv=hash2(tx,ty)%100; ctx.globalAlpha=0.05+(hv%4)*0.012; ctx.fillStyle=hv<50?'#000':'#fff';
+    ctx.fillRect(dx,dy,TILE+1,TILE+1); ctx.globalAlpha=1;
+  }
+}
+function drawTownHero(h,dx,dy){
+  if(HERO){ var row=h.dir==='up'?3:(h.dir==='down'?0:(h.facing<0?1:2));
+    var col=h.moving?[1,0,1,2][Math.floor(h.frame)%4]:1;
+    if(drawHeroSprite(HERO.key,col,row,dx,dy,2.8)) return; }
+  var dkey=(h.dir==='side')?'side':h.dir, hd=A.hero[h.anim][dkey], fl=(h.dir==='side'&&h.facing<0);
+  if(!drawFrame(images['hero_'+h.anim+'_'+dkey], hd.fw,hd.fh, Math.min(h.frame,hd.frames-1), dx,dy,0.9,fl,16)){
+    ctx.fillStyle='#6cc5ff'; ctx.fillRect(dx-10,dy-40,20,40); }
+}
+function townDraw(sh){
+  ctx.save(); ctx.translate(sh.x,sh.y);
+  drawTownGround();
+  // gate marker (a dirt opening at the south wall)
+  var g=TOWN.gate, gdx=g.x-TOWN.cam.x, gdy=g.y-TOWN.cam.y;
+  ctx.fillStyle='rgba(255,227,160,'+(0.25+0.1*Math.sin(TOWN.t*3))+')';
+  roundRect(gdx,gdy,g.w,g.h,6); ctx.fill();
+  ctx.fillStyle='#2b2016'; ctx.font='bold 11px Trebuchet MS'; ctx.textAlign='center';
+  ctx.fillText('\u25bc EXIT', gdx+g.w/2, gdy+g.h/2+4); ctx.textAlign='left';
+  var list=[], h=TOWN.hero;
+  for(var i=0;i<TOWN.buildings.length;i++){ (function(o){ list.push({y:o.wy,fn:function(){ var m=A.build[o.key];
+    drawShadow(o.wx-TOWN.cam.x, o.wy-TOWN.cam.y, m.w*o.scale*0.3);
+    drawStatic(images['build_'+o.key], m.w,m.h, o.wx-TOWN.cam.x, o.wy-TOWN.cam.y, o.scale); }}); })(TOWN.buildings[i]); }
+  for(i=0;i<TOWN.npcs.length;i++){ (function(o){ list.push({y:o.wy,fn:function(){
+    drawShadow(o.wx-TOWN.cam.x, o.wy-TOWN.cam.y, 12);
+    drawFrame(images['npc_'+o.sprite], o.fw,o.fh, o.frame|0, o.wx-TOWN.cam.x, o.wy-TOWN.cam.y, o.scale, false, o.fh>=64?16:0); }}); })(TOWN.npcs[i]); }
+  list.push({y:h.wy, fn:function(){ drawShadow(h.wx-TOWN.cam.x, h.wy-TOWN.cam.y, 15); drawTownHero(h, h.wx-TOWN.cam.x, h.wy-TOWN.cam.y); }});
+  list.sort(function(a,b){return a.y-b.y;});
+  for(i=0;i<list.length;i++) list[i].fn();
+  drawPP(TOWN.cam.x,TOWN.cam.y); drawFloats(TOWN.cam.x,TOWN.cam.y);
+  ctx.restore();
+  drawHUD();
+  // town name plate (top centre)
+  ctx.font='bold 16px Trebuchet MS'; var tw=ctx.measureText(TOWN.name).width;
+  panel(VW/2-tw/2-16, 8, tw+32, 32);
+  ctx.fillStyle='#ffe3a0'; ctx.textAlign='center'; ctx.fillText(TOWN.name, VW/2, 29); ctx.textAlign='left';
+  if(TOWN.info){ ctx.font='bold 14px Trebuchet MS'; var iw=ctx.measureText(TOWN.info).width;
+    panel(VW/2-iw/2-14, 44, iw+28, 28);
+    ctx.fillStyle='#eafbe0'; ctx.textAlign='center'; ctx.fillText(TOWN.info, VW/2, 63); ctx.textAlign='left'; }
+  if(TOWN.dlg.active) drawTownDialogue();
+}
+function drawTownDialogue(){
+  var d=TOWN.dlg, hh=118, y=VH-hh-150;
+  panel(12,y,VW-24,hh);
+  ctx.fillStyle='#ffd98a'; ctx.font='bold 16px Trebuchet MS'; ctx.fillText(d.name, 28, y+28);
+  ctx.fillStyle='#f3e9d2'; ctx.font='15px Trebuchet MS';
+  wrapText(d.lines[Math.min(d.idx,d.lines.length-1)]||'', 28, y+54, VW-56, 22, 'left');
+  ctx.fillStyle='#9fd4ff'; ctx.font='12px Trebuchet MS'; ctx.textAlign='right';
+  ctx.fillText('A \u25b8', VW-28, y+hh-14); ctx.textAlign='left';
+}
+function handleTownTap(cx,cy){
+  var mb=menuBtnRect(); if(cx>=mb.x&&cx<=mb.x+mb.w&&cy>=mb.y&&cy<=mb.y+mb.h){ openMenu(); return; }
+  var d=TOWN.dlg; if(d.active){ d.idx++; if(d.idx>=d.lines.length) d.active=false; haptic('sel'); return; }
+  var h=TOWN.hero, wx=TOWN.cam.x+cx, wy=TOWN.cam.y+cy;
+  for(var i=0;i<TOWN.npcs.length;i++){ var np=TOWN.npcs[i];
+    if(dist(wx,wy,np.wx,np.wy)<TILE && dist(h.wx,h.wy,np.wx,np.wy)<TILE*2.4){ startTownDialogue(np); return; } }
+  for(i=0;i<TOWN.buildings.length;i++){ var bb=TOWN.buildings[i], m=A.build[bb.key], bw=m.w*bb.scale, bh=m.h*bb.scale;
+    if(wx>bb.wx-bw/2 && wx<bb.wx+bw/2 && wy>bb.wy-bh && wy<bb.wy+12 && dist(h.wx,h.wy,bb.wx,bb.wy+8)<TILE*2.6){ enterInterior(bb); return; } }
+  var g=TOWN.gate;
+  if(wx>g.x-TILE && wx<g.x+g.w+TILE && wy>g.y-TILE && dist(h.wx,h.wy,g.x+g.w/2,g.y)<TILE*3.2){ exitTown(); return; }
+  TOWN.tgt={x:clamp(wx,TILE*0.5,TOWN.W-TILE*0.5), y:clamp(wy,TILE*0.5,TOWN.H-TILE*0.5)};
+}
+/* ============================================================
    TOUCH \u2014 tap-to-move / tap-to-act (native mobile controls)
    ============================================================ */
 function canvasTap(cx,cy){
@@ -1508,6 +1789,7 @@ function canvasTap(cx,cy){
   if(state==='interior'){ handleInteriorTap(cx,cy); return; }
   if(state==='shop'){ handleShopTap(cx,cy); return; }
   if(state==='menu'){ handleMenuTap(cx,cy); return; }
+  if(state==='town'){ handleTownTap(cx,cy); return; }
   if(state==='overworld'){ handleOverworldTap(cx,cy); return; }
   if(state==='battle'){ handleBattleTap(cx,cy); return; }
 }
@@ -1519,8 +1801,11 @@ function handleOverworldTap(cx,cy){
   for(var i=0;i<npcs.length;i++){ if(dist(wx,wy,npcs[i].wx,npcs[i].wy)<TILE && dist(player.wx,player.wy,npcs[i].wx,npcs[i].wy)<TILE*2.4){ startDialogue(npcs[i]); return; } }
   for(i=0;i<buildings.length;i++){ var bb=buildings[i], m=A.build[bb.key], bw=m.w*bb.scale, bh=m.h*bb.scale;
     if(wx>bb.wx-bw/2 && wx<bb.wx+bw/2 && wy>bb.wy-bh && wy<bb.wy+12){
-      if(dist(player.wx,player.wy,bb.wx,bb.wy+8)<TILE*2.6){ enterInterior(bb); return; }
+      if(dist(player.wx,player.wy,bb.wx,bb.wy+8)<TILE*2.6){
+        if(bb.town && TOWN_DEFS[bb.town]) enterTown(bb.town); else enterInterior(bb); return; }
     } }
+  for(var tt=0;tt<towns.length;tt++){ var tw=towns[tt];
+    if(TOWN_DEFS[tw.name] && dist(wx,wy,tw.wx,tw.wy)<TILE*3 && dist(player.wx,player.wy,tw.wx,tw.wy)<TILE*4.5){ enterTown(tw.name); return; } }
   moveTarget={x:clamp(wx,TILE,WMAX_X-TILE), y:clamp(wy,TILE,WMAX_Y-TILE)};
 }
 function handleInteriorTap(cx,cy){
@@ -1564,6 +1849,7 @@ function frame(ts){
   else if(state==='menu'){ menuUpdate(dt); menuDraw(); }
   else if(state==='options'){ optionsUpdate(dt); optionsDraw(); }
   else if(state==='overworld'){ overworldUpdate(dt); overworldDraw(sh); }
+  else if(state==='town'){ townUpdate(dt); townDraw(sh); }
   else if(state==='interior'){ interiorUpdate(dt); interiorDraw(); }
   else if(state==='battle'){ battleUpdate(dt); if(B) battleDraw(sh); }
   else if(state==='gameover'){ gameoverUpdate(dt); gameoverDraw(); }
